@@ -1,5 +1,5 @@
 var express = require('express');
-var controller = require('./controller');
+var routeMap = require('./controller');
 var router = express.Router();
 
 router.use(function (req, res, next) {
@@ -7,16 +7,21 @@ router.use(function (req, res, next) {
   next();
 });
 
+//首页
+router.get('/', routeMap.home.index);
+router.get('/mall/classify', routeMap.home.mallClassify);
+router.get('/discovery/list', routeMap.home.discoveryList);
+
 //用户操作
-router.use('/user', controller.user);
-router.get('/user/:id', controller.user.get);
+router.use('/user', routeMap.user);
+router.get('/user/:id', routeMap.user.get);
 
 //积分操作
-router.use('/point', controller.point);
-router.get('/point/:id', controller.point.get);
+router.use('/point', routeMap.point);
+router.get('/point/:id', routeMap.point.get);
 
 //消息操作
-router.use('/msg', controller.message);
-router.get('/msg/:id', controller.message.get);
+router.use('/msg', routeMap.message);
+router.get('/msg/:id', routeMap.message.get);
 
 module.exports = router;
