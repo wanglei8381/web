@@ -24,4 +24,9 @@ router.get('/point/:id', routeMap.point.get);
 router.use('/msg', routeMap.message);
 router.get('/msg/:id', routeMap.message.get);
 
+
+//管理平台操作
+router.use('/sys', routeMap.sysmain);
+router.get('/sys', routeMap.sysmain.home);
+
 module.exports = router;
