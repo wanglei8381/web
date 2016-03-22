@@ -2,31 +2,41 @@
 body{font-family: 'Microsoft YaHei';padding-top: 132px;}
 
 .bgColor{background-color: #34495E;}
+.bgColor1{background-color: #F2F1EF;}
+.bgColor2{background-color: #FFFFFF;}
 .textColor{color:#34495E;}
 .textColor1{color:#000000;}
 .textColor2{color:#ffffff;}
+.textColor3{color:#D73300;}
 
 .fontSize{font-size: 24px;}
-.fontSize1{font-size: 15px;}
+.fontSize1{font-size: 16px;}
 .fontSize2{font-size: 18px;}
 
 .paddALL{padding: 10px 30px;}
+.paddAll1{padding: 10px 10px;}
 .paddAll2{padding: 20px 15px;}
-.paddTB{padding: 20px 0 0 0 ;}
-.paddTB1{padding: 0 0 20px 0;}
+.paddAll3{padding: 30px 30px 70px 30px;}
+.paddAll4{padding: 30px 30px 40px 30px;}
 .paddTop{padding-top: 15px;}
 .paddTop1{padding-top: 20px;}
+.paddTop2{padding-top: 5px;}
 .paddLeft{padding-left: 10px;}
 .paddRight{padding-right: 50px;}
 .paddBottom{padding-bottom: 20px;}
 .paddBottom1{padding-bottom: 10px;}
 .marginLR{margin:0 25px;}
+.marginLR1{margin:0 10px;}
 .marginTop{margin-top:20px;}
 .marginTop1{margin-top:10px;}
+.marginLeft{margin-left:20px;}
+.marginLeft1{margin-left:10px;}
 .marginBottom{margin-bottom:100px;}
 
 .borderStyle{border-bottom: 1px solid #9c9c9c;}
 .borderStyle1{border: 1px solid #9c9c9c;}
+.borderStyle2{border-bottom: 1px dashed #9c9c9c;}
+.boxShadow{ border: 1px solid #DFF0DF;-moz-box-shadow:0 0 10px rgba(52,73,94,125); -webkit-box-shadow:0 0 10px rgba(52,73,94,125);  box-shadow:  0 0 10px rgba(52,73,94,125);}
 
 .btnM {display: inline-block;padding: 6px 12px;margin-bottom: 0;font-size: 14px;font-weight: normal;line-height: 1.42857143;text-align: center;white-space: nowrap;vertical-align: middle;-ms-touch-action: manipulation;touch-action: manipulation;cursor: pointer;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;background-image: none;border: 1px solid transparent;border-radius: 4px;}
 .btnM.focus {color: #fff;text-decoration: none;}
@@ -45,6 +55,15 @@ body{font-family: 'Microsoft YaHei';padding-top: 132px;}
 .paginationM > li:first-child > a{margin-left: 0;border-top-left-radius: 4px;border-bottom-left-radius: 4px;}
 .paginationM > li:last-child > a{border-top-right-radius: 4px;border-bottom-right-radius: 4px;}
 .paginationM > li > a:hover,.paginationM > li > a:focus{z-index: 3;color: #34495E;background-color: #eee;border-color: #ddd;}
+.pagerM {padding-left: 0;margin: 20px 0;text-align: center;list-style: none;}
+.pagerM li {display: inline;}
+.pagerM li > a{color:#434343;display: inline-block;padding: 5px 14px;background-color: #fff;border: 1px solid #ddd;border-radius: 4px;}
+.pagerM li > a:hover,
+.pagerM li > a:focus {text-decoration: none;color: #34495E;background-color: #eee;}
+.pagerM .next > a{float: right;}
+.pagerM .previous > a{float: left;}
+.nav > li.active > a,.nav > li.active > a:hover,.nav > li.active > a:focus {color: #34495E;background-color: #eee;}
+.nav > li > a {color: #434343;}
 
 /*Header&Footer*/
 .headTitle a{color: #ffffff;}
