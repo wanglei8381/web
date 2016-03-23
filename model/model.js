@@ -125,7 +125,6 @@ var NoteSchema = new Schema({
     status: {type: Number, default: 2},//0未通过，1通过，2审批中
     rejectReason: {type: String},
     userId: {type: String},
-    collegeIds: {type: Array},
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });

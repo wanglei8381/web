@@ -1,5 +1,6 @@
 exports.home = require('./home');
-exports.user = require('./user');
-exports.message = require('./message');
-exports.point = require('./point');
-exports.sysmain = require('./sys/main');
+exports.news = require('./news');
+exports.job = require('./job');
+exports.note = require('./note');
+exports.resource = require('./resource');
+exports.login = require('./login');

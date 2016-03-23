@@ -3,30 +3,35 @@ var routeMap = require('./controller');
 var router = express.Router();
 
 router.use(function (req, res, next) {
-  console.log('请求：', req.originalUrl);
-  next();
+    console.log('请求：', req.originalUrl);
+    next();
 });
+
+//登录
+router.get('/login', routeMap.login.login);
 
 //首页
 router.get('/', routeMap.home.index);
-router.get('/mall/classify', routeMap.home.mallClassify);
-router.get('/discovery/list', routeMap.home.discoveryList);
 
-//用户操作
-router.use('/user', routeMap.user);
-router.get('/user/:id', routeMap.user.get);
+//新闻页面
+router.get('/news', routeMap.news.newsList);
+//新闻详情
+router.get('/news/:id', routeMap.news.newsDetail);
 
-//积分操作
-router.use('/point', routeMap.point);
-router.get('/point/:id', routeMap.point.get);
+//通知页面
+router.get('/notification', routeMap.news.notificationList);
+//通知详情
+router.get('/notification/:id', routeMap.news.notificationDetail);
 
-//消息操作
-router.use('/msg', routeMap.message);
-router.get('/msg/:id', routeMap.message.get);
+//假条审批(我的假条/请假申请/假条审批)
+router.get('/mynote', routeMap.note.mynoteList);
+router.get('/noteAdd', routeMap.note.noteAdd);
+router.get('/note', routeMap.note.noteList);
 
+//企业招聘
+router.get('/job', routeMap.job.jobList);
 
-//管理平台操作
-router.use('/sys', routeMap.sysmain);
-router.get('/sys', routeMap.sysmain.home);
+//资源共享
+router.get('/resource', routeMap.resource.resourceList);
 
 module.exports = router;
