@@ -22,33 +22,43 @@
                     </ul>
                 </div>
             </div>
-            <!--请假申请-->
+            <!--假条审批-->
             <div class="textColor paddTop col-md-9">
                 <div class="paddBottom">
-                    <span class="h4 textColor">请假申请</span>
+                    <span class="h4 textColor">假条审批</span>
                 </div>
                 <div class="paddAll4 borderStyle1 bgColor2">
                     <form role="form form-horizontal">
                         <div class="form-group row">
                             <label class="col-md-2 control-label">姓名</label>
                             <div class="col-md-2">
-                                呵呵呵
+                                <input type="text" class="form-control" id="inputEmail3" placeholder="陈俊汝" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假时间</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                            <div class="col-md-8">
+                                <input type="text" class="form-control" id="inputEmail3" placeholder="" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假事由</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" disabled>就是不想上课</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">驳回理由</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" rows="3">点击驳回按钮时显示</textarea>
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-default col-sm-2 col-sm-offset-5 col-xs-12" type="button">提交</button>
+                    <div class="btn-group col-sm-4 col-sm-offset-4">
+                        <button class="btn btn-default marginLR1" type="button">通过</button>
+                        <button class="btn btn-default marginLR1" type="button">驳回</button>
+                        <button class="btn btn-default " type="button">返回</button>
+                    </div>
                 </div>
             </div>
         </div>

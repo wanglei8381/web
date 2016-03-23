@@ -20,3 +20,11 @@ note.noteAdd = function (req, res) {
 note.noteList = function (req, res) {
     res.render('note', {menus_index: 4,note_type: 1});
 };
+
+note.noteDetail = function(req, res) {
+    res.render('noteDetail', {menus_index: 4,note_type: 0});
+}
+
+note.noteApproval = function(req, res) {
+    res.render('noteApproval', {menus_index: 4,note_type: 1});
+}

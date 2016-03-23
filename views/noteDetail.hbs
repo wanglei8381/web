@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>XX系统--请假申请</title>
+    <title>XX系统--假条详情</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
@@ -16,8 +16,8 @@
                 <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li><a href="/mynote">我的假条</a></li>
-                        <li class="active"><a href="/noteAdd">请假申请</a></li>
+                        <li class="active"><a href="/mynote">我的假条</a></li>
+                        <li><a href="/noteAdd">请假申请</a></li>
                         <li><a href="/note">假条审批</a></li>
                     </ul>
                 </div>
@@ -25,30 +25,48 @@
             <!--请假申请-->
             <div class="textColor paddTop col-md-9">
                 <div class="paddBottom">
-                    <span class="h4 textColor">请假申请</span>
+                    <span class="h4 textColor">假条详情</span>
                 </div>
                 <div class="paddAll4 borderStyle1 bgColor2">
                     <form role="form form-horizontal">
                         <div class="form-group row">
                             <label class="col-md-2 control-label">姓名</label>
                             <div class="col-md-2">
-                                呵呵呵
+                                <input type="text" class="form-control" id="inputEmail3" placeholder="陈俊汝" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假时间</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                                <input type="text" class="form-control" id="inputEmail3" placeholder="" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假事由</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" disabled>就是不想上课</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">假条状态</label>
+                            <div class="col-md-10">
+                                <span class="label label-success">已通过</span>
+                                <span class="label label-danger">未通过</span>
+                                <span class="label bgColor">审核中</span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">请假事由</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" rows="3" disabled>就是不想上课</textarea>
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-default col-sm-2 col-sm-offset-5 col-xs-12" type="button">提交</button>
+                    <div class="btn-group col-sm-4 col-sm-offset-4">
+                        <button class="btn btn-default disabled marginLR1" type="button">删除</button>
+                        <button class="btn btn-default marginLR1 disabled" type="button">编辑</button>
+                        <button class="btn btn-default" type="button">返回</button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XX系统--企业招聘</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+{{>header}}
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">企业招聘</div>
+                <div class="textColor borderStyle1">
+                    <ul class="nav nav-stacked">
+                        <li {{#eq job_type 0}}class="active"{{/eq}}><a href="/myjob">我的职位</a></li>
+                        <li><a href="/jobAdd">职位发布</a></li>
+                        <li {{#eq job_type 1}}class="active"{{/eq}}><a href="/job">企业招聘</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paddTop col-md-9">
+                <div class="borderStyle paddBottom">
+                    <span class="h4 textColor">职位详情</span>
+                    {{#eq job_type 0}}
+                        <button type="button" class="btn marginLeft1 btn-default pull-right"><a href="/jobEdit">编辑</a></button>
+                    {{/eq}}
+
+                </div>
+                <div class="fontSize1 borderStyle2 ">
+                    <h4 class="textColor"><span>正益移动互联股份有限公司</span>&nbsp;&nbsp;<span class="textColor3">前端开发工程师</span></h4>
+                    <div class="paddTop2 paddBottom1">
+                        工作地点：<span>海淀</span>
+                        发布日期：<span>2016-03-21</span>
+                    </div>
+
+                </div>
+                <div class="paddTop fontSize1">
+                    <p>
+                        我是职位描述Proin malesuada ipsum ac convallis dignissim. Mauris quis tempus velit, ut gravida justo. In imperdiet odio malesuada tortor placerat pulvinar. Praesent dignissim tortor sit amet urna porta, ac efficitur odio efficitur. Maecenas posuere vestibulum rhoncus.Proin malesuada ipsum ac convallis dignissim. Mauris quis tempus velit, ut gravida justo. In imperdiet odio malesuada tortor placerat pulvinar.
+                    </p>
+                    <p>
+                        Praesent dignissim tortor sit amet urna porta, ac efficitur odio efficitur. Maecenas posuere vestibulum rhoncus.Proin malesuada ipsum ac convallis dignissim. Mauris quis tempus velit, ut gravida justo. In imperdiet odio malesuada tortor placerat pulvinar. Praesent dignissim tortor sit amet urna porta, ac efficitur odio efficitur. Maecenas posuere vestibulum rhoncus.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

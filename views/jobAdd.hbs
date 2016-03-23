@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>XX系统--请假申请</title>
+    <title>XX系统--职位上传</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
@@ -13,42 +13,47 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">企业招聘</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li><a href="/mynote">我的假条</a></li>
-                        <li class="active"><a href="/noteAdd">请假申请</a></li>
-                        <li><a href="/note">假条审批</a></li>
+                        <li><a href="/myjob">我的职位</a></li>
+                        <li class="active"><a href="/jobAdd">职位发布</a></li>
+                        <li><a href="/job">企业招聘</a></li>
                     </ul>
                 </div>
             </div>
-            <!--请假申请-->
             <div class="textColor paddTop col-md-9">
                 <div class="paddBottom">
-                    <span class="h4 textColor">请假申请</span>
+                    <span class="h4 textColor">职位发布</span>
                 </div>
                 <div class="paddAll4 borderStyle1 bgColor2">
                     <form role="form form-horizontal">
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">姓名</label>
-                            <div class="col-md-2">
-                                呵呵呵
+                            <label class="col-md-2 control-label">公司名称</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="" placeholder="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">请假时间</label>
-                            <div class="col-md-7">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="">
+                            <label class="col-md-2 control-label">工作地点</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="" placeholder="">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">请假事由</label>
+                            <label class="col-md-2 control-label">职位名称</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">职位介绍</label>
                             <div class="col-md-10">
                                 <textarea class="form-control" rows="3"></textarea>
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-default col-sm-2 col-sm-offset-5 col-xs-12" type="button">提交</button>
+                    <button class="btn btn-default col-sm-2 col-sm-offset-5 col-xs-12" type="button">发布</button>
                 </div>
             </div>
         </div>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XX系统--职位上传</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+{{>header}}
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">企业招聘</div>
+                <div class="textColor borderStyle1">
+                    <ul class="nav nav-stacked">
+                        <li class="active"><a href="/myjob">我的职位</a></li>
+                        <li><a href="/jobAdd">职位发布</a></li>
+                        <li><a href="/job">企业招聘</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="textColor paddTop col-md-9 ">
+                <div class="paddBottom">
+                    <span class="h4 textColor">职位编辑</span>
+                </div>
+                <div class="paddAll4 borderStyle1 bgColor2">
+                    <form role="form form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">公司名称</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="" placeholder="" value="公司名称">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">工作地点</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="" placeholder="" value="工作地点">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">职位名称</label>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="" placeholder="" value="职位名称">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">职位介绍</label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" rows="3">职位介绍</textarea>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="btn-group col-sm-4 col-sm-offset-4">
+                        <button class="btn btn-default marginLR1" type="button">删除</button>
+                        <button class="btn btn-default marginLR1" type="button">保存</button>
+                        <button class="btn btn-default" type="button">返回</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>

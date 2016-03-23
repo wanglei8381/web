@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>XX系统--资源编辑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+{{>header}}
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
+                <div class="textColor borderStyle1">
+                    <ul class="nav nav-stacked">
+                        <li class="active"><a href="/myresource">我的资源</a></li>
+                        <li><a href="/resourceAdd">资源上传</a></li>
+                        <li><a href="/resource">资源共享</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paddTop col-md-9">
+                <div class="borderStyle paddBottom">
+                    <span class="h4 textColor">资源编辑</span>
+                </div>
+                <div class="paddAll4 borderStyle1 bgColor2">
+                    <form role="form form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">资源名称</label>
+                            <div class="col-md-2">
+                                <input type="text" class="form-control" id="" placeholder="资源名称">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">资源描述</label>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" id="" placeholder="资源描述">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">资源上传</label>
+                            <div class="col-md-10">
+                                <input type="text" class="form-control" id="" placeholder="资源文件">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="btn-group col-sm-4 col-sm-offset-4">
+                        <button class="btn btn-default marginLR1" type="button">删除</button>
+                        <button class="btn btn-default marginLR1" type="button">保存</button>
+                        <button class="btn btn-default" type="button">返回</button>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+{{>footer}}
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
