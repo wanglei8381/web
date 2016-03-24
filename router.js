@@ -1,11 +1,19 @@
 var express = require('express');
+var sys_routers = require('./sys_routers');
 var routeMap = require('./controller');
+var response = require('./middlewares/response');
 var router = express.Router();
 
 router.use(function (req, res, next) {
     console.log('请求：', req.originalUrl);
     next();
 });
+
+//添加中间件
+router.use(response);
+
+//后台接口
+router.use('/sys', sys_routers);
 
 //登录
 router.get('/login', routeMap.login.login);

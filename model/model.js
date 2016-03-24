@@ -40,7 +40,7 @@ var UserSchema = new Schema({
     isSupervisor: {type: Number, default: 0}//辅导员标识,0不是，1是
 });
 
-TeacherSchema.index({stid: 1}, {unique: true});
+UserSchema.index({stid: 1}, {unique: true});
 mongoose.model('User', UserSchema);
 
 //班级表

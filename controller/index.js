@@ -1,3 +1,4 @@
+exports.sys = require('./sys');
 exports.home = require('./home');
 exports.news = require('./news');
 exports.job = require('./job');

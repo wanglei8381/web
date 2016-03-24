@@ -15,9 +15,9 @@
   <link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="/css/dashboard.css" rel="stylesheet">
-  <link href="/css/common.css" rel="stylesheet">
-  <link href="/css/bootbox.css" rel="stylesheet">
+  <link href="/sys/dashboard.css" rel="stylesheet">
+  <link href="/sys/common.css" rel="stylesheet">
+  <link href="/sys/bootbox.css" rel="stylesheet">
 </head>
 
 <body>
@@ -36,8 +36,8 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">当前用户: 【{{user.name}}】</a></li>
-        <li><a href="javascript:CMS.repwd();">【修改密码】</a></li>
+        <li><a href="#">当前用户: 【{{sys_user.loginname}}】</a></li>
+        <!--<li><a href="javascript:CMS.repwd();">【修改密码】</a></li>-->
         <li><a href="/sys/logout">退出</a></li>
       </ul>
     </div>
@@ -49,19 +49,12 @@
   <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="#">系统管理 <span class="sr-only">(current)</span></a></li>
-        <li><a href="/sys/user/list">用户列表</a></li>
-        {{#eq 1 1}}
-          <li><a href="#">menu1</a></li>
-        {{/eq}}
-        {{#gt 2 1}}
-          <li><a href="#">menu2</a></li>
-        {{/gt}}
-        {{#lt 2 1}}
-          <li><a href="#">menu3</a></li>
-          {{else}}
-          <li><a href="#">menu4</a></li>
-        {{/lt}}
+        <li id="student_id"><a href="/sys/student">学生管理</a></li>
+        <li id="teacher_id"><a href="/sys/teacher">教师管理</a></li>
+        <li id="news_id"><a href="/sys/news">新闻管理</a></li>
+        <li id="notify_id"><a href="/sys/notify">通知管理</a></li>
+        <li id="job_id"><a href="/sys/job">招聘管理</a></li>
+        <li id="res_id"><a href="/sys/res">资源管理</a></li>
       </ul>
     </div>
 
@@ -76,8 +69,20 @@
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script src="/js/bootbox.js"></script>
-<script src="/js/common.js"></script>
+<script src="/sys/bootbox.js"></script>
+<script src="/sys/common.js"></script>
+<script>
+  $(function () {
+    var path_module = location.pathname.substr(5);
+    if (path_module) {
+      var index = path_module.indexOf('/');
+      if(index > -1){
+        path_module = path_module.substring(0, index);
+      }
+      $('#' + path_module + '_id').addClass('active');
+    }
+  });
+</script>
 {{{block "scripts"}}}
 </body>
 </html>
