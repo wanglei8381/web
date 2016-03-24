@@ -10,16 +10,16 @@ router.use(main.isValidLogin);
 //添加模板中间件
 router.use(main.out);
 
+//首页
 router.get('/', function (req, res) {
     res.out('system/index');
 });
 
+//登录
 router.get('/login', function (req, res) {
     res.render('system/login', {layout: null});
 });
-
 router.post('/login', main.login);
-
 router.get('/logout', main.logout);
 
 //学生管理
@@ -34,14 +34,24 @@ router.get('/teacher', function (req, res) {
 });
 router.post('/teacher', news.page);
 
+
+
 //新闻管理
 router.get('/news', function (req, res) {
     res.out('system/news');
 });
 router.post('/news', news.page);
+//新闻添加
 router.get('/news/add', function (req, res) {
     res.out('system/news_add');
 });
+router.post('/news/add', news.add);
+//新闻详情
+router.get('/news/detail/:id', function (req, res) {
+    res.out('system/news_detail');
+});
+router.post('/news/detail/:id', news.detail);
+
 
 //通知管理
 router.get('/notify', function (req, res) {

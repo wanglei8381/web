@@ -21,3 +21,15 @@ news.page = function (req, res, next) {
     ];
     res.ok({list: list, count: 100, total: 10});
 };
+
+news.add = function (req, res, next) {
+    console.log(req.body);
+    res.ok();
+};
+
+news.detail = function (req, res, next) {
+    var data = [
+        {title:'今日头条1',imgUrl:'/wwww.sss.com/sss2333',status:'1',createdAt:'2015-01-14 10:30:40'},
+    ];
+    res.ok({data: data});
+};
