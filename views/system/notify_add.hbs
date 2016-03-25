@@ -4,32 +4,22 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-md-7">
-                <h4>新闻添加</h4>
+                <h4>通知添加</h4>
             </div>
         </div>
     </div>
     <div class="panel-body">
         <form class="form-horizontal">
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻标题</lable>
+                <lable class="col-sm-2 control-label">通知标题</lable>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="title" placeholder="请输入新闻标题"/>
+                    <input type="text" class="form-control" name="title" placeholder="请输入通知标题"/>
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻描述</lable>
+                <lable class="col-sm-2 control-label">通知描述</lable>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="description" placeholder="请输入新闻描述"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻图片</lable>
-                <div class="col-sm-6 row">
-                        <div class="col-sm-9">
-                            <input class="form-control" placeholder="请选择新闻图片" type="text" id="title"/>
-                        </div>
-                        <button type="button" class="btn btn-default col-sm-3" onclick="search();"><i class="fa fa-search"></i> 上传
-                        </button>
+                    <input type="text" class="form-control" name="description" placeholder="请输入通知描述"/>
                 </div>
             </div>
             <div class="form-group">
@@ -63,7 +53,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻内容</lable>
+                <lable class="col-sm-2 control-label">通知内容</lable>
                 <div class="col-sm-8">
                     <script type="text/plain" id="editor" style="width:100%;height:360px;"></script>
                 </div>
@@ -72,7 +62,7 @@
                 <div class="col-sm-6 col-sm-offset-3">
                     <button class="btn btn-default col-sm-3" id="save">保存</button>
                     <button class="btn btn-default col-sm-3 col-sm-offset-1" id="submit">发布</button>
-                    <button class="btn btn-default col-sm-3 col-sm-offset-1"><a href="/sys/news">取消</a></button>
+                    <button class="btn btn-default col-sm-3 col-sm-offset-1"><a href="/sys/notify">取消</a></button>
                 </div>
             </div>
         </form>
@@ -99,9 +89,9 @@
         $(function () {
         });
 
-        var newsAdd = function(){
+        var notifyAdd = function(){
             my.ajax({
-                url : '/sys/news/add',
+                url : '/sys/notify/add',
                 data : $("form").serialize(),
                 success : function(data) {
                     window.location = '/sys/news';
@@ -110,7 +100,7 @@
         };
 
         $('#submit').click(function(){
-            newsAdd();
+            notifyAdd();
         });
     </script>
 

@@ -1,0 +1,102 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-4">
+                <h4>通知列表</h4>
+            </div>
+            <div class="col-xs-4">
+                <input class="form-control" placeholder="标题" type="text" id="title"/>
+            </div>
+            <div class="col-xs-2">
+                <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
+                </button>
+            </div>
+            <div class="col-xs-2 pull-left">
+                <a class="btn btn-default purple" href="/sys/notify/add"><i class="fa fa-plus"></i> 添加</a>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table id="datatable" class="table table-bordered table-responsive "
+                   style="margin-bottom: 0px !important;border-bottom: none!important">
+            </table>
+        </div>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+    <script>
+        $(function () {
+            search();
+        });
+
+        function search() {
+            var data = {
+                title: $.trim($('#title').val())
+            };
+            new DataTable({
+                id: '#datatable',
+                paging: true,
+                pageSize: 10,
+                ajax: {
+                    url: '/sys/notify',
+                    data: data
+                },
+                columns: [{
+                    "data": "title",
+                    "title": "名称"
+                }, {
+                    "data": "imgUrl",
+                    "title": "图片地址"
+                }, {
+                    "data": "type",
+                    "title": "类型"
+                }, {
+                    "data": "status",
+                    "title": "状态"
+                }, {
+                    "data": "createdAt",
+                    "title": "创建时间"
+                }, {
+                    "data": null,
+                    "title": "操作"
+                }],
+                columnDefs: [
+                    {
+                        targets: 3,
+                        render: function (i, j, item) {
+                            var st = ['未发布','已发布','关闭'];
+                            return st[item.status];
+                        }
+                    }, {
+                        targets: 5,
+                        render: function (i, j, item) {
+                            return '<a href="/sys/notify/detail/' + item.id + '">详情</a>&nbsp;&nbsp;&nbsp;<a href="/sys/notify/edit/' + item.id + '">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item.id + '\');">删除</a>';
+                        }
+                    }
+                ]
+            });
+        }
+
+        function del(id) {
+            bootbox.confirm("您确定要删除吗？", function (result) {
+                if (result) {
+                    my.ajax({
+                        url: '/sys/notify/del/' + id,
+                        type: "get",
+                        success: function () {
+                            $.success('操作成功', null, null, function () {
+                                window.location.reload();
+                            });
+                        },
+                        error: function () {
+                            $.danger('网络异常，请联系管理员！');
+                        }
+                    });
+                }
+            });
+
+        }
+    </script>
+{{/extend}}

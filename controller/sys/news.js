@@ -34,7 +34,7 @@ news.edit = function (req, res, next) {
 };
 
 news.editdetail = function (req, res, next) {
-    console.log(req.id)
+    console.log(req.params.id)//当前新闻ID
     var news_detail = {
         id: '1',
         title: '今日头条1',
@@ -49,6 +49,7 @@ news.editdetail = function (req, res, next) {
 };
 
 news.detail = function (req, res, next) {
+    console.log(req.params.id)//当前新闻ID
     var news_detail = {
         id: '1',
         title: '今日头条1',
@@ -59,5 +60,5 @@ news.detail = function (req, res, next) {
         status: '1',
         createdAt: '2015-01-14 10:30:40'
     };
-    res.out('system/news_add', news_detail);
+    res.out('system/news_detail', news_detail);
 };

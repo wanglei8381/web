@@ -1,6 +1,7 @@
 var express = require('express');
 var main = require('./controller').sys.main;
 var news = require('./controller').sys.news;
+var notify = require('./controller').sys.notify;
 
 var router = express.Router();
 
@@ -34,9 +35,7 @@ router.get('/teacher', function (req, res) {
 });
 router.post('/teacher', news.page);
 
-
-
-//新闻管理
+//新闻管理(列表)
 router.get('/news', function (req, res) {
     res.out('system/news');
 });
@@ -53,11 +52,18 @@ router.post('/news/edit/:id', news.edit);
 router.get('/news/detail/:id', news.detail);
 
 
-//通知管理
+//通知管理(列表)
 router.get('/notify', function (req, res) {
     res.out('system/notify');
 });
-router.post('/notify', news.page);
+router.post('/notify', notify.page);
+//通知添加
+router.get('/notify/add', function (req, res) {
+    res.out('system/notify_add');
+});
+router.post('/notify/add', notify.add);
+//通知详情
+router.get('/notify/detail/:id', notify.detail);
 
 //招聘管理
 router.get('/job', function (req, res) {
