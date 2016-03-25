@@ -1,0 +1,98 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7">
+                <h4>新闻详情</h4>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">新闻标题</lable>
+                <div class="col-sm-10 u-word">
+                    {{title}}
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">新闻描述</lable>
+                <div class="col-sm-10 u-word">
+                    {{description}}
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">新闻图片</lable>
+                <div class="col-sm-10 u-word">
+                    {{imgUrl}}
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">发布范围</lable>
+                <div class="col-sm-6">
+                    <lable class="radio-inline">
+                        <input type="radio" value="1" name="who" id="all" disabled/>
+                        全校
+                    </lable>
+                    <lable class="radio-inline">
+                        <input type="radio" value="2" name="who" id="some" disabled/>
+                        院系
+                    </lable>
+                </div>
+            </div>
+            <div class="form-group hidden" id="collegeIds">
+                <lable class="col-sm-2 control-label"></lable>
+                <div class="col-sm-6">
+                    <lable class="checkbox-inline">
+                        <input type="checkbox" value="1" checked disabled/>
+                        计算机系
+                    </lable>
+                    <lable class="checkbox-inline">
+                        <input type="checkbox" value="2" disabled/>
+                        金融院系
+                    </lable>
+                    <lable class="checkbox-inline">
+                        <input type="checkbox" value="2" disabled/>
+                        等等等
+                    </lable>
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">新闻状态</lable>
+                <div class="col-sm-10 u-word" id="news_status">
+
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">新闻内容</lable>
+                <div class="col-sm-9 u-word u-border">
+                    {{content}}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <button class="btn btn-default col-sm-4 col-sm-offset-2"><a href="/sys/news">返回</a></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+    <!-- 实例化编辑器 -->
+    <script type="text/javascript">
+        $(function () {
+            var st = ['未发布','已发布','关闭'];
+            $('#news_status').html(st[{{status}}]);
+            var collegeIdsLen = {{collegeIds.length}};
+            if(collegeIdsLen>0){
+                //alert({{collegeIds.[0]}})
+                $('#some').attr('checked','true');
+                $('#collegeIds').removeClass('hidden');
+            }else{
+                $('#all').attr('checked','true');
+                $('#collegeIds').addClass('hidden');
+            }
+        });
+    </script>
+
+{{/extend}}

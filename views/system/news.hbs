@@ -1,17 +1,17 @@
 <div class="panel panel-default">
     <div class="panel-heading">
         <div class="row">
-            <div class="col-md-7">
+            <div class="col-xs-4">
                 <h4>新闻列表</h4>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-4">
                 <input class="form-control" placeholder="标题" type="text" id="title"/>
             </div>
-            <div class="col-xs-1">
+            <div class="col-xs-2">
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
                 </button>
             </div>
-            <div class="col-xs-2">
+            <div class="col-xs-2 pull-left">
                 <a class="btn btn-default purple" href="/sys/news/add"><i class="fa fa-plus"></i> 添加</a>
             </div>
         </div>
@@ -69,7 +69,7 @@
                     }, {
                         targets: 4,
                         render: function (i, j, item) {
-                            return '<a href="/sys/news/detail' + item.id + '">详情</a>&nbsp;&nbsp;&nbsp;<a href="/sys/photo/' + item.id + '">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item.id + '\');">删除</a>';
+                            return '<a href="/sys/news/detail/' + item.id + '">详情</a>&nbsp;&nbsp;&nbsp;<a href="/sys/news/edit/' + item.id + '">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item.id + '\');">删除</a>';
                         }
                     }
                 ]

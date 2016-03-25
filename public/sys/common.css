@@ -151,3 +151,10 @@
 .u-word {
   padding-top: 7px;
 }
+
+.u-border{
+  min-height: 150px;
+  border: 1px solid #eff2f7;
+  border-radius: 4px;
+}
+

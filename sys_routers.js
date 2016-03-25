@@ -5,7 +5,7 @@ var news = require('./controller').sys.news;
 var router = express.Router();
 
 //验证用户是否登录
-router.use(main.isValidLogin);
+//router.use(main.isValidLogin);
 
 //添加模板中间件
 router.use(main.out);
@@ -46,11 +46,11 @@ router.get('/news/add', function (req, res) {
     res.out('system/news_add');
 });
 router.post('/news/add', news.add);
+//新闻编辑
+router.get('/news/edit/:id',news.editdetail);
+router.post('/news/edit/:id', news.edit);
 //新闻详情
-router.get('/news/detail/:id', function (req, res) {
-    res.out('system/news_detail');
-});
-router.post('/news/detail/:id', news.detail);
+router.get('/news/detail/:id', news.detail);
 
 
 //通知管理
