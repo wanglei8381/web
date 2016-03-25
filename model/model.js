@@ -65,6 +65,7 @@ var NewsSchema = new Schema({
     imgUrl: {type: String},
     description: {type: String},
     content: {type: String},
+    scope: {type: Number, default: 1},//1公开2限定学院
     collegeIds: {type: Array},
     status: {type: Number, default: 0},//0未发布1已发布、2关闭
     createdAt: {type: Date, default: Date.now},

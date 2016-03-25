@@ -48,7 +48,7 @@ router.get('/news/add', function (req, res) {
 router.post('/news/add', news.add);
 //新闻编辑
 router.get('/news/edit/:id',news.editdetail);
-router.post('/news/edit/:id', news.edit);
+router.post('/news/edit', news.edit);
 //新闻详情
 router.get('/news/detail/:id', news.detail);
 
