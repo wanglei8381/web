@@ -64,15 +64,41 @@
                         targets: 2,
                         render: function (i, j, item) {
                             var st = ['未发布','已发布','关闭'];
-                            return st[item.status];
+                            return st[item.status]
+                        }
+                    },{
+                        targets:3,
+                        render: function (i, j, item) {
+                            return my.toDateString(item.createdAt);
                         }
                     }, {
                         targets: 4,
                         render: function (i, j, item) {
-                            return '<a href="/sys/news/detail/' + item.id + '">详情</a>&nbsp;&nbsp;&nbsp;<a href="/sys/news/edit/' + item.id + '">编辑</a>&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item.id + '\');">删除</a>';
+                            var str = '<a href="/sys/news/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/news/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
+                            if(item.status == 0){
+                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',1);">发布</a>';
+                            }else if(item.status == 1){
+                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',2);">关闭</a>';
+                            }
+                            return str;
                         }
                     }
                 ]
+            });
+        }
+
+        function changeStatus(id,type){
+            my.ajax({
+                url: '/sys/news/changeStatus/' + id,
+                data: {id:id,status:type},
+                success: function () {
+                    $.success('操作成功', null, null, function () {
+                        window.location.reload();
+                    });
+                },
+                error: function () {
+                    $.danger('网络异常，请联系管理员！');
+                }
             });
         }
 
@@ -80,8 +106,8 @@
             bootbox.confirm("您确定要删除吗？", function (result) {
                 if (result) {
                     my.ajax({
-                        url: '/sys/photo/del/' + id,
-                        type: "get",
+                        url: '/sys/news/del/' + id,
+                        data: {id:id},
                         success: function () {
                             $.success('操作成功', null, null, function () {
                                 window.location.reload();
@@ -93,7 +119,6 @@
                     });
                 }
             });
-
         }
     </script>
 {{/extend}}

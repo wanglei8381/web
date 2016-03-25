@@ -5,7 +5,7 @@ var response = require('./middlewares/response');
 var router = express.Router();
 
 router.use(function (req, res, next) {
-    console.log('请求：', req.originalUrl);
+    console.log('请求：', req.originalUrl, req.method);
     next();
 });
 

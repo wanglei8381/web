@@ -47,7 +47,11 @@ router.get('/news/add', function (req, res) {
 router.post('/news/add', news.add);
 //新闻编辑
 router.get('/news/edit/:id',news.editdetail);
-router.post('/news/edit/:id', news.edit);
+router.post('/news/edit', news.edit);
+//新闻状态更改
+router.post('/news/changeStatus/:id', news.changeStatus);
+//新闻删除
+router.post('/news/del/:id', news.delete);
 //新闻详情
 router.get('/news/detail/:id', news.detail);
 

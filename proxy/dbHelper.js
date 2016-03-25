@@ -30,7 +30,7 @@ exports.find = function (tableName, query, keys, opt, callback) {
 
 //ID查找
 exports.findOne = function (tableName, id, callback) {
-    model[tableName].findOne({'_id': _id}, callback);
+    model[tableName].findOne({'_id': id}, callback);
 };
 
 
