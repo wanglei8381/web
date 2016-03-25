@@ -78,9 +78,9 @@ mongoose.model('News', NewsSchema);
 var NotificationSchema = new Schema({
     userId: {type: String},
     title: {type: String},
-    imgUrl: {type: String},
     description: {type: String},
     content: {type: String},
+    scope: {type: Number, default: 0},//0公开1限定学院
     collegeIds: {type: Array},
     status: {type: Number, default: 0},//0未发布1已发布、2关闭
     type: {type: Number, default: 0},//通知类型

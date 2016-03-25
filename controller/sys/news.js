@@ -88,7 +88,6 @@ news.editdetail = function (req, res, next) {
 
 news.detail = function (req, res, next) {
     var id = req.params.id;
-
     dbHelper.findOne('NewsModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');

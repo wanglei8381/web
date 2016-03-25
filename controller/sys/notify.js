@@ -1,30 +1,44 @@
 var validator = require('validator');
 var crypto = require('crypto');//加密
-
+var dbHelper = require('../../proxy/dbHelper');
 
 var notify = module.exports = function (req, res, next) {
     console.log('----->notify');
 };
 
 notify.page = function (req, res, next) {
-    var list = [
-        {id: '1', title: '今日通知1', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '2', title: '今日通知2', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '3', title: '今日通知3', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '4', title: '今日通知4', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '5', title: '今日通知5', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '6', title: '今日通知6', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '7', title: '今日通知7', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '8', title: '今日通知8', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '9', title: '今日通知9', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-        {id: '10', title: '今日通知10', imgUrl: '/wwww.sss.com/sss2333', type: '1', status: '1', createdAt: '2015-01-14 10:30:40'},
-    ];
-    res.ok({list: list, count: 100, total: 10});
+    //查询条件
+    var where = {};
+    //查询的字段
+    var query = {};
+    //分页排序
+    var opt = {
+        pageNo: req.body.pageNo,
+        pageSize: req.body.pageSize,
+        sort: '-createdAt'
+    };
+
+    if (req.body.title) {
+        where.title = {'$regex': req.body.title};
+    }
+
+    dbHelper.page('NotificationModel', where, query, opt, function (err, ret) {
+        if (err) {
+            return res.fail('查询出错');
+        }
+        res.ok(ret);
+    });
 };
 
 notify.add = function (req, res, next) {
     console.log(req.body);
-    res.ok();
+    dbHelper.add('NotificationModel', req.body, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('保存出错');
+        }
+        res.ok();
+    });
 };
 
 notify.detail = function (req, res, next) {
