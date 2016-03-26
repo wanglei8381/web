@@ -97,6 +97,7 @@ var JobSchema = new Schema({
     jobName: {type: String},
     jobDescription: {type: String},
     userId: {type: String},
+    scope: {type: Number, default: 0},//0公开1限定学院
     collegeIds: {type: Array},
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
@@ -110,6 +111,7 @@ var ResourceSchema = new Schema({
     description: {type: String},
     url: {type: String},
     userId: {type: String},
+    scope: {type: Number, default: 0},//0公开1限定学院
     collegeIds: {type: Array},
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}

@@ -2,6 +2,8 @@ var express = require('express');
 var main = require('./controller').sys.main;
 var news = require('./controller').sys.news;
 var notify = require('./controller').sys.notify;
+var job = require('./controller').sys.job;
+var res = require('./controller').sys.res;
 
 var router = express.Router();
 
@@ -55,7 +57,6 @@ router.post('/news/del/:id', news.delete);
 //新闻详情
 router.get('/news/detail/:id', news.detail);
 
-
 //通知管理(列表)
 router.get('/notify', function (req, res) {
     res.out('system/notify');
@@ -66,19 +67,51 @@ router.get('/notify/add', function (req, res) {
     res.out('system/notify_add');
 });
 router.post('/notify/add', notify.add);
+//通知编辑
+router.get('/notify/edit/:id',notify.editdetail);
+router.post('/notify/edit', notify.edit);
 //通知详情
 router.get('/notify/detail/:id', notify.detail);
+//通知状态更改
+router.post('/notify/changeStatus/:id', notify.changeStatus);
+//通知删除
+router.post('/notify/del/:id', notify.delete);
 
-//招聘管理
+//招聘管理(列表)
 router.get('/job', function (req, res) {
     res.out('system/job');
 });
-router.post('/job', news.page);
+router.post('/job', job.page);
+//职位添加
+router.get('/job/add', function (req, res) {
+    res.out('system/job_add');
+});
+router.post('/job/add', job.add);
+//职位编辑
+router.get('/job/edit/:id',job.editdetail);
+router.post('/job/edit', job.edit);
+//职位详情
+router.get('/job/detail/:id', job.detail);
+//职位删除
+router.post('/job/del/:id', job.delete);
 
 //资源管理
+//资源管理(列表)
 router.get('/res', function (req, res) {
     res.out('system/res');
 });
-router.post('/res', news.page);
+router.post('/res', res.page);
+//资源上传
+router.get('/res/add', function (req, res) {
+    res.out('system/res_add');
+});
+router.post('/res/add', res.add);
+//资源编辑
+router.get('/res/edit/:id',res.editdetail);
+router.post('/res/edit', res.edit);
+//资源详情
+router.get('/res/detail/:id', res.detail);
+//资源删除
+router.post('/res/del/:id', res.delete);
 
 module.exports = router;

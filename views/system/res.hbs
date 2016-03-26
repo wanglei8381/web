@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-xs-4">
-                <h4>通知列表</h4>
+                <h4>资源列表</h4>
             </div>
             <div class="col-xs-4">
                 <input class="form-control" placeholder="标题" type="text" id="title"/>
@@ -12,7 +12,7 @@
                 </button>
             </div>
             <div class="col-xs-2 pull-left">
-                <a class="btn btn-default purple" href="/sys/notify/add"><i class="fa fa-plus"></i> 添加</a>
+                <a class="btn btn-default purple" href="/sys/res/add"><i class="fa fa-plus"></i> 上传</a>
             </div>
         </div>
     </div>
@@ -40,22 +40,25 @@
                 paging: true,
                 pageSize: 10,
                 ajax: {
-                    url: '/sys/notify',
+                    url: '/sys/res',
                     data: data
                 },
                 columns: [{
-                    "data": "title",
-                    "title": "名称"
-                },{
-                    "data": "type",
-                    "title": "类型"
+                    "data": "name",
+                    "title": "资源名称"
                 }, {
-                    "data": "status",
-                    "title": "状态"
+                    "data": "description",
+                    "title": "资源描述"
+                },{
+                    "data": "url",
+                    "title": "资源地址"
+                }, {
+                    "data": "userId",
+                    "title": "创建用户"
                 }, {
                     "data": "createdAt",
                     "title": "创建时间"
-                }, {
+                },{
                     "data": null,
                     "title": "操作"
                 }],
@@ -63,30 +66,19 @@
                     {
                         targets: 1,
                         render: function (i, j, item) {
-                            var st = ['活动通知','会议通知','其他通知'];
-                            return st[item.type];
-                        }
-                    },
-                    {
-                        targets: 2,
-                        render: function (i, j, item) {
-                            var st = ['未发布','已发布','关闭'];
-                            return st[item.status];
+                            var description = item.description;
+                            description = description.substr(0.,20);
+                            return description;
                         }
                     }, {
-                        targets: 3,
+                        targets: 4,
                         render: function (i, j, item) {
                             return my.toDateString(item.createdAt);
                         }
-                    },{
-                        targets: 4,
+                    }, {
+                        targets: 5,
                         render: function (i, j, item) {
-                            var str = '<a href="/sys/notify/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/notify/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
-                            if(item.status == 0){
-                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',1);">发布</a>';
-                            }else if(item.status == 1){
-                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',2);">关闭</a>';
-                            }
+                            var str = '<a href="/sys/res/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/res/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:down(\'' + item._id + '\');">下载</a>';
                             return str;
                         }
                     }
@@ -98,7 +90,7 @@
             bootbox.confirm("您确定要删除吗？", function (result) {
                 if (result) {
                     my.ajax({
-                        url: '/sys/notify/del/' + id,
+                        url: '/sys/res/del/' + id,
                         data: {id:id},
                         success: function () {
                             $.success('操作成功', null, null, function () {
@@ -113,19 +105,8 @@
             });
         }
 
-        function changeStatus(id,type){
-            my.ajax({
-                url: '/sys/notify/changeStatus/' + id,
-                data: {id:id,status:type},
-                success: function () {
-                    $.success('操作成功', null, null, function () {
-                        window.location.reload();
-                    });
-                },
-                error: function () {
-                    $.danger('网络异常，请联系管理员！');
-                }
-            });
+        function down(id) {
+            alert('down');
         }
     </script>
 {{/extend}}

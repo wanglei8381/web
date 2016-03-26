@@ -3,7 +3,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-md-7">
-                <h4>新闻添加</h4>
+                <h4>资源上传</h4>
             </div>
         </div>
     </div>
@@ -11,26 +11,18 @@
         <form class="form-horizontal">
             <input type="hidden" name="id" value="{{_id}}"/>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻标题</lable>
+                <lable class="col-sm-2 control-label">资源名称</lable>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="title" value="{{title}}" placeholder="请输入新闻标题"/>
+                    <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入资源名称"/>
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻描述</lable>
-                <div class="col-sm-6">
-                    <textarea type="text" class="form-control u-height" name="description"
-                           placeholder="请输入新闻描述">{{description}}</textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻图片</lable>
+                <lable class="col-sm-2 control-label">资源文件</lable>
                 <div class="col-sm-6 row">
                     <div class="col-sm-9">
-                        <input class="form-control" name="imgUrl" placeholder="请选择新闻图片" value="{{imgUrl}}" type="text"/>
+                        <input class="form-control" name="url" placeholder="请选择上传文件" value="{{url}}" type="text"/>
                     </div>
-                    <button type="button" class="btn btn-default col-sm-3" onclick="search();"><i
-                            class="fa fa-search"></i>
+                    <button type="button" class="btn btn-default col-sm-3">
                         上传
                     </button>
                 </div>
@@ -66,15 +58,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻内容</lable>
-                <div class="col-sm-8">
-                    <script type="text/plain" name="content" id="editor" style="width:100%;height:360px;"></script>
+                <lable class="col-sm-2 control-label">资源描述</lable>
+                <div class="col-sm-6">
+                    <textarea type="text" class="form-control u-height" name="description"
+                           placeholder="请输入资源描述">{{description}}</textarea>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-6 col-sm-offset-3">
                     <button class="btn btn-default col-sm-4" type="button" id="submit">保存</button>
-                    <a href="/sys/news" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                    <a href="/sys/res" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
                 </div>
             </div>
         </form>
@@ -83,45 +76,24 @@
 
 {{#extend "scripts"}}
 
-    <!-- 配置文件 -->
-    <script type="text/javascript" src="/umeditor/umeditor.config.js"></script>
-    <!-- 编辑器源码文件 -->
-    <script type="text/javascript" src="/umeditor/umeditor.min.js"></script>
-    <!-- 实例化编辑器 -->
     <script type="text/javascript">
-        var URL = '/ueditor/';
-        var serverPath = '/server/umeditor/';
-        var um = UM.getEditor('editor', {
-            imageUrl: 'http://7xobdo.com1.z0.glb.clouddn.com',
-            imagePath: serverPath,
-            lang: /^zh/.test(navigator.language || navigator.browserLanguage || navigator.userLanguage) ? 'zh-cn' : 'en',
-            langPath: UMEDITOR_CONFIG.UMEDITOR_HOME_URL + "lang/",
-            focus: true
-        });
-
-        //初始化数据
-        var content = '{{{content}}}' || '';
         var id = '{{_id}}';
-        um.ready(function () {
-            um.setContent(content);
-        });
-
-        var newsSubmit = function () {
-            var url = '/sys/news/add';
+        var jobSubmit = function () {
+            var url = '/sys/res/add';
             if (id) {
-                url = '/sys/news/edit';
+                url = '/sys/res/edit';
             }
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
                 success: function (data) {
-                    window.location = '/sys/news';
+                    window.location = '/sys/res';
                 }
             });
         };
 
         $('#submit').click(function () {
-            newsSubmit();
+            jobSubmit();
         });
 
         $("input[name=scope]").click(function () {

@@ -2,11 +2,11 @@ var validator = require('validator');
 var crypto = require('crypto');//加密
 var dbHelper = require('../../proxy/dbHelper');
 
-var notify = module.exports = function (req, res, next) {
-    console.log('----->notify');
+var res = module.exports = function (req, res, next) {
+    console.log('----->res');
 };
 
-notify.page = function (req, res, next) {
+res.page = function (req, res, next) {
     //查询条件
     var where = {};
     //查询的字段
@@ -19,10 +19,11 @@ notify.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where.title = {'$regex': req.body.title};
+        where.name ={'$regex': req.body.title};
     }
 
-    dbHelper.page('NotificationModel', where, query, opt, function (err, ret) {
+    dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
+        console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');
         }
@@ -30,9 +31,9 @@ notify.page = function (req, res, next) {
     });
 };
 
-notify.add = function (req, res, next) {
+res.add = function (req, res, next) {
     console.log(req.body);
-    dbHelper.add('NotificationModel', req.body, function (err, ret) {
+    dbHelper.add('ResourceModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
@@ -41,19 +42,19 @@ notify.add = function (req, res, next) {
     });
 };
 
-notify.detail = function (req, res, next) {
+res.detail = function (req, res, next) {
     var id = req.params.id;
-    dbHelper.findOne('NotificationModel', id, function (err, ret) {
+    dbHelper.findOne('ResourceModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');
         }
-        res.out('system/notify_detail', ret);
+        res.out('system/res_detail', ret);
     });
 };
 
-notify.edit = function (req, res, next) {
+res.edit = function (req, res, next) {
     console.log(req.body);
-    dbHelper.edit('NotificationModel', req.body.id, req.body, function (err, ret) {
+    dbHelper.edit('ResourceModel', req.body.id, req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
@@ -62,9 +63,9 @@ notify.edit = function (req, res, next) {
     });
 };
 
-notify.changeStatus = function (req, res, next) {
+res.delete = function (req, res, next) {
     console.log(req.body);
-    dbHelper.edit('NotificationModel', req.body.id, {status: req.body.status}, function (err, ret) {
+    dbHelper.del('ResourceModel', req.body.id, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
@@ -73,23 +74,12 @@ notify.changeStatus = function (req, res, next) {
     });
 };
 
-notify.delete = function (req, res, next) {
-    console.log(req.body);
-    dbHelper.del('NotificationModel', req.body.id, function (err, ret) {
-        console.log('执行的结果------->', ret);
-        if (err) {
-            return res.fail('保存出错');
-        }
-        res.ok();
-    });
-};
-
-notify.editdetail = function (req, res, next) {
+res.editdetail = function (req, res, next) {
     var id = req.params.id;
-    dbHelper.findOne('NotificationModel', id, function (err, ret) {
+    dbHelper.findOne('ResourceModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');
         }
-        res.out('system/notify_add', ret);
+        res.out('system/res_add', ret);
     });
 };
