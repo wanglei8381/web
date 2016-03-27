@@ -4,6 +4,7 @@ var news = require('./controller').sys.news;
 var notify = require('./controller').sys.notify;
 var job = require('./controller').sys.job;
 var res = require('./controller').sys.res;
+var user = require('./controller').sys.user;
 
 var router = express.Router();
 
@@ -27,15 +28,15 @@ router.get('/logout', main.logout);
 
 //学生管理
 router.get('/student', function (req, res) {
-    res.out('system/user');
+    res.out('system/user',{user_type:1});
 });
-router.post('/student', news.page);
+router.post('/student', user.page);
 
 //教师管理
 router.get('/teacher', function (req, res) {
-    res.out('system/user');
+    res.out('system/user',{user_type:2});
 });
-router.post('/teacher', news.page);
+router.post('/teacher', user.page);
 
 //新闻管理(列表)
 router.get('/news', function (req, res) {
