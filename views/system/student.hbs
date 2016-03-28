@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-xs-3">
-                <h4>{{#eq user_type 1}}新闻列表{{/eq}}教师列表</h4>
+                <h4>学生列表</h4>
             </div>
             <div class="col-xs-4">
                 <input class="form-control" placeholder="标题" type="text" id="title"/>
@@ -12,10 +12,10 @@
                 </button>
             </div>
             <div class="col-xs-2">
-                <a class="btn btn-default purple" href="/sys/user/add_excel"><i class="fa fa-plus"></i> excel导入</a>
+                <a class="btn btn-default purple" href="/sys/student/add_excel"><i class="fa fa-plus"></i> excel导入</a>
             </div>
             <div class="col-xs-1">
-                <a class="btn btn-default purple" href="/sys/user/add"><i class="fa fa-plus"></i> 添加</a>
+                <a class="btn btn-default purple" href="/sys/student/add"><i class="fa fa-plus"></i> 添加</a>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         function search() {
             var data = {
                 title: $.trim($('#title').val()),
-                identity:{{user_type}},
+                identity:1,
             };
             new DataTable({
                 id: '#datatable',
@@ -48,42 +48,37 @@
                     data: data
                 },
                 columns: [{
-                    "data": "title",
-                    "title": "名称"
+                    "data": "stid",
+                    "title": "学生学号"
                 }, {
-                    "data": "imgUrl",
-                    "title": "图片地址"
+                    "data": "name",
+                    "title": "学生姓名"
                 }, {
-                    "data": "status",
-                    "title": "状态"
+                    "data": "classId",
+                    "title": "学生班级"
                 }, {
-                    "data": "createdAt",
-                    "title": "创建时间"
+                    "data": "collegeId",
+                    "title": "学生院系"
                 }, {
                     "data": null,
                     "title": "操作"
                 }],
                 columnDefs: [
                     {
-                        targets: 2,
+                        targets: 3,
                         render: function (i, j, item) {
-                            var st = ['未发布','已发布','关闭'];
-                            return st[item.status]
+                            return collage[item.collegeId]
                         }
                     },{
                         targets:3,
                         render: function (i, j, item) {
-                            return my.toDateString(item.createdAt);
+                            var str = ['普通教师','班主任'];
+                            return str[item.isHead];
                         }
                     }, {
                         targets: 4,
                         render: function (i, j, item) {
-                            var str = '<a href="/sys/news/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/news/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
-                            if(item.status == 0){
-                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',1);">发布</a>';
-                            }else if(item.status == 1){
-                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',2);">关闭</a>';
-                            }
+                            var str = '<a href="/sys/teacher/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
                             return str;
                         }
                     }

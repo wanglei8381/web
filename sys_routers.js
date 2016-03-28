@@ -26,17 +26,37 @@ router.get('/login', function (req, res) {
 router.post('/login', main.login);
 router.get('/logout', main.logout);
 
-//学生管理
+//学生管理(列表)
 router.get('/student', function (req, res) {
-    res.out('system/user',{user_type:1});
+    res.out('system/student');
 });
 router.post('/student', user.page);
+//学生添加
+router.get('/student/add', function (req, res) {
+    res.out('system/student_add');
+});
+router.post('/student/add', user.add);
+//学生编辑
+router.get('/student/edit/:id',user.editSdetail);
+router.post('/student/edit', user.edit);
+//学生删除
+router.post('/student/del/:id', user.delete);
 
 //教师管理
 router.get('/teacher', function (req, res) {
-    res.out('system/user',{user_type:2});
+    res.out('system/teacher');
 });
 router.post('/teacher', user.page);
+//教师添加
+router.get('/teacher/add', function (req, res) {
+    res.out('system/teacher_add');
+});
+router.post('/teacher/add', user.add);
+//教师编辑
+router.get('/teacher/edit/:id',user.editTdetail);
+router.post('/teacher/edit', user.edit);
+//教师删除
+router.post('/teacher/del/:id', user.delete);
 
 //新闻管理(列表)
 router.get('/news', function (req, res) {
