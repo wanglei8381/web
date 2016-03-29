@@ -12,11 +12,7 @@
                 </button>
             </div>
             <div class="col-xs-2">
-<<<<<<< HEAD
-                <a class="btn btn-default purple" href="/sys/user/add_excel"><i class="fa fa-plus"></i> excel导入</a>
-=======
                 <a class="btn btn-default purple" href="/sys/teacher/add_excel"><i class="fa fa-plus"></i> excel导入</a>
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
             </div>
             <div class="col-xs-1">
                 <a class="btn btn-default purple" href="/sys/teacher/add"><i class="fa fa-plus"></i> 添加</a>
@@ -48,24 +44,7 @@
                 paging: true,
                 pageSize: 10,
                 ajax: {
-<<<<<<< HEAD
                     url: '/sys/teacher',
-                    data: data
-                },
-                columns: [{
-                    "data": "title",
-                    "title": "工号"
-                }, {
-                    "data": "imgUrl",
-                    "title": "姓名"
-                }, {
-                    "data": "status",
-                    "title": "状态"
-                }, {
-                    "data": "createdAt",
-                    "title": "创建时间"
-=======
-                    url: '/sys/student',
                     data: data
                 },
                 columns: [{
@@ -80,7 +59,6 @@
                 }, {
                     "data": "isHead",
                     "title": "教师级别"
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                 }, {
                     "data": null,
                     "title": "操作"
@@ -89,70 +67,29 @@
                     {
                         targets: 2,
                         render: function (i, j, item) {
-<<<<<<< HEAD
-                            var st = ['未发布','已发布','关闭'];
-                            return st[item.status]
-=======
                             return collage[item.collegeId]
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                         }
                     },{
                         targets:3,
                         render: function (i, j, item) {
-<<<<<<< HEAD
-                            return my.toDateString(item.createdAt);
-=======
                             var str = ['普通教师','班主任'];
                             return str[item.isHead];
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                         }
                     }, {
                         targets: 4,
                         render: function (i, j, item) {
-<<<<<<< HEAD
-                            var str = '<a href="/sys/news/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/news/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
-                            if(item.status == 0){
-                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',1);">发布</a>';
-                            }else if(item.status == 1){
-                                str = str + '&nbsp;&nbsp;&nbsp;<a href="javascript:changeStatus(\'' + item._id + '\',2);">关闭</a>';
-                            }
-=======
                             var str = '<a href="/sys/teacher/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                             return str;
                         }
                     }
                 ]
             });
         }
-
-<<<<<<< HEAD
-        function changeStatus(id,type){
-            my.ajax({
-                url: '/sys/news/changeStatus/' + id,
-                data: {id:id,status:type},
-                success: function () {
-                    $.success('操作成功', null, null, function () {
-                        window.location.reload();
-                    });
-                },
-                error: function () {
-                    $.danger('网络异常，请联系管理员！');
-                }
-            });
-        }
-
-=======
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
         function del(id) {
             bootbox.confirm("您确定要删除吗？", function (result) {
                 if (result) {
                     my.ajax({
-<<<<<<< HEAD
-                        url: '/sys/news/del/' + id,
-=======
                         url: '/sys/teacher/del/' + id,
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                         data: {id:id},
                         success: function () {
                             $.success('操作成功', null, null, function () {

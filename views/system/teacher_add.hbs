@@ -11,41 +11,22 @@
         <form class="form-horizontal">
             <input type="hidden" name="id" value="{{_id}}"/>
             <input type="hidden" name="identity" value="2"/>
-<<<<<<< HEAD
             <input type="hidden" name="collegeId" value="0"/>
             <div class="form-group">
                 <lable class="col-sm-2 control-label">教师工号</lable>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="companyName" value="{{stid}}" placeholder="请输入教师工号"/>
-=======
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">教师工号</lable>
-                <div class="col-sm-6">
                     <input type="text" class="form-control" name="stid" value="{{stid}}" placeholder="请输入教师工号"/>
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                 </div>
             </div>
             <div class="form-group">
                 <lable class="col-sm-2 control-label">教师姓名</lable>
                 <div class="col-sm-6">
-<<<<<<< HEAD
-                    <input type="text" class="form-control" name="companyName" value="{{name}}" placeholder="请输入教师姓名"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">初始密码</lable>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="jobName" value="{{password}}"
-                           placeholder="请输入初始密码"/>
-=======
-                    <textarea type="text" class="form-control u-height" name="name"
-                           placeholder="请输入教师姓名">{{name}}</textarea>
+                    <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入教师姓名"/>
                 </div>
             </div>
             <div class="form-group">
                 <lable class="col-sm-2 control-label">所属院系</lable>
                 <div class="col-sm-10 collage">
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                 </div>
             </div>
             <div class="form-group">
@@ -53,30 +34,18 @@
                 <div class="col-sm-6">
                     <lable class="radio-inline">
                         <input type="radio" value="0" {{#eq isHead 0}}checked{{/eq}} name="isHead"/>
-<<<<<<< HEAD
                         班主任
                     </lable>
                     <lable class="radio-inline">
                         <input type="radio" value="1" {{#eq isHead 1}}checked{{/eq}} name="isHead"/>
-                        其他
-=======
                         普通教师
-                    </lable>
-                    <lable class="radio-inline">
-                        <input type="radio" value="1" {{#eq isHead 1}}checked{{/eq}} name="isHead"/>
-                        班主任
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
                     </lable>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-6 col-sm-offset-3">
                     <button class="btn btn-default col-sm-4" type="button" id="submit">保存</button>
-<<<<<<< HEAD
-                    <a href="/sys/job" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
-=======
-                    <a href="/sys/news" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
+                    <a href="/sys/teacher" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
                 </div>
             </div>
         </form>
@@ -86,10 +55,6 @@
 {{#extend "scripts"}}
 
     <script type="text/javascript">
-<<<<<<< HEAD
-        var id = '{{_id}}';
-
-=======
         $(function () {
             //初始化数据
             getCollage();
@@ -108,7 +73,6 @@
         }
 
         var id = '{{_id}}';
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
         var teacherSubmit = function () {
             var url = '/sys/teacher/add';
             if (id) {

@@ -20,7 +20,7 @@ user.page = function (req, res, next) {
 
     if (req.body.title) {
         console.log('----',req.body)
-        where.title = {'$regex': req.body.title};
+        where.name = {'$regex': req.body.title};
     }
 
     dbHelper.page('UserModel', where, query, opt, function (err, ret) {
@@ -43,7 +43,6 @@ user.add = function (req, res, next) {
     });
 };
 
-<<<<<<< HEAD
 user.detail = function (req, res, next) {
     var id = req.params.id;
     dbHelper.findOne('UserModel', id, function (err, ret) {
@@ -54,8 +53,6 @@ user.detail = function (req, res, next) {
     });
 };
 
-=======
->>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
 user.edit = function (req, res, next) {
     console.log(req.body);
     dbHelper.edit('UserModel', req.body.id, req.body, function (err, ret) {
