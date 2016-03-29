@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-xs-3">
-                <h4>{{#eq user_type 1}}新闻列表{{/eq}}教师列表</h4>
+                <h4>学生列表</h4>
             </div>
             <div class="col-xs-4">
                 <input class="form-control" placeholder="标题" type="text" id="title"/>
@@ -15,7 +15,7 @@
                 <a class="btn btn-default purple" href="/sys/user/add_excel"><i class="fa fa-plus"></i> excel导入</a>
             </div>
             <div class="col-xs-1">
-                <a class="btn btn-default purple" href="/sys/user/add"><i class="fa fa-plus"></i> 添加</a>
+                <a class="btn btn-default purple" href="/sys/student/add"><i class="fa fa-plus"></i> 添加</a>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@
         function search() {
             var data = {
                 title: $.trim($('#title').val()),
-                identity:{{user_type}},
+                identity:2,
             };
             new DataTable({
                 id: '#datatable',

@@ -34,7 +34,7 @@ user.page = function (req, res, next) {
 
 user.add = function (req, res, next) {
     console.log(req.body);
-    dbHelper.add('JobModel', req.body, function (err, ret) {
+    dbHelper.add('UserModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
@@ -45,7 +45,7 @@ user.add = function (req, res, next) {
 
 user.detail = function (req, res, next) {
     var id = req.params.id;
-    dbHelper.findOne('JobModel', id, function (err, ret) {
+    dbHelper.findOne('UserModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');
         }
@@ -55,7 +55,7 @@ user.detail = function (req, res, next) {
 
 user.edit = function (req, res, next) {
     console.log(req.body);
-    dbHelper.edit('JobModel', req.body.id, req.body, function (err, ret) {
+    dbHelper.edit('UserModel', req.body.id, req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
@@ -66,7 +66,7 @@ user.edit = function (req, res, next) {
 
 user.delete = function (req, res, next) {
     console.log(req.body);
-    dbHelper.del('JobModel', req.body.id, function (err, ret) {
+    dbHelper.del('UserModel', req.body.id, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
@@ -77,7 +77,7 @@ user.delete = function (req, res, next) {
 
 user.editdetail = function (req, res, next) {
     var id = req.params.id;
-    dbHelper.findOne('JobModel', id, function (err, ret) {
+    dbHelper.findOne('UserModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');
         }

@@ -26,20 +26,17 @@ var Schema = mongoose.Schema;
  TeacherSchema.index({tid: 1}, {unique: true});
  mongoose.model('Teacher', TeacherSchema);*/
 
-
 //用户表
 var UserSchema = new Schema({
-    identity: {type: Number, default: 1},//学生1，老师2
+    identity: {type: Number, default: 1},//学生1，老师(普通教师，班主任，导员)2
     stid: {type: String},//学号或工号
     password: {type: String},
     name: {type: String},
-    sex: {type: Number},//0：男，1：女
-    enterTime: {type: String},//入学时间
     classId: {type: String},//所在班级编号
+    collegeId: {type: String},//所在院系编号
     isHead: {type: Number, default: 0},//班主任标识0不是，1是
     isSupervisor: {type: Number, default: 0}//辅导员标识,0不是，1是
 });
-
 UserSchema.index({stid: 1}, {unique: true});
 mongoose.model('User', UserSchema);
 
@@ -54,7 +51,8 @@ mongoose.model('Class', ClassSchema);
 
 //院系表
 var CollegeSchema = new Schema({
-    name: {type: String}
+    name: {type: String},
+    supervisor: {type: String}//辅导员id
 });
 mongoose.model('College', CollegeSchema);
 

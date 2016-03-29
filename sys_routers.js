@@ -28,15 +28,21 @@ router.get('/logout', main.logout);
 
 //学生管理
 router.get('/student', function (req, res) {
-    res.out('system/user',{user_type:1});
+    res.out('system/student');
 });
 router.post('/student', user.page);
 
 //教师管理
 router.get('/teacher', function (req, res) {
-    res.out('system/user',{user_type:2});
+    res.out('system/teacher');
 });
 router.post('/teacher', user.page);
+//教师添加
+router.get('/teacher/add', function (req, res) {
+    res.out('system/teacher_add');
+});
+router.post('/teacher/add', user.add);
+
 
 //新闻管理(列表)
 router.get('/news', function (req, res) {
