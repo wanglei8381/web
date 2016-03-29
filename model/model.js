@@ -30,7 +30,7 @@ var Schema = mongoose.Schema;
 var UserSchema = new Schema({
     identity: {type: Number, default: 1},//学生1，老师(普通教师，班主任，导员)2
     stid: {type: String},//学号或工号
-    password: {type: String},
+    password: {type: String, default: 111111},//默认密码111111
     name: {type: String},
     classId: {type: String},//所在班级编号
     collegeId: {type: String},//所在院系编号

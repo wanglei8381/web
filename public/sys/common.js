@@ -76,6 +76,8 @@ var my = {
     }
 };
 
+var collage = ['性别与社会发展学院','法学院','管理学院','儿童发展与教育学院','艺术学院','高等职业教育学院','教育学院','计算机系','外语系','金融系','汉语国际教育系'];
+
 
 jQuery.extend({
     intiAlert: function (cnt, dom, cls, time, callback) {

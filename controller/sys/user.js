@@ -15,7 +15,7 @@ user.page = function (req, res, next) {
     var opt = {
         pageNo: req.body.pageNo,
         pageSize: req.body.pageSize,
-        sort: '-createdAt'
+        sort: {"stid":1}
     };
 
     if (req.body.title) {
@@ -43,6 +43,7 @@ user.add = function (req, res, next) {
     });
 };
 
+<<<<<<< HEAD
 user.detail = function (req, res, next) {
     var id = req.params.id;
     dbHelper.findOne('UserModel', id, function (err, ret) {
@@ -53,6 +54,8 @@ user.detail = function (req, res, next) {
     });
 };
 
+=======
+>>>>>>> 2a22784efd78a9902730e176cf1915881256b90d
 user.edit = function (req, res, next) {
     console.log(req.body);
     dbHelper.edit('UserModel', req.body.id, req.body, function (err, ret) {
@@ -75,12 +78,22 @@ user.delete = function (req, res, next) {
     });
 };
 
-user.editdetail = function (req, res, next) {
+user.editTdetail = function (req, res, next) {
     var id = req.params.id;
     dbHelper.findOne('UserModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');
         }
-        res.out('system/job_add', ret);
+        res.out('system/teacher_add', ret);
+    });
+};
+
+user.editSdetail = function (req, res, next) {
+    var id = req.params.id;
+    dbHelper.findOne('UserModel', id, function (err, ret) {
+        if (err) {
+            return res.fail('查询出错');
+        }
+        res.out('system/student_add', ret);
     });
 };
