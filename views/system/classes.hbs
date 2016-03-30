@@ -2,7 +2,7 @@
     <div class="panel-heading">
         <div class="row">
             <div class="col-xs-3">
-                <h4>学生列表</h4>
+                <h4>班级列表</h4>
             </div>
             <div class="col-xs-4">
                 <input class="form-control" placeholder="标题" type="text" id="title"/>
@@ -11,11 +11,8 @@
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
                 </button>
             </div>
-            <div class="col-xs-2">
-                <a class="btn btn-default purple" href="/sys/student/add_excel"><i class="fa fa-plus"></i> excel导入</a>
-            </div>
             <div class="col-xs-1">
-                <a class="btn btn-default purple" href="/sys/student/add"><i class="fa fa-plus"></i> 添加</a>
+                <a class="btn btn-default purple" href="/sys/classes/add"><i class="fa fa-plus"></i> 添加</a>
             </div>
         </div>
     </div>
@@ -37,61 +34,52 @@
         function search() {
             var data = {
                 title: $.trim($('#title').val()),
-                identity:1,
             };
             new DataTable({
                 id: '#datatable',
                 paging: true,
                 pageSize: 10,
                 ajax: {
-                    url: '/sys/student',
+                    url: '/sys/classes',
                     data: data
                 },
                 columns: [{
-                    "data": "stid",
-                    "title": "学生学号"
-                }, {
                     "data": "name",
-                    "title": "学生姓名"
+                    "title": "班级"
+                },{
+                    "data": "collegeId",
+                    "title": "院系"
                 }, {
-                    "data": "classId",
-                    "title": "学生班级"
+                    "data": "head_teacher",
+                    "title": "班主任(工号)"
+                }, {
+                    "data": "supervisor",
+                    "title": "辅导员(工号)"
                 }, {
                     "data": null,
                     "title": "操作"
                 }],
                 columnDefs: [
-                     {
-                        targets: 3,
+                    {
+                        targets: 1,
                         render: function (i, j, item) {
-                            var str = '<a href="/sys/teacher/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
+                            return collage[item.collegeId];
+                        }
+                    }, {
+                        targets: 4,
+                        render: function (i, j, item) {
+                            var str = '<a href="/sys/classes/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
                             return str;
                         }
                     }
                 ]
             });
         }
-
-        function changeStatus(id,type){
-            my.ajax({
-                url: '/sys/news/changeStatus/' + id,
-                data: {id:id,status:type},
-                success: function () {
-                    $.success('操作成功', null, null, function () {
-                        window.location.reload();
-                    });
-                },
-                error: function () {
-                    $.danger('网络异常，请联系管理员！');
-                }
-            });
-        }
-
         function del(id) {
             bootbox.confirm("您确定要删除吗？", function (result) {
                 if (result) {
                     my.ajax({
-                        url: '/sys/news/del/' + id,
+                        url: '/sys/classes/del/' + id,
                         data: {id:id},
                         success: function () {
                             $.success('操作成功', null, null, function () {

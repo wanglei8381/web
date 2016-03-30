@@ -28,14 +28,12 @@ var Schema = mongoose.Schema;
 
 //用户表
 var UserSchema = new Schema({
-    identity: {type: Number, default: 1},//学生1，老师(普通教师，班主任，导员)2
+    identity: {type: Number, default: 1},//学生1，老师(班主任2辅导员3普通老师4)
     stid: {type: String},//学号或工号
     password: {type: String, default: 111111},//默认密码111111
     name: {type: String},
     classId: {type: String},//所在班级编号
-    collegeId: {type: String},//所在院系编号
-    isHead: {type: Number, default: 0},//班主任标识0不是，1是
-    isSupervisor: {type: Number, default: 0}//辅导员标识,0不是，1是
+    collegeId: {type: String}//所在院系编号
 });
 UserSchema.index({stid: 1}, {unique: true});
 mongoose.model('User', UserSchema);
@@ -43,18 +41,11 @@ mongoose.model('User', UserSchema);
 //班级表
 var ClassSchema = new Schema({
     name: {type: String},
-    head_teacher: {type: String},//班主任标识id
-    supervisor: {type: String}//辅导员id
+    collegeId: {type: String},//所在院系编号
+    head_teacher: {type: String},//班主任标识id工号
+    supervisor: {type: String}//辅导员id工号
 });
 mongoose.model('Class', ClassSchema);
-
-
-//院系表
-var CollegeSchema = new Schema({
-    name: {type: String},
-    supervisor: {type: String}//辅导员id
-});
-mongoose.model('College', CollegeSchema);
 
 //新闻表
 var NewsSchema = new Schema({
@@ -78,8 +69,7 @@ var NotificationSchema = new Schema({
     title: {type: String},
     description: {type: String},
     content: {type: String},
-    scope: {type: Number, default: 0},//0公开1限定学院
-    collegeIds: {type: Array},
+    collegeId: {type: String},//所属院系编号
     status: {type: Number, default: 0},//0未发布1已发布、2关闭
     type: {type: Number, default: 0},//通知类型
     createdAt: {type: Date, default: Date.now},
@@ -95,8 +85,7 @@ var JobSchema = new Schema({
     jobName: {type: String},
     jobDescription: {type: String},
     userId: {type: String},
-    scope: {type: Number, default: 0},//0公开1限定学院
-    collegeIds: {type: Array},
+    collegeId: {type: String},//所属院系编号(职位发布来源)
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });
@@ -109,8 +98,7 @@ var ResourceSchema = new Schema({
     description: {type: String},
     url: {type: String},
     userId: {type: String},
-    scope: {type: Number, default: 0},//0公开1限定学院
-    collegeIds: {type: Array},
+    collegeId: {type: String},//所属院系编号
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });

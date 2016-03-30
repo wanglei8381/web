@@ -11,9 +11,6 @@
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
                 </button>
             </div>
-            <div class="col-xs-2">
-                <a class="btn btn-default purple" href="/sys/teacher/add_excel"><i class="fa fa-plus"></i> excel导入</a>
-            </div>
             <div class="col-xs-1">
                 <a class="btn btn-default purple" href="/sys/teacher/add"><i class="fa fa-plus"></i> 添加</a>
             </div>
@@ -36,8 +33,7 @@
 
         function search() {
             var data = {
-                title: $.trim($('#title').val()),
-                identity:2,
+                title: $.trim($('#title').val())
             };
             new DataTable({
                 id: '#datatable',
@@ -57,7 +53,7 @@
                     "data": "collegeId",
                     "title": "所属院系"
                 }, {
-                    "data": "isHead",
+                    "data": "identity",
                     "title": "教师级别"
                 }, {
                     "data": null,
@@ -72,8 +68,8 @@
                     },{
                         targets:3,
                         render: function (i, j, item) {
-                            var str = ['普通教师','班主任'];
-                            return str[item.isHead];
+                            var str = ['','','班主任','辅导员','普通教师'];
+                            return str[item.identity];
                         }
                     }, {
                         targets: 4,

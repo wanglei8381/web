@@ -19,7 +19,6 @@ require('./model');
 
 exports.UserModel = mongoose.model('User');
 exports.ClassModel = mongoose.model('Class');
-exports.CollegeModel = mongoose.model('College');
 exports.NewsModel = mongoose.model('News');
 exports.NotificationModel = mongoose.model('Notification');
 exports.JobModel = mongoose.model('Job');

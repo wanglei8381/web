@@ -8,7 +8,7 @@ var user = module.exports = function (req, res, next) {
 
 user.page = function (req, res, next) {
     //查询条件
-    var where = {identity:req.body.identity};
+    var where = {};
     //查询的字段
     var query = {};
     //分页排序
@@ -20,7 +20,7 @@ user.page = function (req, res, next) {
 
     if (req.body.title) {
         console.log('----',req.body)
-        where.name = {'$regex': req.body.title};
+        where = {"$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}}]};
     }
 
     dbHelper.page('UserModel', where, query, opt, function (err, ret) {
@@ -32,11 +32,42 @@ user.page = function (req, res, next) {
     });
 };
 
+user.check = function(req,res,next){
+    console.log(req.body);
+    var where = {};
+    if(req.body.checkType == 0){//教师工号查重
+        where.stid = req.body.stid;
+    }else{//根据院系ID查询教师
+        where.collegeId = req.body.collegeId;
+    }
+    var opt = {};
+    var query = {};
+    dbHelper.find('UserModel', where, query, opt, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('查询出错');
+        }
+        res.ok(ret);
+    });
+}
+
 user.add = function (req, res, next) {
     console.log(req.body);
+
+    var body = req.body;
+    var name = validator.trim(body.name);
+    var identity = validator.trim(body.identity);
+    if (!name) {
+        return res.fail("教师姓名不能为空");
+    }
+    if (!identity || identity == 1) {
+        return res.fail("请选择教师");
+    }
+
     dbHelper.add('UserModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
+            console.log('[contoller][sys][user][add]',err.stack);
             return res.fail('保存出错');
         }
         res.ok();
@@ -45,7 +76,7 @@ user.add = function (req, res, next) {
 
 user.detail = function (req, res, next) {
     var id = req.params.id;
-    dbHelper.findOne('UserModel', id, function (err, ret) {
+    dbHelper.find('UserModel', id, function (err, ret) {
         if (err) {
             return res.fail('查询出错');
         }

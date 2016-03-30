@@ -5,6 +5,7 @@ var notify = require('./controller').sys.notify;
 var job = require('./controller').sys.job;
 var res = require('./controller').sys.res;
 var user = require('./controller').sys.user;
+var classes = require('./controller').sys.classes;
 
 var router = express.Router();
 
@@ -26,6 +27,40 @@ router.get('/login', function (req, res) {
 router.post('/login', main.login);
 router.get('/logout', main.logout);
 
+//教师管理
+router.get('/teacher', function (req, res) {
+    res.out('system/teacher');
+});
+router.post('/teacher', user.page);
+router.post('/teacher/check', user.check);
+//教师添加
+router.get('/teacher/add', function (req, res) {
+    res.out('system/teacher_add');
+});
+router.post('/teacher/add', user.add);
+//教师编辑
+router.get('/teacher/edit/:id',user.editTdetail);
+router.post('/teacher/edit', user.edit);
+//教师删除
+router.post('/teacher/del/:id', user.delete);
+
+//班级管理
+router.get('/classes', function (req, res) {
+    res.out('system/classes');
+});
+router.post('/classes', classes.page);
+//班级添加
+router.get('/classes/add', function (req, res) {
+    res.out('system/classes_add');
+});
+router.post('/classes/add', classes.add);
+//班级编辑
+router.get('/classes/edit/:id',classes.editdetail);
+router.post('/classes/edit', classes.edit);
+//班级删除
+router.post('/classes/del/:id', classes.delete);
+
+
 //学生管理(列表)
 router.get('/student', function (req, res) {
     res.out('system/student');
@@ -41,22 +76,6 @@ router.get('/student/edit/:id',user.editSdetail);
 router.post('/student/edit', user.edit);
 //学生删除
 router.post('/student/del/:id', user.delete);
-
-//教师管理
-router.get('/teacher', function (req, res) {
-    res.out('system/teacher');
-});
-router.post('/teacher', user.page);
-//教师添加
-router.get('/teacher/add', function (req, res) {
-    res.out('system/teacher_add');
-});
-router.post('/teacher/add', user.add);
-//教师编辑
-router.get('/teacher/edit/:id',user.editTdetail);
-router.post('/teacher/edit', user.edit);
-//教师删除
-router.post('/teacher/del/:id', user.delete);
 
 //新闻管理(列表)
 router.get('/news', function (req, res) {
