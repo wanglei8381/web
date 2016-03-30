@@ -49,6 +49,7 @@ router.get('/classes', function (req, res) {
     res.out('system/classes');
 });
 router.post('/classes', classes.page);
+router.post('/classes/check', classes.check);
 //班级添加
 router.get('/classes/add', function (req, res) {
     res.out('system/classes_add');

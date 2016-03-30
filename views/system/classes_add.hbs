@@ -10,7 +10,8 @@
     <div class="panel-body">
         <form class="form-horizontal">
             <input type="hidden" name="id" value="{{_id}}"/>
-            <input type="hidden" name="identity" value="2"/>
+            <input type="hidden" name="supervisor" value=""/>
+            <input type="hidden" name="head_teacher" value=""/>
             <div class="form-group">
                 <lable class="col-sm-2 control-label">班级名称</lable>
                 <div class="col-sm-6">
@@ -84,6 +85,11 @@
                 data: data,
                 success: function (data) {
                     $(".selectSupervisor").empty();
+                    $(".selectHeader").empty();
+                    var strS = '<option value="">请选择辅导员</option>';
+                    var strH = '<option value="">请选择班主任</option>';
+                    $(".selectHeader").append(strH);
+                    $(".selectSupervisor").append(strS);
                     for(var i=0; i<data.data.length; i++){
                         var str = '<option value="'+data.data[i].stid+'">'+data.data[i].name+'</option>';
                         $(".selectSupervisor").append(str);
@@ -95,6 +101,11 @@
 
         var id = '{{_id}}';
         var gradeSubmit = function () {
+            var supervisor=$(".selectSupervisor").find("option:selected").val();
+            var head_teacher=$(".selectHeader").find("option:selected").val();
+            $('input[name=supervisor]').attr("value",supervisor);
+            $('input[name=head_teacher]').attr("value",head_teacher);
+            alert(supervisor);
             var url = '/sys/classes/add';
             if (id) {
                 url = '/sys/classes/edit';

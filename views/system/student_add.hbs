@@ -1,0 +1,133 @@
+<link href="/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7">
+                <h4>学生添加</h4>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal">
+            <input type="hidden" name="id" value="{{_id}}"/>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">学生学号</lable>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control stid" name="stid" value="{{stid}}" placeholder="请输入学生学号" onchange="chickStid()"/>
+                    <span class="checkStid hidden" style="color: #D73300">学号已存在，请更换</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">学生姓名</lable>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入学生姓名" />
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">所属院系</lable>
+                <div class="col-sm-10 collage">
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">所在班级</lable>
+                <div class="col-sm-10 classes">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <button class="btn btn-default col-sm-4" type="button" id="submit">保存</button>
+                    <a href="/sys/teacher" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+
+    <script type="text/javascript">
+        $(function () {
+            //初始化数据
+            getCollage();
+            getClasses(0);
+        });
+
+        function getCollage(){
+            for(var i=0; i<collage.length; i++){
+                var str = '<lable class="radio-inline">'+
+                            '<input type="radio" value="'+i+'" name="collegeId"/>'+ collage[i] +
+                          '</lable>';
+                $('.collage').append(str);
+                if('{{collegeId}}' == i){
+                    $('input[name=collegeId]').attr('checked','checked');
+                }
+            }
+            $("input[name=collegeId]").click(function () {
+                var collegeId = $("input[name=collegeId]:checked").attr("value");
+                getClasses(collegeId);
+            });
+        }
+
+        var id = '{{_id}}';
+        var studentSubmit = function () {
+            var url = '/sys/student/add';
+            if (id) {
+                url = '/sys/student/edit';
+            }
+            my.ajax({
+                url: url,
+                data: $("form").serialize(),
+                success: function (data) {
+                    window.location = '/sys/student';
+                }
+            });
+        };
+
+        $('#submit').click(function () {
+            if(checkStatus == 1){
+                alert('请更换学生学号');
+            }else{
+                studentSubmit();
+            }
+        });
+        var checkStatus = 0
+        function chickStid(){
+            var data = {
+                stid : $('.stid').val(),
+                checkType:0
+            }
+            my.ajax({
+                url: '/sys/teacher/check',
+                data: data,
+                success: function (data) {
+                    if(data.data.length == 0){
+                        checkStatus = 0;
+                        $('.checkStid').addClass('hidden');
+                    }else{
+                        checkStatus = 1;
+                        $('.checkStid').removeClass('hidden');
+                    }
+                }
+            });
+        }
+
+        function getClasses(collegeId){
+            var data = {
+                collegeId : collegeId,
+            }
+            my.ajax({
+                url: '/sys/classes/check',
+                data: data,
+                success: function (data) {
+                    for(var i=0; i<data.data.length; i++){
+                        var str = '<lable class="radio-inline">'+
+                                '<input type="radio" value="'+data.data[i]._id+'" name="classId"/>'+ data.data[i].name +
+                                '</lable>';
+                        $('.classes').append(str);
+                    }
+                }
+            });
+        }
+    </script>
+
+{{/extend}}

@@ -20,7 +20,7 @@ classes.page = function (req, res, next) {
 
     if (req.body.title) {
         console.log('----',req.body)
-        where.name = {'$regex': req.body.title};
+        where = {"$or":[{"name" : {'$regex': req.body.title}},{"collegeId" : {'$regex': req.body.title}}]};
     }
 
     dbHelper.page('ClassModel', where, query, opt, function (err, ret) {
@@ -34,6 +34,21 @@ classes.page = function (req, res, next) {
 
 classes.add = function (req, res, next) {
     console.log(req.body);
+
+    var body = req.body;
+    var name = validator.trim(body.name);
+    var head_teacher = validator.trim(body.head_teacher);
+    var supervisor = validator.trim(body.supervisor);
+    if(!stid) {
+        return res.fail("请输入班级")
+    }
+    if (!head_teacher) {
+        return res.fail("请选择班主任");
+    }
+    if (!supervisor || identity == 1) {
+        return res.fail("请选择辅导员");
+    }
+
     dbHelper.add('ClassModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
@@ -74,3 +89,18 @@ classes.edit = function (req, res, next) {
         res.ok();
     });
 };
+
+classes.check = function(req,res,next){
+    console.log(req.body);
+    var where = {};
+    where.collegeId = req.body.collegeId;
+    var opt = {};
+    var query = {};
+    dbHelper.find('ClassModel', where, query, opt, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('查询出错');
+        }
+        res.ok(ret);
+    });
+}
