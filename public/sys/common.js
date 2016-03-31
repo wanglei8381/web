@@ -44,6 +44,7 @@ var my = {
         return d.getFullYear() + '-' + add0((d.getMonth() + 1)) + '-' + add0(d.getDate()) + ' ' + add0(d.getHours()) + ':' + add0(d.getMinutes()) + ':' + add0(d.getSeconds());
     },
     repwd: function () {
+        var self = this;
         var html = '<div class="panel-body"><form class="form-horizontal" id="repwdForm"><div class="form-group"><label class="col-sm-3 control-label">旧密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="旧密码" type="text" name="oldpassword"/></div></div><div class="form-group"><label class="col-sm-3 control-label">新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="新密码" type="text" name="password"/></div></div><div class="form-group"><label class="col-sm-3 control-label">确认新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="确认新密码" type="text" name="repassword"/></div></div></form></div>';
         bootbox.dialog({
             message: html,
@@ -54,7 +55,7 @@ var my = {
                     label: "提交",
                     className: "btn-success",
                     callback: function () {
-                        CMS.ajax({
+                        self.ajax({
                             url: '/sys/user/repwd',
                             data: $('#repwdForm').serialize(),
                             success: function (data) {

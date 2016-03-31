@@ -53,8 +53,8 @@
                     "data": "workPlace",
                     "title": "工作地点"
                 }, {
-                    "data": "userId",
-                    "title": "创建用户"
+                    "data": "collegeId",
+                    "title": "职位来源"
                 }, {
                     "data": "createdAt",
                     "title": "创建时间"
@@ -64,6 +64,11 @@
                 }],
                 columnDefs: [
                     {
+                        targets:3,
+                        render: function (i, j, item) {
+                            return collage[item.collegeId];
+                        }
+                    }, {
                         targets:4,
                         render: function (i, j, item) {
                             return my.toDateString(item.createdAt);

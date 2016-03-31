@@ -40,28 +40,11 @@
                 <div class="col-sm-6">
                     <lable class="radio-inline">
                         <input type="radio" value="0" {{#eq scope 0}}checked{{/eq}} name="scope"/>
-                        全校
+                        公开
                     </lable>
                     <lable class="radio-inline">
                         <input type="radio" value="1" {{#eq scope 1}}checked{{/eq}} name="scope"/>
-                        院系
-                    </lable>
-                </div>
-            </div>
-            <div class="form-group hidden" id="college">
-                <lable class="col-sm-2 control-label"></lable>
-                <div class="col-sm-6">
-                    <lable class="checkbox-inline">
-                        <input type="checkbox" value="0" name="collegeIds"/>
-                        计算机系
-                    </lable>
-                    <lable class="checkbox-inline">
-                        <input type="checkbox" value="1" name="collegeIds"/>
-                        金融院系
-                    </lable>
-                    <lable class="checkbox-inline">
-                        <input type="checkbox" value="2" name="collegeIds"/>
-                        等等等
+                        不公开
                     </lable>
                 </div>
             </div>
@@ -104,7 +87,7 @@
         var id = '{{_id}}';
         um.ready(function () {
             um.setContent(content);
-        });
+        })
 
         var newsSubmit = function () {
             var url = '/sys/news/add';
@@ -124,18 +107,6 @@
             newsSubmit();
         });
 
-        $("input[name=scope]").click(function () {
-            switch ($("input[name=scope]:checked").attr("value")) {
-                case "0":
-                    $('#college').addClass('hidden');
-                    break;
-                case "1":
-                    $('#college').removeClass('hidden');
-                    break;
-                default:
-                    break;
-            }
-        });
     </script>
 
 {{/extend}}

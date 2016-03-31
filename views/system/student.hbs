@@ -51,17 +51,17 @@
                     "data": "name",
                     "title": "学生姓名"
                 }, {
-                    "data": "classId",
+                    "data": "className",
                     "title": "学生班级"
                 }, {
                     "data": null,
                     "title": "操作"
                 }],
                 columnDefs: [
-                     {
+                    {
                         targets: 3,
                         render: function (i, j, item) {
-                            var str = '<a href="/sys/teacher/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
+                            var str = '<a href="/sys/student/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
                             return str;
                         }
                     }
@@ -69,26 +69,12 @@
             });
         }
 
-        function changeStatus(id,type){
-            my.ajax({
-                url: '/sys/news/changeStatus/' + id,
-                data: {id:id,status:type},
-                success: function () {
-                    $.success('操作成功', null, null, function () {
-                        window.location.reload();
-                    });
-                },
-                error: function () {
-                    $.danger('网络异常，请联系管理员！');
-                }
-            });
-        }
 
         function del(id) {
             bootbox.confirm("您确定要删除吗？", function (result) {
                 if (result) {
                     my.ajax({
-                        url: '/sys/news/del/' + id,
+                        url: '/sys/student/del/' + id,
                         data: {id:id},
                         success: function () {
                             $.success('操作成功', null, null, function () {

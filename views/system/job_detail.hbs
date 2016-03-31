@@ -9,15 +9,14 @@
     <div class="panel-body">
         <form class="form-horizontal">
             <div class="form-group">
-                <lable class="col-sm-2 control-label">创建用户</lable>
-                <div class="col-sm-10 u-word">
-                    {{userId}}
-                </div>
-            </div>
-            <div class="form-group">
                 <lable class="col-sm-2 control-label">公司名称</lable>
                 <div class="col-sm-10 u-word">
                     {{companyName}}
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">发布时间</lable>
+                <div class="col-sm-10 u-word createdAt">
                 </div>
             </div>
             <div class="form-group">
@@ -30,12 +29,6 @@
                 <lable class="col-sm-2 control-label">工作地点</lable>
                 <div class="col-sm-10 u-word">
                     {{workPlace}}
-                </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">发布范围</lable>
-                <div class="col-sm-10 u-word">
-                    【<span id="scope"></span>】&nbsp;&nbsp;&nbsp;&nbsp;<span id="collegeVal"></span>
                 </div>
             </div>
             <div class="form-group">
@@ -54,19 +47,8 @@
 </div>
 
 {{#extend "scripts"}}
-    <!-- 实例化编辑器 -->
-    <script type="text/javascript">
-        $(function () {
-            var scopeSt = ['全部', '院系'];
-            $('#scope').html(scopeSt['{{scope}}']);
-            if('{{collegeIds}}'){
-                var collegeSt = ['计算机系', '金融院系','等等等'];
-                var collegeLen = {{collegeIds.length}};
-                for(var i = 0; i<collegeLen; i++ ){
-                }
-                $('#collegeVal').html(collegeSt[0]);
-            }
-        });
+    <script>
+        $('.createdAt').html(my.toDateString('{{createdAt}}'));
     </script>
 
 {{/extend}}

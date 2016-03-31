@@ -20,10 +20,12 @@ news.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where.title = {'$regex': req.body.title};
+        where ={userId: req.session.sys_user.stid, title: {'$regex': req.body.title}};
     }
+    where.userId = req.session.sys_user.stid;
 
     dbHelper.page('NewsModel', where, query, opt, function (err, ret) {
+        console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');
         }
@@ -33,6 +35,7 @@ news.page = function (req, res, next) {
 
 news.add = function (req, res, next) {
     console.log(req.body);
+    req.body.userId = req.session.sys_user.stid;
     dbHelper.add('NewsModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {

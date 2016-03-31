@@ -33,6 +33,7 @@ var UserSchema = new Schema({
     password: {type: String, default: 111111},//默认密码111111
     name: {type: String},
     classId: {type: String},//所在班级编号
+    className: {type: String},//所在班级名称
     collegeId: {type: String}//所在院系编号
 });
 UserSchema.index({stid: 1}, {unique: true});
@@ -54,8 +55,7 @@ var NewsSchema = new Schema({
     imgUrl: {type: String},
     description: {type: String},
     content: {type: String},
-    scope: {type: Number, default: 0},//0公开1限定学院
-    collegeIds: {type: Array},
+    scope: {type: Number, default: 0},//0公开1自己学院
     status: {type: Number, default: 0},//0未发布1已发布、2关闭
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
@@ -98,7 +98,7 @@ var ResourceSchema = new Schema({
     description: {type: String},
     url: {type: String},
     userId: {type: String},
-    collegeId: {type: String},//所属院系编号
+    collegeId: {type: String},//所属院系编号(发布来源)
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });

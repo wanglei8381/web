@@ -10,7 +10,7 @@ var classes = require('./controller').sys.classes;
 var router = express.Router();
 
 //验证用户是否登录
-//router.use(main.isValidLogin);
+router.use(main.isValidLogin);
 
 //添加模板中间件
 router.use(main.out);
@@ -26,6 +26,8 @@ router.get('/login', function (req, res) {
 });
 router.post('/login', main.login);
 router.get('/logout', main.logout);
+//修改密码
+router.post('/user/repwd', main.repwd);
 
 //教师管理
 router.get('/teacher', function (req, res) {

@@ -37,8 +37,8 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">当前用户: 【{{sys_user.stid}}】</a></li>
-                <!--<li><a href="javascript:CMS.repwd();">【修改密码】</a></li>-->
+                <li><a href="#">当前用户: 【{{sys_user.name}}】</a></li>
+                <li class="user"><a href="javascript:my.repwd();">【修改密码】</a></li>
                 <li><a href="/sys/logout">退出</a></li>
             </ul>
         </div>
@@ -51,8 +51,8 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li id="student_id" class="user"><a href="/sys/student">学生管理</a></li>
-                <li id="teacher_id" class="admin"><a href="/sys/teacher">教师管理</a></li>
-                <li id="class_id" class="admin"><a href="/sys/classes">班级管理</a></li>
+                <li id="teacher_id" class="admin hidden"><a href="/sys/teacher">教师管理</a></li>
+                <li id="classes_id" class="admin hidden"><a href="/sys/classes">班级管理</a></li>
                 <li id="news_id" class="user"><a href="/sys/news">新闻管理</a></li>
                 <li id="notify_id" class="user"><a href="/sys/notify">通知管理</a></li>
                 <li id="job_id" class="user"><a href="/sys/job">招聘管理</a></li>
@@ -85,10 +85,10 @@
             $('#' + path_module + '_id').addClass('active');
         }
 
-        /*if('{{sys_user.stid}}' == 'admin'){
+        if('{{sys_user.stid}}' == 'admin'){
             $('.user').addClass('hidden');
             $('.admin').removeClass('hidden');
-        }*/
+        }
 
     });
 </script>

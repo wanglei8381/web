@@ -19,8 +19,9 @@ res.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where.name ={'$regex': req.body.title};
+        where ={userId: req.session.sys_user.stid , name: {'$regex': req.body.title}};
     }
+    where.userId = req.session.sys_user.stid;
 
     dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
@@ -33,6 +34,8 @@ res.page = function (req, res, next) {
 
 res.add = function (req, res, next) {
     console.log(req.body);
+    req.body.collegeId = req.session.sys_user.collegeId;
+    req.body.userId = req.session.sys_user.stid;
     dbHelper.add('ResourceModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {

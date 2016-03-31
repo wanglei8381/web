@@ -19,8 +19,9 @@ notify.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where.title = {'$regex': req.body.title};
+        where = {userId:req.session.sys_user.stid, title:{'$regex': req.body.title}};
     }
+    where.userId = req.session.sys_user.stid;
 
     dbHelper.page('NotificationModel', where, query, opt, function (err, ret) {
         if (err) {
@@ -32,6 +33,8 @@ notify.page = function (req, res, next) {
 
 notify.add = function (req, res, next) {
     console.log(req.body);
+    req.body.collegeId = req.session.sys_user.collegeId;
+    req.body.userId = req.session.sys_user.stid;
     dbHelper.add('NotificationModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {

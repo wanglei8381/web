@@ -17,18 +17,25 @@ user.page = function (req, res, next) {
         pageSize: req.body.pageSize,
         sort: {"stid":1}
     };
-
-    if (req.body.title) {
-        console.log('----',req.body)
-        where = {"$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}}]};
-    }
-
     if (req.body.identity) {
-        where = {"identity" : 1};
+        where = {"identity" : 1, "collegeId" : req.session.sys_user.collegeId};
+        if (req.body.title) {
+            console.log('----',req.body)
+            where = {"identity" : 1, "collegeId" : req.session.sys_user.collegeId, "$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}}]};
+        }
+    }else{
+        where = {"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}]};
+        if (req.body.title) {
+            console.log('----',req.body)
+            where = {"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}],"name" : {'$regex': req.body.title}};
+        }
     }
+
+
 
     dbHelper.page('UserModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
+        console.log('------',req.session)
         if (err) {
             return res.fail('查询出错');
         }
@@ -43,6 +50,7 @@ user.check = function(req,res,next){
         where.stid = req.body.stid;
     }else{//根据院系ID查询教师
         where.collegeId = req.body.collegeId;
+        where = {"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}]};
     }
     var opt = {};
     var query = {};
@@ -57,6 +65,7 @@ user.check = function(req,res,next){
 
 user.add = function (req, res, next) {
     console.log(req.body);
+    req.body.collegeId = req.session.sys_user.collegeId;
     dbHelper.add('UserModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
