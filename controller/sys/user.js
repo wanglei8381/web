@@ -21,17 +21,15 @@ user.page = function (req, res, next) {
         where = {"identity" : 1, "collegeId" : req.session.sys_user.collegeId};
         if (req.body.title) {
             console.log('----',req.body)
-            where = {"identity" : 1, "collegeId" : req.session.sys_user.collegeId, "$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}}]};
+            where = {"identity" : 1, "collegeId" : req.session.sys_user.collegeId, "$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}},{"className" : {'$regex': req.body.title}}]};
         }
     }else{
         where = {"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}]};
         if (req.body.title) {
             console.log('----',req.body)
-            where = {"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}],"name" : {'$regex': req.body.title}};
+            where = {"identity": {"$in":[2, 3,4]},"$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}}]};
         }
     }
-
-
 
     dbHelper.page('UserModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

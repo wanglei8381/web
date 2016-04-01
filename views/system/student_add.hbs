@@ -12,20 +12,20 @@
             <input type="hidden" name="id" value="{{_id}}"/>
             <input type="hidden" name="className" value=""/>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">学生学号</lable>
+                <lable class="col-sm-2 control-label">学生学号<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
                     <input type="text" class="form-control stid" name="stid" value="{{stid}}" placeholder="请输入学生学号" onchange="chickStid()"/>
                     <span class="checkStid hidden" style="color: #D73300">学号已存在，请更换</span>
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">学生姓名</lable>
+                <lable class="col-sm-2 control-label">学生姓名<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入学生姓名" />
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">所在班级</lable>
+                <lable class="col-sm-2 control-label">所在班级<span style="color:red">（*）</span></lable>
                 <div class="col-sm-10 classes">
                 </div>
             </div>
@@ -49,6 +49,18 @@
 
         var id = '{{_id}}';
         var studentSubmit = function () {
+            //必填项校验
+            var studentId = $("input[name=stid]").val();
+            var studentName = $("input[name=name]").val();
+            if(!studentId){
+                $.warning('请输入学生学号');
+                return;
+            }
+            if(!studentName){
+                $.warning('请输入学生姓名');
+                return;
+            }
+
             var url = '/sys/student/add';
             if (id) {
                 url = '/sys/student/edit';
@@ -56,7 +68,7 @@
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
-                success: function (data) {
+                success: function () {
                     window.location = '/sys/student';
                 }
             });
@@ -64,7 +76,7 @@
 
         $('#submit').click(function () {
             if(checkStatus == 1){
-                alert('请更换学生学号');
+                $.warning('学号已存在');
             }else{
                 studentSubmit();
             }
@@ -90,7 +102,7 @@
             });
         }
 
-        function getClasses(collegeId){
+        function getClasses(){
             my.ajax({
                 url: '/sys/classes/check',
                 success: function (data) {
@@ -99,6 +111,8 @@
                                 '<input type="radio" value="'+data.data[i]._id+'" name="classId"/><span>'+ data.data[i].name +
                                 '</span></lable>';
                         $('.classes').append(str);
+                        $("input[value='{{classId}}']").attr('checked',true);
+                        $("input[name=className]").attr("value",'{{className}}');
                     }
                     $("input[name=classId]").click(function () {
                         var name = $("input[name=classId]:checked").next('span').html();
