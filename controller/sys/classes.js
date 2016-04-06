@@ -34,21 +34,6 @@ classes.page = function (req, res, next) {
 
 classes.add = function (req, res, next) {
     console.log(req.body);
-
-    var body = req.body;
-    var name = validator.trim(body.name);
-    var head_teacher = validator.trim(body.head_teacher);
-    var supervisor = validator.trim(body.supervisor);
-    if(!name) {
-        return res.fail("请输入班级")
-    }
-    if (!head_teacher) {
-        return res.fail("请选择班主任");
-    }
-    if (!supervisor) {
-        return res.fail("请选择辅导员");
-    }
-
     dbHelper.add('ClassModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {

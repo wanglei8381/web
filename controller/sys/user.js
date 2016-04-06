@@ -44,11 +44,12 @@ user.page = function (req, res, next) {
 user.check = function(req,res,next){
     console.log(req.body);
     var where = {};
-    if(req.body.checkType == 0){//工号查重
+    if(req.body.checkType == '0'){
+        //工号查重
         where.stid = req.body.stid;
-    }else{//根据院系ID查询教师
-        where.collegeId = req.body.collegeId;
-        where = {"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}]};
+    }else{
+        //根据院系ID查询教师
+        where = {"collegeId" :req.body.collegeId,"$or":[{"identity" : 2},{"identity" : 3},{"identity" : 4}]};
     }
     var opt = {};
     var query = {};

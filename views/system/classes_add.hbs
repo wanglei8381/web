@@ -24,10 +24,10 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">导员工号</lable>
+                <lable class="col-sm-2 control-label">辅导员工号</lable>
                 <div class="col-sm-6">
                     <select class="selectSupervisor form-control">
-                        <option value="">请选择辅导员</option>
+
                     </select>
                 </div>
             </div>
@@ -35,7 +35,6 @@
                 <lable class="col-sm-2 control-label">班主任工号</lable>
                 <div class="col-sm-6">
                     <select class="selectHeader form-control">
-                        <option value="">请选择班主任</option>
                     </select>
                 </div>
             </div>
@@ -52,12 +51,24 @@
 {{#extend "scripts"}}
 
     <script type="text/javascript">
+        var url;
         $(function () {
             //初始化数据
             getCollage();
-            getSupervisor(0);
-            $(".selectSupervisor").select2();
-            $(".selectHeader").select2();
+            $(".selectSupervisor").select2({
+                placeholder: "请选择辅导员",
+                allowClear: true
+            });
+            $(".selectHeader").select2({
+                placeholder: "请选择班主任"
+            });
+            if (id) {
+                getSupervisor('{{collegeId}}');
+                url = '/sys/classes/edit';
+            }else{
+                url = '/sys/classes/add';
+                getSupervisor(0);
+            }
         });
 
         function getCollage(){
@@ -72,7 +83,7 @@
             }
             $("input[name=collegeId]").click(function () {
                 var collegeId = $("input[name=collegeId]:checked").attr("value");
-                getSupervisor(collegeId)
+                getSupervisor(collegeId);
             });
         }
         function getSupervisor(collegeId){
@@ -86,30 +97,50 @@
                 success: function (data) {
                     $(".selectSupervisor").empty();
                     $(".selectHeader").empty();
-                    var strS = '<option value="">请选择辅导员</option>';
-                    var strH = '<option value="">请选择班主任</option>';
-                    $(".selectHeader").append(strH);
-                    $(".selectSupervisor").append(strS);
-                    for(var i=0; i<data.data.length; i++){
-                        var str = '<option value="'+data.data[i].stid+'">'+data.data[i].name+'</option>';
-                        $(".selectSupervisor").append(str);
-                        $(".selectHeader").append(str);
+                    var superData = [];
+                    if(data.data.length == 0){
+                        $(".selectHeader").select2({placeholder: "请选择班主任"});
+                        $(".selectSupervisor").select2({placeholder: "请选择班主任"});
+                    }else{
+                        for(var i=0; i<data.data.length; i++){
+                            var supervisor = { id: data.data[i].stid, text: data.data[i].name };
+                            superData.push(supervisor);
+                        }
+                        $(".selectSupervisor").select2({
+                            data: superData
+                        });
+                        $(".selectHeader").select2({
+                            data: superData
+                        });
+                        if('{{supervisor}}'){
+                            //$('select').select2().select2('val', $('.selectSupervisor option:eq(3)').val());
+                           // $(".selectSupervisor option:eq(3)").attr('selected',true);
+                        }
                     }
+
                 }
             });
         }
 
         var id = '{{_id}}';
         var gradeSubmit = function () {
-            var supervisor=$(".selectSupervisor").find("option:selected").val();
-            var head_teacher=$(".selectHeader").find("option:selected").val();
+            var className = $.trim($('input[name=name]').val());
+            var supervisor=$.trim($(".selectSupervisor").find("option:selected").val());
+            var head_teacher=$.trim($(".selectHeader").find("option:selected").val());
+            if(!className){
+                $.warning('请输入班级名称');
+                return;
+            }
+            if(!supervisor){
+                $.warning('请选择辅导员');
+                return;
+            }
+            if(!head_teacher){
+                $.warning('请选择班主任');
+                return;
+            }
             $('input[name=supervisor]').attr("value",supervisor);
             $('input[name=head_teacher]').attr("value",head_teacher);
-            alert(supervisor);
-            var url = '/sys/classes/add';
-            if (id) {
-                url = '/sys/classes/edit';
-            }
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
