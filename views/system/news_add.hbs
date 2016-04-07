@@ -11,32 +11,20 @@
         <form class="form-horizontal">
             <input type="hidden" name="id" value="{{_id}}"/>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻标题</lable>
+                <lable class="col-sm-2 control-label">新闻标题<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
                     <input type="text" class="form-control" name="title" value="{{title}}" placeholder="请输入新闻标题"/>
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻描述</lable>
+                <lable class="col-sm-2 control-label">新闻描述<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
                     <textarea type="text" class="form-control u-height" name="description"
                            placeholder="请输入新闻描述">{{description}}</textarea>
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻图片</lable>
-                <div class="col-sm-6 row">
-                    <div class="col-sm-9">
-                        <input class="form-control" name="imgUrl" placeholder="请选择新闻图片" value="{{imgUrl}}" type="text"/>
-                    </div>
-                    <button type="button" class="btn btn-default col-sm-3" onclick="search();"><i
-                            class="fa fa-search"></i>
-                        上传
-                    </button>
-                </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">发布范围</lable>
+                <lable class="col-sm-2 control-label">发布范围<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
                     <lable class="radio-inline">
                         <input type="radio" value="0" {{#eq scope 0}}checked{{/eq}} name="scope"/>
@@ -49,7 +37,19 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻内容</lable>
+                <lable class="col-sm-2 control-label">新闻图片<span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></lable>
+                <div class="col-sm-6 row">
+                    <div class="col-sm-9">
+                        <input class="form-control" name="imgUrl" placeholder="请选择新闻图片" value="{{imgUrl}}" type="text"/>
+                    </div>
+                    <button type="button" class="btn btn-default col-sm-3" onclick="search();"><i
+                            class="fa fa-search"></i>
+                        上传
+                    </button>
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">新闻内容<span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></lable>
                 <div class="col-sm-8">
                     <script type="text/plain" name="content" id="editor" style="width:100%;height:360px;"></script>
                 </div>
@@ -90,6 +90,22 @@
         })
 
         var newsSubmit = function () {
+            var newsTitle = $.trim($('input[name=title]').val());
+            var newsDescription = $.trim($('input[name=description]').val());
+            var newsScope = $.trim($('input[name=scope]:checked').attr("value"));
+            if(!newsTitle){
+                $.warning('请输入新闻标题');
+                return;
+            }
+            if(!newsDescription){
+                $.warning('请输入新闻描述');
+                return;
+            }
+            if(!newsScope){
+                $.warning('请选择新闻发布范围');
+                return;
+            }
+
             var url = '/sys/news/add';
             if (id) {
                 url = '/sys/news/edit';
@@ -97,7 +113,7 @@
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
-                success: function (data) {
+                success: function () {
                     window.location = '/sys/news';
                 }
             });
