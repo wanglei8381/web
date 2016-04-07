@@ -77,6 +77,21 @@
 
         var id = '{{_id}}';
         var teacherSubmit = function () {
+            var teacherId = $.trim($('input[name=stid]').val());
+            var teacherName = $.trim($('input[name=name]').val());
+            var teacherType = $.trim($('input[name=identity]:checked').attr("value"));
+            if(!teacherId){
+                $.warning("请输入教师工号");
+                return;
+            }
+            if(!teacherName){
+                $.warning("请输入教师姓名");
+                return;
+            }
+            if(!teacherType){
+                $.warning("请选择教师职别");
+                return;
+            }
             var url = '/sys/teacher/add';
             if (id) {
                 url = '/sys/teacher/edit';
@@ -84,7 +99,7 @@
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
-                success: function (data) {
+                success: function () {
                     window.location = '/sys/teacher';
                 }
             });
@@ -92,7 +107,7 @@
 
         $('#submit').click(function () {
             if(checkStatus == 1){
-                alert('请更换教师工号');
+                $.warning('请更换教师工号');
             }else{
                 teacherSubmit();
             }

@@ -64,7 +64,9 @@ user.check = function(req,res,next){
 
 user.add = function (req, res, next) {
     console.log(req.body);
-    req.body.collegeId = req.session.sys_user.collegeId;
+    if (req.body.identity) {
+        req.body.collegeId = req.session.sys_user.collegeId;
+    }
     dbHelper.add('UserModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {

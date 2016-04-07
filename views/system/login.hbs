@@ -32,11 +32,20 @@
 <script>
 
     var login = function () {
-
+        var userName = $.trim($('input[name=stid]').val());
+        var passWord = $.trim($('input[name=password]').val());
+        if(!userName){
+            $.warning('请输入用户名');
+            return;
+        }
+        if(!passWord){
+            $.warning('请输入密码');
+            return;
+        }
         my.ajax({
             url: '/sys/login',
             data: $("form").serialize(),
-            success: function (data) {
+            success: function () {
                 window.location = '/sys';
             }
         });

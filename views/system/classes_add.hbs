@@ -15,7 +15,7 @@
             <div class="form-group">
                 <lable class="col-sm-2 control-label">班级名称</lable>
                 <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入班级名称"/>
+                    <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入班级名称，如（12级1班）"/>
                 </div>
             </div>
             <div class="form-group">
@@ -53,15 +53,9 @@
     <script type="text/javascript">
         var url;
         $(function () {
-            //初始化数据
-            getCollage();
-            $(".selectSupervisor").select2({
-                placeholder: "请选择辅导员",
-                allowClear: true
-            });
-            $(".selectHeader").select2({
-                placeholder: "请选择班主任"
-            });
+            getCollage();//获取院系
+            $(".selectSupervisor").select2({placeholder: "请选择辅导员",});
+            $(".selectHeader").select2({placeholder: "请选择班主任"});
             if (id) {
                 getSupervisor('{{collegeId}}');
                 url = '/sys/classes/edit';
@@ -100,11 +94,20 @@
                     var superData = [];
                     if(data.data.length == 0){
                         $(".selectHeader").select2({placeholder: "请选择班主任"});
-                        $(".selectSupervisor").select2({placeholder: "请选择班主任"});
+                        $(".selectSupervisor").select2({placeholder: "请选择辅导员"});
                     }else{
+                        var superNum;
+                        var headNum;
                         for(var i=0; i<data.data.length; i++){
                             var supervisor = { id: data.data[i].stid, text: data.data[i].name };
                             superData.push(supervisor);
+
+                            if('{{supervisor}}' == data.data[i].stid){
+                                superNum = i;
+                            }
+                            if('{{head_teacher}}' == data.data[i].stid){
+                                headNum = i;
+                            }
                         }
                         $(".selectSupervisor").select2({
                             data: superData
@@ -113,11 +116,14 @@
                             data: superData
                         });
                         if('{{supervisor}}'){
-                            //$('select').select2().select2('val', $('.selectSupervisor option:eq(3)').val());
-                           // $(".selectSupervisor option:eq(3)").attr('selected',true);
+                            $('.selectSupervisor').select2().select2('val', $(".selectSupervisor option:eq('"+superNum+"')").val());
+                            $(".selectSupervisor option:eq('"+superNum+"')").attr('selected',true);
+                        }
+                        if('{{head_teacher}}'){
+                            $('.selectHeader').select2().select2('val', $(".selectHeader option:eq('"+headNum+"')").val());
+                            $(".selectHeader option:eq('"+headNum+"')").attr('selected','selected');
                         }
                     }
-
                 }
             });
         }
@@ -139,12 +145,16 @@
                 $.warning('请选择班主任');
                 return;
             }
+            if(supervisor == head_teacher){
+                $.warning('辅导员，班主任不能为同一个老师');
+                return;
+            }
             $('input[name=supervisor]').attr("value",supervisor);
             $('input[name=head_teacher]').attr("value",head_teacher);
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
-                success: function (data) {
+                success: function () {
                     window.location = '/sys/classes';
                 }
             });
