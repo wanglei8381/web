@@ -51,8 +51,9 @@
         var id = '{{_id}}';
         var studentSubmit = function () {
             //必填项校验
-            var studentId = $("input[name=stid]").val();
-            var studentName = $("input[name=name]").val();
+            var studentId = $.trim($("input[name=stid]").val());
+            var studentName = $.trim($("input[name=name]").val());
+            var studentClass = $.trim($("input[name=className]").val());
             if(!studentId){
                 $.warning('请输入学生学号');
                 return;
@@ -61,7 +62,10 @@
                 $.warning('请输入学生姓名');
                 return;
             }
-
+            if(!studentClass){
+                $.warning('请选择学生班级');
+                return;
+            }
             var url = '/sys/student/add';
             if (id) {
                 url = '/sys/student/edit';
