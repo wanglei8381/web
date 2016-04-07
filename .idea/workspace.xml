@@ -3,11 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="0f67ed09-56c5-469b-a9ff-afcb501a7387" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/system/classes_add.hbs" afterPath="$PROJECT_DIR$/views/system/classes_add.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/system/login.hbs" afterPath="$PROJECT_DIR$/views/system/login.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/system/student_add.hbs" afterPath="$PROJECT_DIR$/views/system/student_add.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/system/teacher.hbs" afterPath="$PROJECT_DIR$/views/system/teacher.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/system/teacher_add.hbs" afterPath="$PROJECT_DIR$/views/system/teacher_add.hbs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,8 +26,23 @@
       <file leaf-file-name="classes_add.hbs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/system/classes_add.hbs">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.6034858">
-              <caret line="117" column="45" selection-start-line="117" selection-start-column="45" selection-end-line="117" selection-end-column="45" />
+            <state vertical-scroll-proportion="0.25358853">
+              <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
+              <folding>
+                <element signature="e#610#627#0#HTML" expanded="true" />
+                <element signature="e#951#968#0#HTML" expanded="true" />
+                <element signature="e#1180#1197#0#HTML" expanded="true" />
+                <element signature="e#1520#1537#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="job_add.hbs" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/views/system/job_add.hbs">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.103448">
+              <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
               <folding />
             </state>
           </provider>
@@ -138,10 +148,10 @@
         <option value="$PROJECT_DIR$/controller/sys/classes.js" />
         <option value="$PROJECT_DIR$/controller/sys/user.js" />
         <option value="$PROJECT_DIR$/views/system/teacher.hbs" />
-        <option value="$PROJECT_DIR$/views/system/classes_add.hbs" />
         <option value="$PROJECT_DIR$/views/system/teacher_add.hbs" />
         <option value="$PROJECT_DIR$/views/system/student_add.hbs" />
         <option value="$PROJECT_DIR$/views/system/login.hbs" />
+        <option value="$PROJECT_DIR$/views/system/classes_add.hbs" />
       </list>
     </option>
   </component>
@@ -433,14 +443,14 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="1384" height="736" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1727672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1727672" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1503268" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.21732026" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -558,13 +568,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="10" column="0" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/views/system/job_add.hbs">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.589011">
-          <caret line="40" column="83" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="83" />
         </state>
       </provider>
     </entry>
@@ -844,11 +847,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/views/system/job_add.hbs">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.103448">
+          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/views/system/classes_add.hbs">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.6034858">
-          <caret line="117" column="45" selection-start-line="117" selection-start-column="45" selection-end-line="117" selection-end-column="45" />
-          <folding />
+        <state vertical-scroll-proportion="0.25358853">
+          <caret line="95" column="19" selection-start-line="95" selection-start-column="19" selection-end-line="95" selection-end-column="19" />
+          <folding>
+            <element signature="e#610#627#0#HTML" expanded="true" />
+            <element signature="e#951#968#0#HTML" expanded="true" />
+            <element signature="e#1180#1197#0#HTML" expanded="true" />
+            <element signature="e#1520#1537#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
