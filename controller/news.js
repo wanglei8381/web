@@ -1,13 +1,23 @@
-/**
- * message controller
- * @param req
- * @param res
- * @param next
- */
+var dbHelper = require('../../proxy/dbHelper');
+
 var news = module.exports = function (req, res, next) {
-    console.log('进入message controller...');
-    next();
+    console.log('----->news');
 };
+
+news.list = function(req,res,next){
+    console.log(req.body);
+    var where = {};
+    where.collegeId = req.session.sys_user.collegeId;
+    var opt = {};
+    var query = {};
+    dbHelper.find('ClassModel', where, query, opt, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('查询出错');
+        }
+        res.ok(ret);
+    });
+}
 
 news.newsList = function (req, res) {
     res.render('news', {menus_index: 2});

@@ -1,26 +1,42 @@
 var express = require('express');
 var sys_routers = require('./sys_routers');
-var routeMap = require('./controller');
+var login = require('./controller').login;
+var news = require('./controller').news;
 var response = require('./middlewares/response');
 var router = express.Router();
 
-router.use(function (req, res, next) {
-    console.log('请求：', req.originalUrl, req.method);
-    next();
-});
+//验证用户是否登录
+router.use(login.isValidLogin);
 
 //添加中间件
 router.use(response);
 
+//添加模板中间件
+router.use(login.out);
+
 //后台接口
 router.use('/sys', sys_routers);
 
-//登录
-router.get('/login', routeMap.login.login);
-
 //首页
-router.get('/', routeMap.home.index);
+router.get('/', function (req, res) {
+    res.out('index');
+});
 
+
+//登录
+router.get('/login', function (req, res) {
+    res.render('login', {layout: null});
+});
+router.post('/login', login.login);
+router.get('/logout', login.logout);
+
+//新闻页面(新闻列表/详情)
+router.get('/news', function (req, res) {
+    res.out('news');
+});
+router.post('/news', news.list);
+router.get('/news/:id', news.newsDetail);
+/*
 //新闻页面(新闻列表/详情)
 router.get('/news', routeMap.news.newsList);
 router.get('/news/:id', routeMap.news.newsDetail);
@@ -54,6 +70,6 @@ router.get('/resourceEdit/:id', routeMap.resource.resourceEdit);
 
 //个人中心
 router.get('/personCenter', routeMap.person.personCenter);
-router.get('/changePwd', routeMap.person.changePwd);
+router.get('/changePwd', routeMap.person.changePwd);*/
 
 module.exports = router;
