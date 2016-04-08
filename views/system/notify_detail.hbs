@@ -56,8 +56,7 @@
         $(function () {
             var statusSt = ['未发布', '已发布', '关闭'];
             $('#notify_status').html(statusSt['{{status}}']);
-            var typeSt = ['活动通知', '会议通知', '其他通知 '];
-            $('#notify_type').html(typeSt['{{type}}']);
+            $('#notify_type').html(notifyType['{{type}}']);
             $('#createdAt').html(my.toDateString('{{createdAt}}'));
         });
     </script>

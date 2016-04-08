@@ -107,7 +107,6 @@
             for (var i = 0; i < data.data.length; i++) {
               var supervisor = {id: data.data[i].stid, text: data.data[i].name};
               superData.push(supervisor);
-
               if ('{{supervisor}}' == data.data[i].stid) {
                 superNum = i;
               }

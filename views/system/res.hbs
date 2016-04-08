@@ -53,9 +53,6 @@
                     "data": "url",
                     "title": "资源地址"
                 }, {
-                    "data": "userId",
-                    "title": "创建用户"
-                }, {
                     "data": "createdAt",
                     "title": "创建时间"
                 },{
@@ -64,19 +61,27 @@
                 }],
                 columnDefs: [
                     {
-                        targets: 1,
+                        targets: 0,
                         render: function (i, j, item) {
-                            var description = item.description;
-                            description = description.substr(0.,20);
-                            return description;
+                            return formatStr(item.name);
                         }
                     }, {
-                        targets: 4,
+                        targets: 1,
+                        render: function (i, j, item) {
+                            return formatStr(item.description);
+                        }
+                    }, {
+                        targets: 2,
+                        render: function (i, j, item) {
+                            return formatStr(item.url);
+                        }
+                    }, {
+                        targets: 3,
                         render: function (i, j, item) {
                             return my.toDateString(item.createdAt);
                         }
                     }, {
-                        targets: 5,
+                        targets: 4,
                         render: function (i, j, item) {
                             var str = '<a href="/sys/res/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/res/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>';
                             return str;

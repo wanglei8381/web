@@ -19,7 +19,7 @@ res.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where ={userId: req.session.sys_user.stid , name: {'$regex': req.body.title}};
+        where ={userId: req.session.sys_user.stid ,"$or":[{"name" : {'$regex': req.body.title}},{"description": {'$regex': req.body.title}}]};
     }
     where.userId = req.session.sys_user.stid;
 

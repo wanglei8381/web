@@ -19,8 +19,8 @@
             <div class="form-group">
                 <lable class="col-sm-2 control-label">新闻描述<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
-                    <textarea type="text" class="form-control u-height" name="description"
-                           placeholder="请输入新闻描述">{{description}}</textarea>
+                    <textarea type="text" maxlength="300" class="form-control u-height" name="description"
+                           placeholder="请输入新闻描述(300字以内)">{{description}}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻内容<span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></lable>
+                <lable class="col-sm-2 control-label">新闻内容<span style="color:red">（*）</span></lable>
                 <div class="col-sm-8">
                     <script type="text/plain" name="content" id="editor" style="width:100%;height:360px;"></script>
                 </div>
@@ -91,8 +91,9 @@
 
         var newsSubmit = function () {
             var newsTitle = $.trim($('input[name=title]').val());
-            var newsDescription = $.trim($('input[name=description]').val());
+            var newsDescription = $.trim($('textarea[name=description]').val());
             var newsScope = $.trim($('input[name=scope]:checked').attr("value"));
+            var newsContent = $.trim($('#editor').html());
             if(!newsTitle){
                 $.warning('请输入新闻标题');
                 return;
@@ -103,6 +104,10 @@
             }
             if(!newsScope){
                 $.warning('请选择新闻发布范围');
+                return;
+            }
+            if(newsContent == '<p><br></p>'){
+                $.warning('请输入新闻内容');
                 return;
             }
 
