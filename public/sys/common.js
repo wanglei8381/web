@@ -87,6 +87,21 @@ function formatStr(str){
     return str;
 }
 
+function getSupervisor(){
+    var supervisorId;
+    my.ajax({
+        url: '/getServer',
+        success: function(data){
+            supervisorId = data.data[0].supervisor;
+            alert('111'+supervisorId)
+        },
+        error: function(){
+            $.danger('网络异常，请联系管理员！');
+        }
+    });
+    alert(supervisorId)
+    return supervisorId;
+}
 jQuery.extend({
     intiAlert: function (cnt, dom, cls, time, callback) {
         time = time || 3000;

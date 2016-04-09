@@ -60,7 +60,7 @@ login.login = function (req, res) {
       res.fail('用户名密码错误或没有权限');
     } else {
       var user = ret[0];
-      var user = {id: user._id, stid: stid, password: password, collegeId: user.collegeId, name: user.name};
+      var user = {id: user._id, stid: stid, password: password, collegeId: user.collegeId, name: user.name, classId: user.classId};
       console.log('登陆者信息：', user);
       req.session.normal_user = user;
       res.ok(ret);
@@ -92,3 +92,17 @@ login.repwd = function (req, res, next) {
     res.ok();
   });
 };
+
+login.getServer = function(req, res, next){
+  console.log('getServer执行的结果------->', req.session.normal_user.classId);
+  var where = {"_id" : req.session.normal_user.classId};
+  var query = {};
+  var opt = {};
+  dbHelper.find('ClassModel', where, query, opt, function (err, ret) {
+    console.log('执行的结果------->', ret);
+    if (err) {
+      return res.fail('查询出错');
+    }
+    res.ok(ret);
+  });
+}

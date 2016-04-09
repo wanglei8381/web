@@ -30,12 +30,15 @@ router.get('/login', function (req, res) {
 router.post('/login', login.login);
 router.get('/logout', login.logout);
 
+//获取登录学生导员ID
+router.post('/getServer', login.getServer);
+
 //新闻页面(新闻列表/详情)
 router.get('/news', function (req, res) {
     res.out('news');
 });
 router.post('/news', news.list);
-router.get('/news/:id', news.newsDetail);
+//router.get('/news/:id', news.newsDetail);
 /*
 //新闻页面(新闻列表/详情)
 router.get('/news', routeMap.news.newsList);

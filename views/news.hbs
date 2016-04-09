@@ -1,82 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>XX系统--新闻中心</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/common.css" rel="stylesheet">
-</head>
-<body>
-{{>header}}
 <div class="marginLR marginBottom">
     <div class="container">
         <div class="row">
             <div class="textColor paddTop col-md-10 col-md-offset-1">
                 <div class="borderStyle row">
                     <div class="col-sm-2 paddTop2 paddBottom2">
-                        <span class="h4 textColor">{{#eq menus_index 2}}新闻中心{{else}}通知中心{{/eq}}</span>
+                        <span class="h4 textColor">新闻中心</span>
                     </div>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="form-group col-xs-10 col-sm-6">
-                                <input type="text" class="form-control " placeholder="请输入关键字"/>
+                                <input type="text" class="form-control " placeholder="请输入关键字" id="title"/>
                             </div>
-                            <button type="submit  col-xs-2 col-sm-2" class="btn  btn-default col-xs-2">搜索</button>
+                            <button type="submit  col-xs-2 col-sm-2" onclick="getSupervisor();" class="btn  btn-default col-xs-2">搜索</button>
                         </div>
                     </div>
                 </div>
-                <ul class="fontSize1 list">
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="/news/245464iiii">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <span>[计算机系]</span>
-                        <a href="">关于呵呵呵呵呵呵呵呵呵呵呵，呵呵呵呵呵呵呵呵呵呵新闻.......</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
+                <ul class="fontSize1 list" id="newsList">
                 </ul>
                 <div class="text-center">
                     <div class="hidden-xs">
@@ -103,8 +42,53 @@
     </div>
 </div>
 
-{{>footer}}
-<script src="js/jquery.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-</body>
-</html>
+{{#extend "scripts"}}
+    <script>
+        $(function () {
+            getSupervisor();//获取当前登录学生导员ID
+        });
+        var supervisorId;
+        function getSupervisor(){
+            my.ajax({
+                url: '/getServer',
+                success: function(data){
+                    supervisorId = data.data[0].supervisor;
+                    search(supervisorId);
+                },
+                error: function(){
+                    $.danger('网络异常，请联系管理员！');
+                }
+            })
+        }
+
+        function search(supervisorId) {
+            var data = {
+                supervisorId : supervisorId,
+                title : $.trim($('#title').val())
+            }
+            my.ajax({
+                url: '/news',
+                data : data,
+                success: function (data) {
+                    var data = data.data;
+                    for(var i = 0; i < data.length; i++){
+                        var scope = '院系新闻';
+                        if(data[i].scope == 0){
+                            scope = '校级新闻';
+                        }
+                        var str = '<li class="paddTop">'+
+                                    '<span>['+scope+']</span>'+
+                                    '<a href="">'+formatStr(data[i].title)+'</a>'+
+                                    '<span class="textColor1 pull-right paddLeft">'+my.toDateString(data[i].createdAt)+'</span>'+
+                                '</li>'
+                        $('#newsList').append(str);
+                    }
+                },
+                error: function () {
+                    $.danger('网络异常，请联系管理员！');
+                }
+           });
+        }
+
+    </script>
+{{/extend}}

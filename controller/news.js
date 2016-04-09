@@ -1,4 +1,4 @@
-var dbHelper = require('../../proxy/dbHelper');
+var dbHelper = require('../proxy/dbHelper');
 
 var news = module.exports = function (req, res, next) {
     console.log('----->news');
@@ -6,11 +6,10 @@ var news = module.exports = function (req, res, next) {
 
 news.list = function(req,res,next){
     console.log(req.body);
-    var where = {};
-    where.collegeId = req.session.sys_user.collegeId;
+    var where = {status: 1, "$or":[{"scope" : 0},{"scope": 1, "userId" : req.body.supervisorId}], "title" : {'$regex': req.body.title}};
     var opt = {};
     var query = {};
-    dbHelper.find('ClassModel', where, query, opt, function (err, ret) {
+    dbHelper.find('NewsModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');
@@ -18,21 +17,3 @@ news.list = function(req,res,next){
         res.ok(ret);
     });
 }
-
-news.newsList = function (req, res) {
-    res.render('news', {menus_index: 2});
-};
-
-news.newsDetail = function (req, res) {
-    console.log(req.params.id);
-    res.render('newsDetail', {menus_index: 2});
-};
-
-news.notificationList = function (req, res) {
-    res.render('news', {menus_index: 3});
-};
-
-news.notificationDetail = function (req, res) {
-    console.log(req.params.id);
-    res.render('newsDetail', {menus_index: 3});
-};
