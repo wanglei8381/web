@@ -43,6 +43,13 @@ var my = {
         };
         return d.getFullYear() + '-' + add0((d.getMonth() + 1)) + '-' + add0(d.getDate()) + ' ' + add0(d.getHours()) + ':' + add0(d.getMinutes()) + ':' + add0(d.getSeconds());
     },
+    toDateStr: function (UTCString) {
+        var d = new Date(UTCString);
+        var add0 = function (num) {
+            return num < 10 ? '0' + num : num;
+        };
+        return d.getFullYear() + '-' + add0((d.getMonth() + 1)) + '-' + add0(d.getDate());
+    },
     repwd: function () {
         var self = this;
         var html = '<div class="panel-body"><form class="form-horizontal" id="repwdForm"><div class="form-group"><label class="col-sm-3 control-label">旧密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="旧密码" type="text" name="oldpassword"/></div></div><div class="form-group"><label class="col-sm-3 control-label">新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="新密码" type="text" name="password"/></div></div><div class="form-group"><label class="col-sm-3 control-label">确认新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="确认新密码" type="text" name="repassword"/></div></div></form></div>';
@@ -86,22 +93,14 @@ function formatStr(str){
     }
     return str;
 }
-
-function getSupervisor(){
-    var supervisorId;
-    my.ajax({
-        url: '/getServer',
-        success: function(data){
-            supervisorId = data.data[0].supervisor;
-            alert('111'+supervisorId)
-        },
-        error: function(){
-            $.danger('网络异常，请联系管理员！');
-        }
-    });
-    alert(supervisorId)
-    return supervisorId;
+function formatStr2(str){
+    if(str.length > 20){
+        str = str.substr(0,20);
+        str = str + '...' ;
+    }
+    return str;
 }
+
 jQuery.extend({
     intiAlert: function (cnt, dom, cls, time, callback) {
         time = time || 3000;

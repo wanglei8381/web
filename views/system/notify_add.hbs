@@ -18,12 +18,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">通知描述<span style="color:red">（*）</span></lable>
-                <div class="col-sm-6">
-                    <textarea type="text" class="form-control u-height" maxlength="100" name="description" placeholder="请输入通知描述(100字以内)">{{description}}</textarea>
-                </div>
-            </div>
-            <div class="form-group">
                 <lable class="col-sm-2 control-label">通知类型<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6 notifyType">
                 </div>
@@ -71,14 +65,9 @@
 
         var notifySubmit = function(){
             var notifyTitle = $.trim($('input[name=title]').val());
-            var notifyDes = $.trim($('textarea[name=description]').val());
             var notifyContent = $.trim($('#editor').html());
             if(!notifyTitle){
                 $.warning('请输入通知标题');
-                return;
-            }
-            if(!notifyDes){
-                $.warning('请输入通知描述');
                 return;
             }
             if(notifyContent == '<p><br></p>') {

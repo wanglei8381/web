@@ -1,0 +1,30 @@
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="paddTop col-md-10 col-md-offset-1">
+                <div class="borderStyle paddBottom">
+                    <span class="h4 textColor">新闻中心</span>
+                </div>
+                <div class="text-center">
+                    <h3 class="textColor">{{title}}</h3>
+                    发布日期：<span class="createdAt"></span>
+                    新闻来源：<span>{{#eq scope 0}}校级新闻{{else}}院系新闻{{/eq}}</span>
+                </div>
+                <div class="paddTop fontSize1 textColor4">
+                    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{description}}</span>
+                </div>
+                <div class="paddTop fontSize2">
+                    {{{content}}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+    <script>
+        $(function () {
+            $('.createdAt').html(my.toDateStr('{{createdAt}}'));
+        });
+    </script>
+{{/extend}}

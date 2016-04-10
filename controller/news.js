@@ -17,3 +17,14 @@ news.list = function(req,res,next){
         res.ok(ret);
     });
 }
+
+news.detail = function (req, res, next) {
+    var id = req.params.id;
+    dbHelper.findOne('NewsModel', id, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('查询出错');
+        }
+        res.out('news_detail', ret);
+    });
+};

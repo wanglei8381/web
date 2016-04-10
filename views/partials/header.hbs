@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>教务辅助系统</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" charset="utf-8">
-    <link href="../sys/signin.css" rel="stylesheet">
-    <link href="../sys/common.css" rel="stylesheet">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/common.css" rel="stylesheet">
+    <link href="/sys/signin.css" rel="stylesheet">
+    <link href="/sys/common.css" rel="stylesheet">
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/common.css" rel="stylesheet">
 </head>
 <body>
     <header class="navbar-fixed-top">
@@ -29,16 +29,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <span href="##" class="navbar-brand fontSize paddRight">教务辅助系统</span>
+                <a href="/" class="navbar-brand fontSize paddRight">教务辅助系统</a>
             </div>
             <div class="collapse navbar-collapse navbar-responsive-collapse">
                 <ul class="nav navbar-nav h4">
-                    <li id="_id"><a href="/">首页</a></li>
-                    <li id="news_id"><a href="/news">新闻</a></li>
-                    <li id="notify_id"><a href="/notification">通知</a></li>
-                    <li id="note_id"><a href="/mynote">假条审批</a></li>
-                    <li id=job_id""><a href="/myjob">企业招聘</a></li>
-                    <li id="res_id"><a href="/myresource">资源共享</a></li>
+                    <li id="news_id" ><a href="/news">新闻</a></li>
+                    <li id="notify_id"><a href="/notify">通知</a></li>
+                    <li id="note_id"><a href="/note">假条审批</a></li>
+                    <li id=job_id""><a href="/job">企业招聘</a></li>
+                    <li id="res_id"><a href="/res">资源共享</a></li>
                 </ul>
             </div>
         </div>
@@ -55,12 +54,12 @@
             </ul>
         </div>
     </footer>
-    <script src="../sys/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../sys/common.js"></script>
+    <script src="/sys/jquery.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/sys/common.js"></script>
     <script>
         $(function () {
-            var path_module = location.pathname.substr(5);
+            var path_module = location.pathname.substr(1);
             if (path_module) {
                 var index = path_module.indexOf('/');
                 if (index > -1) {

@@ -78,7 +78,7 @@ login.logout = function (req, res, next) {
 };
 
 login.repwd = function (req, res, next) {
-  if (validator.trim(req.body.oldpassword) != req.session.sys_user.password) {
+  if (validator.trim(req.body.oldpassword) != req.session.normal_user.password) {
     return res.fail('旧密码输入错误');
   }
   var id = req.session.normal_user.id;
