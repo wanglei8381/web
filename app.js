@@ -43,6 +43,22 @@ app.use(session({
 //配置路由
 app.use(router);
 
+//404错误
+app.use(function (req, res, next) {
+    var err = new Error('404 Page Not Found');
+    err.status = 404;
+    next(err);
+});
+
+//其它错误
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+        message: err.message,
+        error: err
+    });
+});
+
 //启动服务
 app.listen(config.port);
 
