@@ -1,5 +1,3 @@
-var validator = require('validator');
-var crypto = require('crypto');//加密
 var dbHelper = require('../../proxy/dbHelper');
 
 var res = module.exports = function (req, res, next) {
@@ -19,7 +17,7 @@ res.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where ={userId: req.session.sys_user.stid , name: {'$regex': req.body.title}};
+        where ={userId: req.session.sys_user.stid ,"$or":[{"name" : {'$regex': req.body.title}},{"description": {'$regex': req.body.title}}]};
     }
     where.userId = req.session.sys_user.stid;
 

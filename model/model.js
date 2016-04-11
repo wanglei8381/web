@@ -67,7 +67,6 @@ mongoose.model('News', NewsSchema);
 var NotificationSchema = new Schema({
     userId: {type: String},
     title: {type: String},
-    description: {type: String},
     content: {type: String},
     collegeId: {type: String},//所属院系编号
     status: {type: Number, default: 0},//0未发布1已发布、2关闭

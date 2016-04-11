@@ -9,12 +9,6 @@
     <div class="panel-body">
         <form class="form-horizontal">
             <div class="form-group">
-                <lable class="col-sm-2 control-label">创建用户</lable>
-                <div class="col-sm-10 u-word">
-                    {{userId}}
-                </div>
-            </div>
-            <div class="form-group">
                 <lable class="col-sm-2 control-label">资源名称</lable>
                 <div class="col-sm-10 u-word">
                     {{name}}
@@ -23,8 +17,9 @@
             <div class="form-group">
                 <lable class="col-sm-2 control-label">资源地址</lable>
                 <div class="col-sm-10 u-word">
-                    {{url}}
+                    <span>{{url}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="##" class="btn btn-default">下载</a>
                 </div>
+
             </div>
             <div class="form-group">
                 <lable class="col-sm-2 control-label">资源描述</lable>

@@ -16,10 +16,6 @@ var app = express();
 // 设置模板引擎
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
-/*app.set('view engine', 'html');
- app.engine('html', hbs.__express);*/
-//局部模板
-hbs.registerPartials(__dirname + '/views/partials');
 
 //提供网站小图标，显示在浏览器的地址栏和收藏栏里
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

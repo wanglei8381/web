@@ -1,5 +1,3 @@
-var validator = require('validator');
-var crypto = require('crypto');
 var dbHelper = require('../../proxy/dbHelper');
 
 

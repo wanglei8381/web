@@ -5,7 +5,7 @@
                 <h4>通知列表</h4>
             </div>
             <div class="col-xs-4">
-                <input class="form-control" placeholder="标题" type="text" id="title"/>
+                <input class="form-control" placeholder="通知标题" type="text" id="title"/>
             </div>
             <div class="col-xs-2">
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
@@ -45,13 +45,13 @@
                 },
                 columns: [{
                     "data": "title",
-                    "title": "名称"
+                    "title": "通知标题"
                 },{
                     "data": "type",
-                    "title": "类型"
+                    "title": "通知类型"
                 }, {
                     "data": "status",
-                    "title": "状态"
+                    "title": "通知状态"
                 }, {
                     "data": "createdAt",
                     "title": "创建时间"
@@ -61,10 +61,14 @@
                 }],
                 columnDefs: [
                     {
+                        targets: 0,
+                        render: function(i, j, item){
+                            return formatStr(item.title);
+                        }
+                    }, {
                         targets: 1,
                         render: function (i, j, item) {
-                            var st = ['活动通知','会议通知','其他通知'];
-                            return st[item.type];
+                            return notifyType[item.type];
                         }
                     },
                     {

@@ -5,7 +5,7 @@
                 <h4>新闻列表</h4>
             </div>
             <div class="col-xs-4">
-                <input class="form-control" placeholder="标题" type="text" id="title"/>
+                <input class="form-control" placeholder="新闻标题" type="text" id="title"/>
             </div>
             <div class="col-xs-2">
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
@@ -45,7 +45,7 @@
                 },
                 columns: [{
                     "data": "title",
-                    "title": "名称"
+                    "title": "新闻标题"
                 }, {
                     "data": "imgUrl",
                     "title": "图片地址"
@@ -64,6 +64,20 @@
                 }],
                 columnDefs: [
                     {
+                        targets: 0,
+                        render: function(i, j, item){
+                            return formatStr(item.title);
+                        }
+                    }, {
+                        targets: 1,
+                        render: function(i, j, item){
+                            if(!item.imgUrl){
+                                return '无';
+                            }else{
+                                return formatStr(item.imgUrl);
+                            }
+                        }
+                    }, {
                         targets: 2,
                         render: function (i, j, item) {
                             var st = ['公开','不公开'];

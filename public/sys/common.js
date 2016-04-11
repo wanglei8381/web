@@ -43,6 +43,13 @@ var my = {
         };
         return d.getFullYear() + '-' + add0((d.getMonth() + 1)) + '-' + add0(d.getDate()) + ' ' + add0(d.getHours()) + ':' + add0(d.getMinutes()) + ':' + add0(d.getSeconds());
     },
+    toDateStr: function (UTCString) {
+        var d = new Date(UTCString);
+        var add0 = function (num) {
+            return num < 10 ? '0' + num : num;
+        };
+        return d.getFullYear() + '-' + add0((d.getMonth() + 1)) + '-' + add0(d.getDate());
+    },
     repwd: function () {
         var self = this;
         var html = '<div class="panel-body"><form class="form-horizontal" id="repwdForm"><div class="form-group"><label class="col-sm-3 control-label">旧密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="旧密码" type="text" name="oldpassword"/></div></div><div class="form-group"><label class="col-sm-3 control-label">新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="新密码" type="text" name="password"/></div></div><div class="form-group"><label class="col-sm-3 control-label">确认新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="确认新密码" type="text" name="repassword"/></div></div></form></div>';
@@ -78,7 +85,21 @@ var my = {
 };
 
 var collage = ['性别与社会发展学院','法学院','管理学院','儿童发展与教育学院','艺术学院','高等职业教育学院','教育学院','计算机系','外语系','金融系','汉语国际教育系'];
-
+var notifyType = ['活动通知','会议通知','考试通知','课程通知','其他通知'];
+function formatStr(str){
+    if(str.length > 10){
+        str = str.substr(0,10);
+        str = str + '...' ;
+    }
+    return str;
+}
+function formatStr2(str){
+    if(str.length > 20){
+        str = str.substr(0,20);
+        str = str + '...' ;
+    }
+    return str;
+}
 
 jQuery.extend({
     intiAlert: function (cnt, dom, cls, time, callback) {

@@ -1,5 +1,3 @@
-var validator = require('validator');
-var crypto = require('crypto');//加密
 var dbHelper = require('../../proxy/dbHelper');
 
 var classes = module.exports = function (req, res, next) {

@@ -1,29 +1,56 @@
 var express = require('express');
 var sys_routers = require('./sys_routers');
-var routeMap = require('./controller');
+var login = require('./controller').login;
+var news = require('./controller').news;
+var notify = require('./controller').notify;
 var response = require('./middlewares/response');
 var router = express.Router();
-
-router.use(function (req, res, next) {
-    console.log('请求：', req.originalUrl, req.method);
-    next();
-});
 
 //添加中间件
 router.use(response);
 
+//添加模板中间件
+router.use(login.out);
+
 //后台接口
 router.use('/sys', sys_routers);
 
-//登录
-router.get('/login', routeMap.login.login);
+//验证用户是否登录
+router.use(login.isValidLogin);
 
 //首页
-router.get('/', routeMap.home.index);
+router.get('/', function (req, res) {
+    res.out('index');
+});
 
-//新闻页面(新闻列表/详情)
-router.get('/news', routeMap.news.newsList);
-router.get('/news/:id', routeMap.news.newsDetail);
+
+//登录
+router.get('/login', function (req, res) {
+    res.render('login', {layout: null});
+});
+router.post('/login', login.login);
+router.get('/logout', login.logout);
+
+//获取登录学生导员ID
+router.post('/getServer', login.getServer);
+
+//新闻列表
+router.get('/news', function (req, res) {
+    res.out('news');
+});
+router.post('/news', news.list);
+//新闻详情
+router.get('/news/detail/:id', news.detail);
+
+//通知列表
+router.get('/notify', function (req, res) {
+    res.out('notify');
+});
+router.post('/notify', notify.list);
+//通知详情
+router.get('/notify/detail/:id', notify.detail);
+
+/*
 
 //通知页面(通知列表/详情)
 router.get('/notification', routeMap.news.notificationList);
@@ -54,6 +81,6 @@ router.get('/resourceEdit/:id', routeMap.resource.resourceEdit);
 
 //个人中心
 router.get('/personCenter', routeMap.person.personCenter);
-router.get('/changePwd', routeMap.person.changePwd);
+router.get('/changePwd', routeMap.person.changePwd);*/
 
 module.exports = router;

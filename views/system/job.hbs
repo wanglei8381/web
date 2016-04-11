@@ -5,7 +5,7 @@
                 <h4>职位列表</h4>
             </div>
             <div class="col-xs-4">
-                <input class="form-control" placeholder="标题" type="text" id="title"/>
+                <input class="form-control" placeholder="公司名称/职位名称/工作地点" type="text" id="title"/>
             </div>
             <div class="col-xs-2">
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
@@ -52,10 +52,7 @@
                 }, {
                     "data": "workPlace",
                     "title": "工作地点"
-                }, {
-                    "data": "collegeId",
-                    "title": "职位来源"
-                }, {
+                },{
                     "data": "createdAt",
                     "title": "创建时间"
                 },{
@@ -64,17 +61,27 @@
                 }],
                 columnDefs: [
                     {
-                        targets:3,
+                        targets:0,
                         render: function (i, j, item) {
-                            return collage[item.collegeId];
+                            return formatStr(item.companyName);
                         }
                     }, {
-                        targets:4,
+                        targets:1,
+                        render: function (i, j, item) {
+                            return formatStr(item.jobName);
+                        }
+                    }, {
+                        targets:2,
+                        render: function (i, j, item) {
+                            return my.toDateString(item.workPlace);
+                        }
+                    }, {
+                        targets:3,
                         render: function (i, j, item) {
                             return my.toDateString(item.createdAt);
                         }
                     }, {
-                        targets: 5,
+                        targets: 4,
                         render: function (i, j, item) {
                             var str = '<a href="/sys/job/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/job/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
                             return str;

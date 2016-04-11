@@ -1,0 +1,28 @@
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="paddTop col-md-10 col-md-offset-1">
+                <div class="borderStyle paddBottom">
+                    <span class="h4 textColor">通知中心</span>
+                </div>
+                <div class="text-center borderStyle2">
+                    <h3 class="textColor">{{title}}</h3>
+                    发布日期：<span class="createdAt"></span>
+                    通知类型：<span class="type"></span>
+                </div>
+                <div class="paddTop fontSize2">
+                    {{{content}}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+    <script>
+        $(function () {
+            $('.createdAt').html(my.toDateStr('{{createdAt}}'));
+            $('.type').html(notifyType['{{type}}']);
+        });
+    </script>
+{{/extend}}
