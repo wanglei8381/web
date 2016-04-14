@@ -19,39 +19,34 @@
                         <div class="form-group row">
                             <label class="col-md-2 control-label">姓名</label>
                             <div class="col-md-2">
-                                <input type="text" class="form-control" id="inputEmail3" disabled value="{{userName}}">
+                                {{userName}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假时间</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="" disabled>
+                                {{beginDate}}至{{endDate}}&nbsp;&nbsp;&nbsp;&nbsp;共：{{days}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假事由</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3" disabled>{{reason}}</textarea>
+                                {{reason}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">教师意见</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3"></textarea>
+                                <textarea class="form-control" rows="3" name="rejectReason">{{rejectReason}}</textarea>
                             </div>
                         </div>
                     </form>
                     <div class="form-group">
                         <div class="col-sm-6 col-sm-offset-3">
-                            <button class="btn btn-default marginLR1" type="pass">通过</button>
-                            <button class="btn btn-default marginLR1" type="back">驳回</button>
-                            <a href="/allNote" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                            <a class="btn btn-default col-sm-2 col-sm-offset-2">通过</a>
+                            <a class="btn btn-default col-sm-2 col-sm-offset-2">驳回</a>
+                            <a href="/allNote" class="btn btn-default col-sm-2 col-sm-offset-2">取消</a>
                         </div>
-                    </div>
-                    <div class="btn-group col-sm-4 col-sm-offset-4">
-                        <button class="btn btn-default marginLR1" type="pass">通过</button>
-                        <button class="btn btn-default marginLR1" type="back">驳回</button>
-                        <button class="btn btn-default " type="button">返回</button>
                     </div>
                 </div>
             </div>

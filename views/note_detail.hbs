@@ -19,19 +19,19 @@
                         <div class="form-group row">
                             <label class="col-md-2 control-label">姓名</label>
                             <div class="col-md-2">
-                                <input type="text" class="form-control" placeholder="" disabled value="{{userName}}">
+                                {{userName}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假时间</label>
                             <div class="col-md-7">
-                                <input type="text" class="form-control" placeholder="" disabled>
+                                {{beginDate}}至{{endDate}}&nbsp;&nbsp;&nbsp;&nbsp;共：{{days}}
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假事由</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3" disabled>{{reason}}</textarea>
+                                {{reason}}
                             </div>
                         </div>
                         <div class="form-group row">
@@ -43,7 +43,7 @@
                         <div class="form-group row" id="teacherSugg">
                             <label class="col-md-2 control-label">教师意见</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3" disabled>就是不想上课</textarea>
+                                {{rejectReason}}
                             </div>
                         </div>
                     </form>
