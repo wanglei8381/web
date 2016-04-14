@@ -1,0 +1,116 @@
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
+                <div class="textColor borderStyle1">
+                    <div class="textColor borderStyle1">
+                        <ul class="nav nav-stacked">
+                            <li><a href="/note">我的假条</a></li>
+                            <li class="active"><a href="/note/add">请假申请</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--请假申请-->
+            <div class="textColor paddTop col-md-9">
+                <div class="paddBottom">
+                    <span class="h4 textColor">请假申请</span>
+                </div>
+                <div class="paddAll4 borderStyle1 bgColor2">
+                    <form role="form form-horizontal">
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">姓名</label>
+                            <div class="col-md-2">
+                                {{normal_user.name}}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">请假日期<span style="color:red">（*）</span></label>
+                            <div class="col-md-10 row">
+                                <div class="col-md-4">
+                                    <div class="input-group date noteDate " data-date="" data-date-format="yyyy-mm-dd  HH时" data-link-field="dtp_input1">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        <input class="form-control" size="16" type="text" value="{{beginDate}}" name="beginDate" readonly placeholder="开始日期">
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" value="" /><br/>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="input-group date noteDate " data-date="" data-date-format="yyyy-mm-dd  hh时" data-link-field="dtp_input1">
+                                        <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                        <input class="form-control" size="16" type="text" value="{{endDate}}" name="endDate" readonly placeholder="结束日期">
+                                    </div>
+                                    <input type="hidden" id="dtp_input1" value="" /><br/>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" name="days" value="{{days}}" placeholder="请假天数"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-2 control-label">请假事由<span style="color:red">（*）</span></label>
+                            <div class="col-md-10">
+                                <textarea class="form-control" rows="3" name="reason">{{reason}}</textarea>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="form-group">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <button class="btn btn-default col-sm-4" type="button" id="submit">提交</button>
+                            <a href="/note" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{#extend "scripts"}}
+    <script>
+        $(function () {
+            if('{{normal_user.identity}}' == 1){
+                $('#noteApproval').addClass('hidden');
+            }else if('{{normal_user.identity}}' == 2 || '{{normal_user.identity}}' == 3){
+                $('.ifTeacer').addClass('hidden');
+            }
+            $('.noteDate').datetimepicker({
+                language:  'zh-CN',
+                weekStart: 1,
+                todayBtn:  1,
+                autoclose: 1,
+                todayHighlight: 1,
+                startView: 2,
+                minView:1,
+                forceParse: 0,
+                showMeridian: 1
+            });
+        });
+
+        $('#submit').click(function () {
+            noteSubmit();
+        });
+
+        function noteSubmit(){
+            var beginDate = $.trim($('input[name=beginDate]').val());
+            var noteReason = $.trim($('textarea[name=reason]').val());
+            if(!beginDate){
+                $.warning('请选择请假日期');
+                return;
+            }
+            if(!noteReason){
+                $.warning('请输入请假理由');
+                return;
+            }
+
+            var url = '/note/add';
+            my.ajax({
+                url: url,
+                data: $("form").serialize(),
+                success: function () {
+                    window.location = '/note';
+                }
+            });
+        }
+    </script>
+{{/extend}}

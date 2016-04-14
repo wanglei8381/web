@@ -56,6 +56,7 @@ var NewsSchema = new Schema({
     description: {type: String},
     content: {type: String},
     scope: {type: Number, default: 0},//0公开1自己学院
+    collegeId: {type: String},//所属院系编号
     status: {type: Number, default: 0},//0未发布1已发布、2关闭
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
@@ -113,6 +114,7 @@ var NoteSchema = new Schema({
     status: {type: Number, default: 2},//0未通过，1通过，2审批中
     rejectReason: {type: String},
     userId: {type: String},
+    userName: {type: String},
     createdAt: {type: Date, default: Date.now},
     updatedAt: {type: Date, default: Date.now}
 });

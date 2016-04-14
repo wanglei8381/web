@@ -1,22 +1,29 @@
 <div class="marginLR marginBottom">
     <div class="container">
         <div class="row">
-            <div class="textColor paddTop col-md-10 col-md-offset-1">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
+                <div class="textColor borderStyle1">
+                    <ul class="nav nav-stacked">
+                        <li class="active"><a href="/allNote">假条审批</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="textColor paddTop col-md-9">
                 <div class="borderStyle row">
                     <div class="col-sm-2 paddTop2 paddBottom2">
-                        <span class="h4 textColor">新闻中心</span>
+                        <span class="h4 textColor">所有假条</span>
                     </div>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="form-group col-xs-10 col-sm-6">
-                                <input type="text" class="form-control " placeholder="请输入关键字" id="title"/>
+                                <input type="text" class="form-control " placeholder="请输入关键字" />
                             </div>
-                            <button type="submit  col-xs-2 col-sm-2" onclick="search();" class="btn  btn-default col-xs-2">搜索</button>
+                            <button type="submit  col-xs-2 col-sm-2" class="btn  btn-default col-xs-2">搜索</button>
                         </div>
                     </div>
                 </div>
-                <ul class="fontSize1 list" id="newsList">
-
+                <ul class="fontSize1 list" id="noteList">
                 </ul>
                 <div class="text-center" id="changePage">
                     <div class="hidden-xs">
@@ -42,46 +49,39 @@
         </div>
     </div>
 </div>
-
 {{#extend "scripts"}}
     <script>
         $(function () {
-            search()
+            search();
         });
         function search() {
             var data = {
                 title : $.trim($('#title').val())
             }
             my.ajax({
-                url: '/news',
+                url: '/allNote',
                 data : data,
                 success: function (data) {
                     var data = data.data;
                     if(data.length == 0){
                         var str = '<li class="paddTop"><span>暂无数据</span></li>';
-                        $('#newsList').prepend(str);
+                        $('#noteList').prepend(str);
                         $('#changePage').addClass('hidden');
-                    }else {
-                        $('#newsList').empty();
-                        for (var i = 0; i < data.length; i++) {
-                            var scope = '院系新闻';
-                            if (data[i].scope == 0) {
-                                scope = '校级新闻';
-                            }
-                            var str = '<li class="paddTop">' +
-                                    '<span>[' + scope + ']</span>&nbsp;' +
-                                    '<a href="/news/detail/' + data[i]._id + '">' + formatStr2(data[i].title) + '</a>' +
-                                    '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(data[i].createdAt) + '</span>' +
-                                    '</li>'
-                            $('#newsList').prepend(str);
+                    }else{
+                        $('#noteList').empty();
+                        for(var i = 0; i < data.length; i++){
+                            var str = '<li class="paddTop">'+
+                                    '<a href="/note/appreval/' + data[i]._id + '"><span>'+data[i].userName+'</span> 的请假单</a>'+
+                                    '<span class="textColor1 pull-right paddLeft">'+my.toDateStr(data[i].createdAt)+'</span>'+
+                                    '<span class="pull-right">'+noteStatus[data[i].status]+'</span></li>'
+                            $('#noteList').prepend(str);
                         }
                     }
                 },
                 error: function () {
                     $.danger('网络异常，请联系管理员！');
                 }
-           });
+            });
         }
-
     </script>
 {{/extend}}

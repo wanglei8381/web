@@ -3,6 +3,7 @@ var sys_routers = require('./sys_routers');
 var login = require('./controller').login;
 var news = require('./controller').news;
 var notify = require('./controller').notify;
+var note = require('./controller').note;
 var response = require('./middlewares/response');
 var router = express.Router();
 
@@ -31,10 +32,7 @@ router.get('/login', function (req, res) {
 router.post('/login', login.login);
 router.get('/logout', login.logout);
 
-//获取登录学生导员ID
-router.post('/getServer', login.getServer);
-
-//新闻列表
+//新闻管理(列表)
 router.get('/news', function (req, res) {
     res.out('news');
 });
@@ -42,7 +40,7 @@ router.post('/news', news.list);
 //新闻详情
 router.get('/news/detail/:id', news.detail);
 
-//通知列表
+//通知管理(列表)
 router.get('/notify', function (req, res) {
     res.out('notify');
 });
@@ -50,12 +48,28 @@ router.post('/notify', notify.list);
 //通知详情
 router.get('/notify/detail/:id', notify.detail);
 
+//假条审批(我的假条列表)
+router.get('/note', function (req, res) {
+    res.out('note');
+});
+router.post('/note', note.list);
+//假条详情
+router.get('/note/detail/:id', note.detail);
+//全部假条列表
+router.get('/allNote', function (req, res) {
+    res.out('allNote');
+});
+router.post('/allNote', note.listAll);
+//请假申请(假条添加)
+router.get('/note/add', function (req, res) {
+    res.out('note_add');
+});
+router.post('/note/add', note.add);
+//假条审批
+router.get('/note/appreval/:id',note.apprevaldetail);
+//router.post('/note/appreval', note.appreval);
+
 /*
-
-//通知页面(通知列表/详情)
-router.get('/notification', routeMap.news.notificationList);
-router.get('/notification/:id', routeMap.news.notificationDetail);
-
 //假条审批(我的假条列表/请假申请/假条审批列表/假条详情/假条审批)
 router.get('/mynote', routeMap.note.mynoteList);
 router.get('/noteAdd', routeMap.note.noteAdd);

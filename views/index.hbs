@@ -1,7 +1,157 @@
-<div>
-    首页
+<!--首页 轮播-->
+<div class="bgColor">
+    <div class="container">
+        <div class="row">
+            <div id="myCarousel" class="carousel slide col-md-10 col-md-push-1">
+                <!-- 轮播（Carousel）指标 -->
+                <ol class="carousel-indicators bBottom">
+                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                </ol>
+                <!-- 轮播（Carousel）项目 -->
+                <div class="carousel-inner">
+                    <div class="item active">
+                        <img src="imgs/index-1.jpg" alt="First slide" class="img-responsive">
+                    </div>
+                    <div class="item">
+                        <img src="imgs/index-2.jpg" alt="Second slide" class="img-responsive">
+                    </div>
+                    <div class="item text-center">
+                        <img src="imgs/index-3.jpg" alt="Third slide" class="img-responsive">
+                    </div>
+                </div>
+                <!-- 轮播（Carousel）导航 -->
+                <a class="my-carousel-control left" href="#myCarousel"
+                   data-slide="prev"></a>
+                <a class="my-carousel-control right" href="#myCarousel"
+                   data-slide="next"></a>
+            </div>
+        </div>
+    </div>
 </div>
+<!--首页 新闻模块-->
+<div class="text-center marginTop2">
+    <h4>新闻中心</h4>
+    <span class="glyphicon glyphicon-chevron-down"></span>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2" id="newsData">
+                <h4 id="newsTitle"></h4>
+                <h6 id="newsInfo"></h6>
+
+                <p id="newsDes">
+                </p>
+                <a href="/news" class="btn morBtn col-sm-4 col-sm-offset-4 bgColor3 textColor2 marginTop">查看更多</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--首页 企业招聘模块-->
+<div class="marginTop2 bgColor1 paddBottom">
+    <div class="text-center paddTop">
+        <h4>企业招聘中心</h4>
+        <span class="textColor4">
+            ---------&nbsp;&nbsp;
+            <a href="/job">More</a>
+            &nbsp;&nbsp;---------
+        </span>
+    </div>
+    <div class="container text-center paddTop1">
+        <div class="row" id="jobData">
+            <div class="col-md-3 bgColor2 marginTop1">
+                <h5 id="jobTitleA">通知标题</h5>
+                <h6 id="jobInfoA">2015-05-05</h6>
+
+                <p id="jobDesA">
+                    呵呵呵呵
+                </p>
+            </div>
+            <div class="col-md-4 col-md-offset-1 borderStyle1 paddAll6">
+                <h5 id="jobTitleB">通知标题</h5>
+                <h6 id="jobInfoB">2015-05-05</h6>
+                <p id="jobDesB">
+                    呵呵呵呵
+                </p>
+            </div>
+            <div class="col-md-3 col-md-offset-1 bgColor2 marginTop">
+                <h5 id="jobTitleC">通知标题</h5>
+                <h6 id="jobInfoC">2015-05-05</h6>
+                <p id="jobDesC">
+                    呵呵呵呵
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
 {{#extend "scripts"}}
     <script>
+        $(function () {
+            //设置轮播图时间
+            $('#myCarousel').carousel({
+                interval: 3000
+            });
+            //加载新闻
+            getNews();
+            //加载招聘
+            //getJob();
+        })
+        function getNews() {
+            my.ajax({
+                url: '/news',
+                success: function (data) {
+                    var data = data.data;
+                    if (data.length == 0) {
+                        $('#newsData').html('敬请期待');
+                    } else {
+                        var i = data.length - 1;
+                        $('#newsTitle').html(data[i].title);
+                        var scope = '院系新闻';
+                        if (data[i].scope == 0) {
+                            scope = '校级新闻';
+                        }
+                        var str = '发布日期：' + my.toDateStr(data[i].createdAt) + '  新闻来源：' + scope;
+                        $('#newsInfo').html(str);
+                        $('#newsDes').html(data[i].description);
+                    }
+                },
+                error: function () {
+                    $.danger('网络异常，请联系管理员！');
+                }
+            });
+        }
+        function getJob(){
+            my.ajax({
+                url: '/job',
+                success: function (data) {
+                    var data = data.data;
+                    if(data.length < 3){
+                        $('#jobData').html('敬请期待');
+                    }else {
+                        var a = data.length - 1;
+                        $('#jobTitleA').html(formatStr(data[a].title));
+                        var str = '发布日期：' + my.toDateStr(data[a].createdAt);
+                        $('#jobInfoA').html(str);
+                        $('#jobDesA').html(formatStr3(data[a].content));
+                        var b = data.length - 2;
+                        $('#jobTitleB').html(formatStr(data[b].title));
+                        var str = '发布日期：' + my.toDateStr(data[b].createdAt);
+                        $('#jobInfoB').html(str);
+                        $('#jobDesB').html(formatStr3(data[b].content));
+                        var c = data.length - 3;
+                        $('#jobTitleC').html(formatStr(data[c].title));
+                        var str = '发布日期：' + my.toDateStr(data[c].createdAt);
+                        $('#jobInfoC').html(str);
+                        $('#jobDesC').html(formatStr3(data[c].content));
+
+                    }
+                },
+                error: function () {
+                    $.danger('网络异常，请联系管理员！');
+                }
+            });
+        }
     </script>
 {{/extend}}

@@ -5,48 +5,50 @@
                 <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li><a href="/mynote">我的假条</a></li>
-                        <li class="active"><a href="/noteAdd">请假申请</a></li>
-                        <li><a href="/note">假条审批</a></li>
+                        <li class="active"><a href="/note">我的假条</a></li>
+                        <li><a href="/note/add">请假申请</a></li>
                     </ul>
                 </div>
             </div>
-            <!--假条审批-->
             <div class="textColor paddTop col-md-9">
                 <div class="paddBottom">
-                    <span class="h4 textColor">假条审批</span>
+                    <span class="h4 textColor">假条详情</span>
                 </div>
                 <div class="paddAll4 borderStyle1 bgColor2">
                     <form role="form form-horizontal">
                         <div class="form-group row">
                             <label class="col-md-2 control-label">姓名</label>
                             <div class="col-md-2">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="陈俊汝" disabled>
+                                <input type="text" class="form-control" placeholder="" disabled value="{{userName}}">
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假时间</label>
-                            <div class="col-md-8">
-                                <input type="text" class="form-control" id="inputEmail3" placeholder="" disabled>
+                            <div class="col-md-7">
+                                <input type="text" class="form-control" placeholder="" disabled>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假事由</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3" disabled>就是不想上课</textarea>
+                                <textarea class="form-control" rows="3" disabled>{{reason}}</textarea>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">驳回理由</label>
+                            <label class="col-md-2 control-label">假条状态</label>
+                            <div class="col-md-10" id="noteStatus">
+
+                            </div>
+                        </div>
+                        <div class="form-group row" id="teacherSugg">
+                            <label class="col-md-2 control-label">教师意见</label>
                             <div class="col-md-10">
-                                <textarea class="form-control" rows="3">点击驳回按钮时显示</textarea>
+                                <textarea class="form-control" rows="3" disabled>就是不想上课</textarea>
                             </div>
                         </div>
                     </form>
                     <div class="btn-group col-sm-4 col-sm-offset-4">
-                        <button class="btn btn-default marginLR1" type="button">通过</button>
-                        <button class="btn btn-default marginLR1" type="button">驳回</button>
-                        <button class="btn btn-default " type="button">返回</button>
+                        <a href="/note" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
                     </div>
                 </div>
             </div>
@@ -56,6 +58,17 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
+            var noteStatus = '{{status}}';
+            var str;
+            if(noteStatus == 0){
+                str = '<span class="label label-danger">未通过</span>';
+            }else if(noteStatus == 1){
+                str = '<span class="label label-success">已通过</span>';
+            }else{
+                str = '<span class="label bgColor">审核中</span>';
+                $('#teacherSugg').addClass('hidden');
+            }
+            $('#noteStatus').append(str);
         });
     </script>
 {{/extend}}

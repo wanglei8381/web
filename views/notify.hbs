@@ -11,13 +11,13 @@
                             <div class="form-group col-xs-10 col-sm-6">
                                 <input type="text" class="form-control " placeholder="请输入关键字" id="title"/>
                             </div>
-                            <button type="submit  col-xs-2 col-sm-2" onclick="getSupervisor();" class="btn  btn-default col-xs-2">搜索</button>
+                            <button type="submit  col-xs-2 col-sm-2" onclick="search();" class="btn  btn-default col-xs-2">搜索</button>
                         </div>
                     </div>
                 </div>
                 <ul class="fontSize1 list" id="notifyList">
                 </ul>
-                <div class="text-center">
+                <div class="text-center" id="changePage">
                     <div class="hidden-xs">
                         <ul class="paginationM">
                             <li><a href="#">&laquo;第一页</a></li>
@@ -45,41 +45,33 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
-            getSupervisor();//获取当前登录学生导员ID
+            search();//获取当前登录学生导员ID
         });
-        var supervisorId;
-        function getSupervisor(){
-            my.ajax({
-                url: '/getServer',
-                success: function(data){
-                    supervisorId = data.data[0].supervisor;
-                    search(supervisorId);
-                },
-                error: function(){
-                    $.danger('网络异常，请联系管理员！');
-                }
-            })
-        }
 
-        function search(supervisorId) {
+        function search() {
             var data = {
-                supervisorId : supervisorId,
                 title : $.trim($('#title').val())
             }
             my.ajax({
                 url: '/notify',
                 data : data,
                 success: function (data) {
-                    $('#notifyList').empty();
                     var data = data.data;
-                    for(var i = 0; i < data.length; i++){
-                        var type = notifyType[data[i].type];
-                        var str = '<li class="paddTop">'+
-                                    '<span>['+type+']</span>&nbsp;'+
-                                    '<a href="/notify/detail/' + data[i]._id + '">'+formatStr2(data[i].title)+'</a>'+
-                                    '<span class="textColor1 pull-right paddLeft">'+my.toDateStr(data[i].createdAt)+'</span>'+
-                                '</li>'
+                    if(data.length == 0){
+                        var str = '<li class="paddTop"><span>暂无数据</span></li>';
                         $('#notifyList').prepend(str);
+                        $('#changePage').addClass('hidden');
+                    }else {
+                        $('#notifyList').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            var type = notifyType[data[i].type];
+                            var str = '<li class="paddTop">' +
+                                    '<span>[' + type + ']</span>&nbsp;' +
+                                    '<a href="/notify/detail/' + data[i]._id + '">' + formatStr2(data[i].title) + '</a>' +
+                                    '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(data[i].createdAt) + '</span>' +
+                                    '</li>'
+                            $('#notifyList').prepend(str);
+                        }
                     }
                 },
                 error: function () {

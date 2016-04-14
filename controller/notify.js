@@ -6,7 +6,11 @@ var notify = module.exports = function (req, res, next) {
 
 notify.list = function(req,res,next){
     console.log(req.body);
-    var where = {status: 1, "userId" : req.body.supervisorId, "title" : {'$regex': req.body.title}};
+    if(req.body.title){
+        var where = {status: 1, "collegeId" : req.session.normal_user.collegeId, "title" : {'$regex': req.body.title}};
+    }else{
+        var where = {status: 1, "collegeId" : req.session.normal_user.collegeId};
+    }
     var opt = {};
     var query = {};
     dbHelper.find('NotificationModel', where, query, opt, function (err, ret) {

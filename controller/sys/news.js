@@ -33,6 +33,7 @@ news.page = function (req, res, next) {
 
 news.add = function (req, res, next) {
     console.log(req.body);
+    req.body.collegeId = req.session.sys_user.collegeId;
     req.body.userId = req.session.sys_user.stid;
     dbHelper.add('NewsModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);

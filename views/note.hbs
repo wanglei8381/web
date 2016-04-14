@@ -5,55 +5,20 @@
                 <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li {{#eq note_type 0}}class="active"{{/eq}}><a href="/mynote">我的假条</a></li>
-                        <li><a href="/noteAdd">请假申请</a></li>
-                        <li {{#eq note_type 1}}class="active"{{/eq}}><a href="/note">假条审批</a></li>
+                        <li class="active"><a href="/note">我的假条</a></li>
+                        <li><a href="/note/add">请假申请</a></li>
                     </ul>
                 </div>
             </div>
-            <!--我的假条-->
             <div class="textColor paddTop col-md-9">
                 <div class="borderStyle row">
                     <div class="col-sm-2 paddTop2 paddBottom2">
-                        <span class="h4 textColor">{{#eq note_type 0}}我的假条{{else}}假条审批{{/eq}}</span>
-                    </div>
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div class="form-group col-xs-10 col-sm-6">
-                                <input type="text" class="form-control " placeholder="请输入关键字" />
-                            </div>
-                            <button type="submit  col-xs-2 col-sm-2" class="btn  btn-default col-xs-2">搜索</button>
-                        </div>
+                        <span class="h4 textColor">我的假条</span>
                     </div>
                 </div>
-                <ul class="fontSize1 list">
-                    <li class="paddTop">
-                        <a {{#eq note_type 0}}href="/noteDetail/111"{{else}}href="/noteApproval/111"{{/eq}}><span>某班主任</span> 的请假单</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                        <span class="pull-right">审批中</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href=""><span>某班主任</span> 的请假单</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                        <span class="pull-right">审批中</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href=""><span>某班主任</span> 的请假单</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                        <span class="pull-right">审批中</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href=""><span>某班主任</span> 的请假单</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                        <span class="pull-right">审批中</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href=""><span>某班主任</span> 的请假单</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                        <span class="pull-right">审批中</span>
-                    </li>
+                <ul class="fontSize1 list" id="noteList">
                 </ul>
-                <div class="text-center">
+                <div class="text-center" id="changePage">
                     <div class="hidden-xs">
                         <ul class="paginationM">
                             <li><a href="#">&laquo;第一页</a></li>
@@ -80,6 +45,32 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
+            search()
         });
+        function search() {
+            my.ajax({
+                url: '/note',
+                success: function (data) {
+                    var data = data.data;
+                    if(data.length == 0){
+                        var str = '<li class="paddTop"><span>暂无数据</span></li>';
+                        $('#noteList').prepend(str);
+                        $('#changePage').addClass('hidden');
+                    }else{
+                        $('#noteList').empty();
+                        for(var i = 0; i < data.length; i++){
+                            var str = '<li class="paddTop">'+
+                                    '<a href="/note/detail/' + data[i]._id + '"><span>{{normal_user.name}}</span> 的请假单</a>'+
+                                    '<span class="textColor1 pull-right paddLeft">'+my.toDateStr(data[i].createdAt)+'</span>'+
+                                    '<span class="pull-right">'+noteStatus[data[i].status]+'</span></li>'
+                            $('#noteList').prepend(str);
+                        }
+                    }
+                },
+                error: function () {
+                    $.danger('网络异常，请联系管理员！');
+                }
+            });
+        }
     </script>
 {{/extend}}
