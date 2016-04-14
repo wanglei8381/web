@@ -4,6 +4,8 @@ var login = require('./controller').login;
 var news = require('./controller').news;
 var notify = require('./controller').notify;
 var note = require('./controller').note;
+var job = require('./controller').job;
+var resource = require('./controller').resource;
 var response = require('./middlewares/response');
 var router = express.Router();
 
@@ -55,7 +57,7 @@ router.get('/note', function (req, res) {
 router.post('/note', note.list);
 //假条详情
 router.get('/note/detail/:id', note.detail);
-//全部假条列表
+//审批假条列表
 router.get('/allNote', function (req, res) {
     res.out('allNote');
 });
@@ -67,16 +69,23 @@ router.get('/note/add', function (req, res) {
 router.post('/note/add', note.add);
 //假条审批
 router.get('/note/appreval/:id',note.apprevaldetail);
-//router.post('/note/appreval', note.appreval);
+router.post('/note/appreval/:id', note.appreval);
+//假条删除
+router.post('/note/del/:id', note.delete);
+
+//企业招聘(所以招聘信息)
+router.get('/job', function (req, res) {
+    res.out('job');
+});
+router.post('/job', job.list);
+
+//资源共享(所有资源)
+router.get('/resource', function (req, res) {
+    res.out('resource');
+});
+router.post('/resource', resource.list);
 
 /*
-//假条审批(我的假条列表/请假申请/假条审批列表/假条详情/假条审批)
-router.get('/mynote', routeMap.note.mynoteList);
-router.get('/noteAdd', routeMap.note.noteAdd);
-router.get('/note', routeMap.note.noteList);
-router.get('/noteDetail/:id', routeMap.note.noteDetail);
-router.get('/noteApproval/:id', routeMap.note.noteApproval);
-
 //企业招聘(我的职位列表/职位上传/企业招聘列表/我的职位详情/职位详情/职位编辑)
 router.get('/myjob', routeMap.job.myjobList);
 router.get('/jobAdd', routeMap.job.jobAdd);

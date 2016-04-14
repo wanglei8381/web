@@ -5,9 +5,9 @@
                 <div class="bgColor textColor2 marginTop fontSize2 paddAll1">企业招聘</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li {{#eq job_type 0}}class="active"{{/eq}}><a href="/myjob">我的职位</a></li>
+                        <li class="active"><a href="/job">企业招聘</a></li>
+                        <li><a href="/myjob">我的职位</a></li>
                         <li><a href="/jobAdd">职位发布</a></li>
-                        <li {{#eq job_type 1}}class="active"{{/eq}}><a href="/job">企业招聘</a></li>
                     </ul>
                 </div>
             </div>
@@ -15,7 +15,7 @@
             <div class="textColor paddTop col-md-9">
                 <div class="borderStyle row">
                     <div class="col-sm-2 paddTop2 paddBottom2">
-                        <span class="h4 textColor">{{#eq job_type 0}}我的职位{{else}}企业招聘{{/eq}}</span>
+                        <span class="h4 textColor">企业招聘</span>
                     </div>
                     <div class="col-sm-10">
                         <div class="row">

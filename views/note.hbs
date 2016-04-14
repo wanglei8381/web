@@ -62,13 +62,36 @@
                             var str = '<li class="paddTop">'+
                                     '<a href="/note/detail/' + data[i]._id + '"><span>{{normal_user.name}}</span> 的请假单</a>'+
                                     '<span class="textColor1 pull-right paddLeft">'+my.toDateStr(data[i].createdAt)+'</span>'+
-                                    '<span class="pull-right">'+noteStatus[data[i].status]+'</span></li>'
+                                    '<span class="pull-right">'+noteStatus[data[i].status]+'</span>'
+                            if(data[i].status == 0 || data[i].status == 2){
+                                str = str + '<span class="pull-right"><a href="javascript:del(\'' + data[i]._id + '\');">删除&nbsp;</a></span>'
+                            }
+                            str = str + '</li>';
                             $('#noteList').prepend(str);
                         }
                     }
                 },
                 error: function () {
                     $.danger('网络异常，请联系管理员！');
+                }
+            });
+        }
+
+        function del(id) {
+            bootbox.confirm("您确定要删除吗？", function (result) {
+                if (result) {
+                    my.ajax({
+                        url: '/note/del/' + id,
+                        data: {id:id},
+                        success: function () {
+                            $.success('操作成功', null, null, function () {
+                                window.location.reload();
+                            });
+                        },
+                        error: function () {
+                            $.danger('网络异常，请联系管理员！');
+                        }
+                    });
                 }
             });
         }

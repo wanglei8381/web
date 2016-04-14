@@ -1,7 +1,7 @@
 var dbHelper = require('../proxy/dbHelper');
 
 var note = module.exports = function (req, res, next) {
-    console.log('----->news');
+    console.log('----->note');
 };
 
 note.list = function (req, res, next) {
@@ -23,15 +23,33 @@ note.list = function (req, res, next) {
 note.listAll = function (req, res, next) {
     console.log(req.body);
     if(req.session.normal_user.identity == 3){//辅导员
-        var where = {
-            "userName": {'$regex': req.body.title},
-            "days" : {$gt : 3}
-        };
+        if(req.body.status){
+            var where = {
+                "userName": {'$regex': req.body.title},
+                "days" : {$gt : 3},
+                "status" : 2
+            };
+        }else{
+            var where = {
+                "userName": {'$regex': req.body.title},
+                "days" : {$gt : 3},
+                $or:[{"status" : 0 , "status" : 1}]
+            };
+        }
     }else if(req.session.normal_user.identity == 2){//班主任
-        var where = {
-            "userName": {'$regex': req.body.title},
-            "days" : {$lt : 3}
-        };
+        if(req.body.status){
+            var where = {
+                "userName": {'$regex': req.body.title},
+                "days" : {$lt : 3},
+                "status" : 2
+            };
+        }else{
+            var where = {
+                "userName": {'$regex': req.body.title},
+                "days" : {$lt : 3},
+                 $or:[{"status" : 0 , "status" : 1}]
+            };
+        }
     }
     var opt = {};
     var query = {};
@@ -71,6 +89,28 @@ note.add = function (req, res, next) {
     req.body.userId = req.session.normal_user.stid;
     req.body.userName = req.session.normal_user.name;
     dbHelper.add('NoteModel', req.body, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('保存出错');
+        }
+        res.ok();
+    });
+};
+
+note.delete = function (req, res, next) {
+    console.log(req.body);
+    dbHelper.del('NoteModel', req.body.id, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('删除出错');
+        }
+        res.ok();
+    });
+};
+
+note.appreval = function (req, res, next) {
+    console.log(req.body);
+    dbHelper.edit('NoteModel', req.body.id, req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('保存出错');
