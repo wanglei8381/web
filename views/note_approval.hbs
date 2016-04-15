@@ -5,7 +5,8 @@
                 <div class="bgColor textColor2 marginTop fontSize2 paddAll1">假条审批</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li class="active"><a href="/allNote">假条审批</a></li>
+                        <li class="allNoteW"><a href="/allNoteW">待审批</a></li>
+                        <li class="allNote"><a href="/allNote">已审批</a></li>
                     </ul>
                 </div>
             </div>
@@ -25,7 +26,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 control-label">请假时间</label>
                             <div class="col-md-8">
-                                {{beginDate}}至{{endDate}}&nbsp;&nbsp;&nbsp;&nbsp;共：{{days}}
+                                {{beginDate}}至{{endDate}}&nbsp;&nbsp;&nbsp;&nbsp;共{{days}}天
                             </div>
                         </div>
                         <div class="form-group row">
@@ -36,17 +37,17 @@
                         </div>
                         <div class="form-group row">
                             <label class="col-md-2 control-label">教师意见</label>
-                            <div class="col-md-10">
-                                <textarea class="form-control" rows="3" name="rejectReason">{{rejectReason}}</textarea>
+                            <div class="col-md-10" id="rejectReason">
                             </div>
                         </div>
                     </form>
                     <div class="form-group">
-                        <div class="col-sm-6 col-sm-offset-3">
-                            <a class="btn btn-default col-sm-2 col-sm-offset-2">通过</a>
-                            <a class="btn btn-default col-sm-2 col-sm-offset-2">驳回</a>
-                            <a href="/allNote" class="btn btn-default col-sm-2 col-sm-offset-2">取消</a>
+                        <div class="col-sm-6 col-sm-offset-3 hidden" id="wait">
+                            <a href="javascript:approval(1);" class="btn btn-default col-sm-2 col-sm-offset-2">通过</a>
+                            <a href="javascript:approval(0);" class="btn btn-default col-sm-2 col-sm-offset-2">驳回</a>
+                            <a href="/allNoteW" class="btn btn-default col-sm-2 col-sm-offset-2">取消</a>
                         </div>
+                        <a href="/allNote" id="approvaled" class="hidden btn btn-default col-sm-2 col-sm-offset-2">取消</a>
                     </div>
                 </div>
             </div>
@@ -56,6 +57,35 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
+            if('{{status}}' &&'{{status}}' == 2){
+                $('.allNoteW').addClass('active');
+                $('#wait').removeClass('hidden');
+                var str = '<textarea class="form-control" rows="3" name="rejectReason"></textarea>';
+                $('#rejectReason').append(str);
+            }else{
+                $('#approvaled').removeClass('hidden');
+                $('.allNote').addClass('active');
+                if('{{rejectReason}}'){
+                    $('#rejectReason').html('{{rejectReason}}');
+                }else{
+                    $('#rejectReason').html('无意见');
+                }
+            }
         });
+        function approval(status){
+            var rejectReason = $.trim($('textarea[name=rejectReason]').val());
+            my.ajax({
+                url: '/note/appreval/' + '{{_id}}',
+                data: {id:'{{_id}}',status:status,rejectReason:rejectReason},
+                success: function () {
+                    $.success('操作成功', null, null, function () {
+                        window.location = '/allNote';
+                    });
+                },
+                error: function () {
+                    $.danger('网络异常，请联系管理员！');
+                }
+            });
+        }
     </script>
 {{/extend}}

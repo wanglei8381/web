@@ -1,174 +1,125 @@
 <link href="/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
 <div class="panel panel-default">
-  <div class="panel-heading">
-    <div class="row">
-      <div class="col-md-7">
-        <h4>班级添加</h4>
-      </div>
-    </div>
-    <div class="panel-body">
-        <form class="form-horizontal">
-            <input type="hidden" name="id" value="{{_id}}"/>
-            <input type="hidden" name="supervisor" value=""/>
-            <input type="hidden" name="head_teacher" value=""/>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">班级名称<span style="color:red">（*）</span></lable>
-                <div class="col-sm-6">
-                    <input type="text" class="form-control" name="name" value="{{name}}" placeholder="请输入班级名称，如（12级1班）"/>
-                </div>
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7">
+                <h4>班级添加</h4>
             </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">所属院系<span style="color:red">（*）</span></lable>
-                <div class="col-sm-10 collage">
-                </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">辅导员工号<span style="color:red">（*）</span></lable>
-                <div class="col-sm-6">
-                    <select class="form-control selectSupervisor" id="selectSupervisor">
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal">
+                <input type="hidden" name="id" value="{{_id}}"/>
+                <input type="hidden" name="supervisor" value="{{sys_user.stid}}"/>
+                <input type="hidden" name="collegeId" value="{{sys_user.collegeId}}"/>
+                <input type="hidden" name="head_teacher" value=""/>
 
-                    </select>
+                <div class="form-group">
+                    <lable class="col-sm-2 control-label">班级名称<span style="color:red">（*）</span></lable>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" name="name" value="{{name}}"
+                               placeholder="请输入班级名称，如（12级1班）"/>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <lable class="col-sm-2 control-label">班主任工号<span style="color:red">（*）</span></lable>
-                <div class="col-sm-6">
-                    <select class="form-control selectHeader" id="selectHeader">
-                    </select>
+                <div class="form-group">
+                    <lable class="col-sm-2 control-label">班主任工号<span style="color:red">（*）</span></lable>
+                    <div class="col-sm-6">
+                        <select class="form-control selectHeader" id="selectHeader">
+                        </select>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-6 col-sm-offset-3">
-                    <button class="btn btn-default col-sm-4" type="button" id="submit">保存</button>
-                    <a href="/sys/classes" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                <div class="form-group">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <button class="btn btn-default col-sm-4" type="button" id="submit">保存</button>
+                        <a href="/sys/classes" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                    </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
 {{#extend "scripts"}}
 
-  <script type="text/javascript">
-    var url;
-    var id = '{{_id}}';
-    //辅导员
-    var $selectSupervisor = $('#selectSupervisor');
-    //班主任
-    var $selectHeader = $('#selectHeader');
-    $(function () {
-      getCollage();//获取院系
-      $selectSupervisor.select2({placeholder: "请选择辅导员",});
-      $selectHeader.select2({placeholder: "请选择班主任"});
-      if (id) {
-        getSupervisor('{{collegeId}}');
-        url = '/sys/classes/edit';
-      } else {
-        url = '/sys/classes/add';
-        getSupervisor(0);
-      }
-    });
-
-    function getCollage() {
-      var $collage = $('.collage');
-      for (var i = 0; i < collage.length; i++) {
-        var str = '<lable class="radio-inline">';
-        if ('{{collegeId}}' == i) {
-          str += '<input type="radio" checked value="' + i + '" name="collegeId"/>' + collage[i];
-        } else {
-          str += '<input type="radio" value="' + i + '" name="collegeId"/>' + collage[i];
-        }
-        str += '</lable>';
-        $collage.append(str);
-      }
-      $("input[name=collegeId]", $collage).click(function () {
-        getSupervisor(this.value);
-      });
-    }
-    function getSupervisor(collegeId) {
-      var data = {
-        collegeId: collegeId,
-        checkType: 1
-      }
-      my.ajax({
-        url: '/sys/teacher/check',
-        data: data,
-        success: function (data) {
-          $selectSupervisor.empty();
-          $selectHeader.empty();
-          var superData = [];
-          if (data.data.length == 0) {
+    <script type="text/javascript">
+        var url;
+        var id = '{{_id}}';
+        //班主任
+        var $selectHeader = $('#selectHeader');
+        $(function () {
             $selectHeader.select2({placeholder: "请选择班主任"});
-            $selectSupervisor.select2({placeholder: "请选择辅导员"});
-          } else {
-            var superNum;
-            var headNum;
-            for (var i = 0; i < data.data.length; i++) {
-              var supervisor = {id: data.data[i].stid, text: data.data[i].name};
-              superData.push(supervisor);
-              if ('{{supervisor}}' == data.data[i].stid) {
-                superNum = i;
-              }
-              if ('{{head_teacher}}' == data.data[i].stid) {
-                headNum = i;
-              }
+            if (id) {
+                url = '/sys/classes/edit';
+            } else {
+                url = '/sys/classes/add';
             }
-            $selectSupervisor.select2({
-              data: superData
-            });
-            $selectHeader.select2({
-              data: superData
-            });
-            if ('{{supervisor}}') {
-              var text = superData[superNum].text;
-              $('#select2-selectSupervisor-container').html(text).attr('title',text);
-              $selectSupervisor[0].options[superNum].selected = true;
-            }
-            if ('{{head_teacher}}') {
-              var text = superData[headNum].text;
-              $('#select2-selectHeader-container').html(text).attr('title',text);
-              $selectHeader[0].options[headNum].selected = true;
-            }
-          }
-        }
-      });
-    }
+            getSupervisor();
+        });
 
-    var gradeSubmit = function () {
-      var className = $.trim($('input[name=name]').val());
-      var supervisor = $.trim($(".selectSupervisor").find("option:selected").val());
-      var head_teacher = $.trim($(".selectHeader").find("option:selected").val());
-      if (!className) {
-        $.warning('请输入班级名称');
-        return;
-      }
-      if (!supervisor) {
-        $.warning('请选择辅导员');
-        return;
-      }
-      if (!head_teacher) {
-        $.warning('请选择班主任');
-        return;
-      }
-      if (supervisor == head_teacher) {
-        $.warning('辅导员，班主任不能为同一个老师');
-        return;
-      }
-      $('input[name=supervisor]').attr("value", supervisor);
-      $('input[name=head_teacher]').attr("value", head_teacher);
-      my.ajax({
-        url: url,
-        data: $("form").serialize(),
-        success: function () {
-          window.location = '/sys/classes';
+        function getSupervisor() {
+            var collegeId = '{{sys_user.collegeId}}';
+            var data = {
+                collegeId: collegeId,
+                checkType: 1
+            }
+            my.ajax({
+                url: '/sys/teacher/check',
+                data: data,
+                success: function (data) {
+                    $selectHeader.empty();
+                    var headerData = [];
+                    if (data.data.length == 0) {
+                        $selectHeader.select2({placeholder: "请选择班主任"});
+                    } else {
+                        var headNum;
+                        for (var i = 0; i < data.data.length; i++) {
+                            var header = {id: data.data[i].stid, text: data.data[i].name};
+                            headerData.push(header);
+                            if ('{{head_teacher}}' == data.data[i].stid) {
+                                headNum = i;
+                            }
+                        }
+                        $selectHeader.select2({
+                            data: headerData
+                        });
+                        if ('{{head_teacher}}') {
+                            var text = headerData[headNum].text;
+                            $('#select2-selectHeader-container').html(text).attr('title', text);
+                            $selectHeader[0].options[headNum].selected = true;
+                        }
+                    }
+                }
+            });
         }
-      });
-    };
 
-    $('#submit').click(function () {
-      gradeSubmit();
-    });
-  </script>
+        var gradeSubmit = function () {
+            var className = $.trim($('input[name=name]').val());
+            var head_teacher = $.trim($(".selectHeader").find("option:selected").val());
+            var supervisor = '{{sys_user.stid}}';
+            if (!className) {
+                $.warning('请输入班级名称');
+                return;
+            }
+            if (!head_teacher) {
+                $.warning('请选择班主任');
+                return;
+            }
+            if (supervisor == head_teacher) {
+                $.warning('辅导员，班主任不能为同一个老师');
+                return;
+            }
+            $('input[name=head_teacher]').attr("value", head_teacher);
+            my.ajax({
+                url: url,
+                data: $("form").serialize(),
+                success: function () {
+                    window.location = '/sys/classes';
+                }
+            });
+        };
+
+        $('#submit').click(function () {
+            gradeSubmit();
+        });
+    </script>
 
 {{/extend}}

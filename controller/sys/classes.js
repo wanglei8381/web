@@ -17,9 +17,9 @@ classes.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        console.log('----',req.body)
-        where = {"name" : {'$regex': req.body.title}};
+        where = {collegeId:req.session.sys_user.collegeId, name:{'$regex': req.body.title}};
     }
+    where.collegeId = req.session.sys_user.collegeId;
 
     dbHelper.page('ClassModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

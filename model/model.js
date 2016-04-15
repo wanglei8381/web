@@ -115,7 +115,7 @@ var NoteSchema = new Schema({
     beginDate: {type: String},
     endDate: {type: String},
     approver: {type: String},//审批人ID
-    status: {type: Number, default: 2},//0未通过，1通过，2审批中
+    status: {type: Number, default: 2},//0驳回，1通过，2审批中
     rejectReason: {type: String},
     userId: {type: String},
     userName: {type: String},
