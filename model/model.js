@@ -94,9 +94,13 @@ mongoose.model('Job', JobSchema);
 
 //资源表
 var ResourceSchema = new Schema({
-    name: {type: String},
+    name: {type: String},//资源的名字
     description: {type: String},
-    url: {type: String},
+    filename: {type: String},//文件的名字
+    path: {type: String},//文件存放的路径
+    size: {type: Numder},//资源大小（单位K）
+    type: {type: String},//文件格式
+    lastModifiedDate: {type: Date, default: Date.now},//文件内容最后修改时间
     userId: {type: String},
     collegeId: {type: String},//所属院系编号(发布来源)
     createdAt: {type: Date, default: Date.now},
