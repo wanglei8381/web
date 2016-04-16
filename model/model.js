@@ -98,7 +98,7 @@ var ResourceSchema = new Schema({
     description: {type: String},
     filename: {type: String},//文件的名字
     path: {type: String},//文件存放的路径
-    size: {type: Numder},//资源大小（单位K）
+    size: {type: Number},//资源大小（单位K）
     type: {type: String},//文件格式
     lastModifiedDate: {type: Date, default: Date.now},//文件内容最后修改时间
     userId: {type: String},

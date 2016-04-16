@@ -68,7 +68,7 @@ router.get('/note/add', function (req, res) {
 });
 router.post('/note/add', note.add);
 //假条审批
-router.get('/note/appreval/:id',note.apprevaldetail);
+router.get('/note/appreval/:id', note.apprevaldetail);
 router.post('/note/appreval/:id', note.appreval);
 //假条删除
 router.post('/note/del/:id', note.delete);
@@ -84,6 +84,16 @@ router.get('/resource', function (req, res) {
     res.out('resource');
 });
 router.post('/resource', resource.list);
+
+router.get('/resourceAdd', function (req, res) {
+    res.out('resourceAdd');
+});
+
+router.post('/resourceAdd', resource.add);
+
+router.get('/myresource', function (req, res) {
+    res.out('resource');
+});
 
 /*
  //企业招聘(我的职位列表/职位上传/企业招聘列表/我的职位详情/职位详情/职位编辑)
