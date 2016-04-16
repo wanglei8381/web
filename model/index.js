@@ -2,7 +2,8 @@ var mongoose = require('mongoose');
 var config = require('../config').mongo;
 mongoose.set('debug', true);
 
-
+//连接格式mongodb://主机/数据库名
+//config.db--'mongodb://123.56.230.118:27017/cms'
 mongoose.connect(config.db, {
     server: {poolSize: 20}
 }, function (err) {

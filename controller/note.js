@@ -22,30 +22,27 @@ note.list = function (req, res, next) {
 
 note.listAll = function (req, res, next) {
     console.log(req.body);
+    var where = {"userName": {'$regex': req.body.title}}
     if(req.session.normal_user.identity == 3){//辅导员
         if(req.body.status){
-            var where = {
-                "userName": {'$regex': req.body.title},
+            where = {
                 "days" : {$gt : 3},
                 "status" : 2
             };
         }else{
-            var where = {
-                "userName": {'$regex': req.body.title},
+            where = {
                 "days" : {$gt : 3},
                 $or:[{"status" : 0 , "status" : 1}]
             };
         }
     }else if(req.session.normal_user.identity == 2){//班主任
         if(req.body.status){
-            var where = {
-                "userName": {'$regex': req.body.title},
+            where = {
                 "days" : {$lt : 3},
                 "status" : 2
             };
         }else{
-            var where = {
-                "userName": {'$regex': req.body.title},
+            where = {
                 "days" : {$lt : 3},
                  $or:[{"status" : 0 , "status" : 1}]
             };
