@@ -48,7 +48,6 @@ resource.detail = function (req, res, next) {
 };
 
 resource.add = function (req, res, next) {
-
     var str = req.get('content-type') || '';
     var mime = str.split(';')[0];
     if ('multipart/form-data' != mime) return res.fail('表单类型不匹配');

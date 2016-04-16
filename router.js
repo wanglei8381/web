@@ -84,11 +84,10 @@ router.get('/resource', function (req, res) {
     res.out('resource');
 });
 router.post('/resource', resource.list);
-
+//资源上传
 router.get('/resourceAdd', function (req, res) {
     res.out('resourceAdd');
 });
-
 router.post('/resourceAdd', resource.add);
 
 router.get('/myresource', function (req, res) {
