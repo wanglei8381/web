@@ -94,6 +94,8 @@ router.get('/myresource', function (req, res) {
     res.out('resource');
 });
 
+router.get('/resource/download/:id', resource.download);
+
 /*
  //企业招聘(我的职位列表/职位上传/企业招聘列表/我的职位详情/职位详情/职位编辑)
  router.get('/myjob', routeMap.job.myjobList);
