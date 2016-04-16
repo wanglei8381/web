@@ -102,10 +102,8 @@
                 $.warning('请输入请假理由');
                 return;
             }
-
-            var url = '/note/add';
             my.ajax({
-                url: url,
+                url: '/note/add',
                 data: $("form").serialize(),
                 success: function () {
                     window.location = '/note';

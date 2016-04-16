@@ -22,6 +22,7 @@ app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 
 // 静态文件目录
 app.use(express.static(path.join(__dirname, 'public')));
+//static是Express 内置的唯一一个中间件。是基于 serve-static 开发的，负责托管 Express 应用内的静态资源
 
 //处理请求数据
 app.use(bodyParser.json({limit: '1mb'}));//指定请求主体的最大长度
