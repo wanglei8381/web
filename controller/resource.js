@@ -47,6 +47,31 @@ resource.detail = function (req, res, next) {
     });
 };
 
+resource.download = function (req, res, next) {
+    var id = req.params.id;
+    dbHelper.findOne('ResourceModel', id, function (err, ret) {
+        console.log('执行的结果------->', ret);
+        if (err) {
+            return res.fail('查询出错');
+        }
+
+        fs.exists(ret.path, function (exists) {
+            if (!exists) {
+                res.fail('资源已经不存在');
+            } else {
+                fs.readFile(ret.path, function (err, chunk) {
+                    if(err){
+                        return res.fail('查询出错');
+                    }
+                    //设置请求头以附件的格式
+                    res.setHeader("Content-Disposition", "attachment; filename=" + encodeURIComponent(ret.filename));
+                    res.end(chunk, 'binary');
+                });
+            }
+        });
+    });
+};
+
 resource.add = function (req, res, next) {
 
     var str = req.get('content-type') || '';
@@ -69,8 +94,8 @@ resource.add = function (req, res, next) {
         console.log(req.body);
         dbHelper.add('ResourceModel', req.body, function (err, ret) {
             console.log('执行的结果------->', ret);
-            if (err){
-                console.log('[contoller][sys][user][add]',err.stack);
+            if (err) {
+                console.log('[contoller][sys][user][add]', err.stack);
                 return res.fail('保存出错');
             }
             res.ok();
