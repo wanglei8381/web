@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh_CN">
+  <meta charset="UTF-8">
+  <title>分页</title>
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/common.css" rel="stylesheet">
+</head>
+<body>
+<div class="text-center" id="page-container">
+  <!--<div class="hidden-xs">-->
+  <!--<ul class="paginationM">-->
+  <!--<li><a href="#">&laquo;第一页</a></li>-->
+  <!--<li class="active"><a href="#">1</a></li>-->
+  <!--<li><a href="#">2</a></li>-->
+  <!--<li><a href="#">3</a></li>-->
+  <!--<li><a href="#">4</a></li>-->
+  <!--<li><a href="#">5</a></li>-->
+  <!--<li class="disabled"><a href="#">最后一页&raquo;</a></li>-->
+  <!--</ul>-->
+  <!--</div>-->
+
+  <!--<div class="visible-xs">-->
+  <!--<ul class="pagerM">-->
+  <!--<li class="previous"><a href="#">&laquo;上一页</a></li>-->
+  <!--<li class="next"><a href="#">下一页&raquo;</a></li>-->
+  <!--</ul>-->
+  <!--</div>-->
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script>
+
+  var total = 11;
+  var pageNo = 2;
+  var $pageContainer = $('#page-container');
+  var begin = 1;
+  var end = total;
+  if (total > 10 && pageNo > 6) {
+    begin = pageNo - 5;
+    var cha = pageNo + 4 - total;
+    end = cha >= 0 ? total : pageNo + 4;
+    if (cha >= 0) {
+      begin = begin - cha;
+    }
+  }
+  var html = '<div class="hidden-xs">' +
+      '<ul class="pagination paginationM">' +
+      '<li><a href="#1">&laquo;第一页</a></li>';
+  for (var i = begin; i <= end; i++) {
+    if (i === pageNo) {
+      html += '<li class="active"><a href="#' + i + '">' + i + '</a></li>';
+    } else {
+      html += '<li><a href="#' + i + '">' + i + '</a></li>';
+    }
+  }
+  html += '<li class="disabled"><a href="#' + total + '">最后一页&raquo;</a></li>' +
+      '</ul>' +
+      '</div>';
+
+  var shang = pageNo - 1 > 0 ? pageNo - 1 : 1;
+  var xia = pageNo + 1 > total ? total : pageNo + 1;
+  html += '<div class="visible-xs">' +
+      '<ul class="pagerM">' +
+      '<li class="previous"><a href="#' + shang + '">&laquo;上一页</a></li>' +
+      '<li class="next"><a href="#' + xia + '">下一页&raquo;</a></li>' +
+      '</ul>' +
+      '</div>';
+
+  $pageContainer.html(html);
+</script>
+</body>
+</html>

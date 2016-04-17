@@ -1,80 +1,79 @@
 <div class="marginLR marginBottom">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
-                <div class="textColor borderStyle1">
-                    <ul class="nav nav-stacked">
-                        <li {{#eq resource_type 0}}class="active"{{/eq}}><a href="/myresource">我的资源</a></li>
-                        <li><a href="/resourceAdd">资源上传</a></li>
-                        <li {{#eq resource_type 1}}class="active"{{/eq}}><a href="/resource">资源共享</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="textColor paddTop col-md-9">
-                <div class="borderStyle row">
-                    <div class="col-sm-2 paddTop2 paddBottom2">
-                        <span class="h4 textColor">{{#eq resource_type 0}}我的资源{{else}}资源共享{{/eq}}</span>
-                    </div>
-                    <div class="col-sm-10">
-                        <div class="row">
-                            <div class="form-group col-xs-10 col-sm-6">
-                                <input type="text" class="form-control " placeholder="请输入关键字" />
-                            </div>
-                            <button type="submit  col-xs-2 col-sm-2" class="btn  btn-default col-xs-2">搜索</button>
-                        </div>
-                    </div>
-                </div>
-                <ul class="fontSize1 list">
-                    <li class="paddTop">
-                        <a {{#eq resource_type 0}}href="/myresourceDetail/111"{{else}}href="/resourceDetail/111"{{/eq}}>资源名称</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href="">资源名称</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href="">资源名称</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href="">资源名称</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                    <li class="paddTop">
-                        <a href="">资源名称</a>
-                        <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-                    </li>
-                </ul>
-                <div class="text-center">
-                    <div class="hidden-xs">
-                        <ul class="paginationM">
-                            <li><a href="#">&laquo;第一页</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li class="disabled"><a href="#">最后一页&raquo;</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="visible-xs">
-                        <ul class="pagerM">
-                            <li class="previous"><a href="#">&laquo;上一页</a></li>
-                            <li class="next"><a href="#">下一页&raquo;</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
+        <div class="textColor borderStyle1">
+          <ul class="nav nav-stacked">
+            <li {{#eq resource_type 0}}class="active"{{/eq}}><a href="/myresource">我的资源</a></li>
+            <li><a href="/resourceAdd">资源上传</a></li>
+            <li {{#eq resource_type 1}}class="active"{{/eq}}><a href="/resource">资源共享</a></li>
+          </ul>
         </div>
+      </div>
+
+      <div class="textColor paddTop col-md-9">
+        <div class="borderStyle row">
+          <div class="col-sm-2 paddTop2 paddBottom2">
+            <span class="h4 textColor">{{#eq resource_type 0}}我的资源{{else}}资源共享{{/eq}}</span>
+          </div>
+          <div class="col-sm-10">
+            <div class="row">
+              <div class="form-group col-xs-10 col-sm-6">
+                <input type="text" class="form-control " placeholder="请输入关键字"/>
+              </div>
+              <button type="submit  col-xs-2 col-sm-2" class="btn  btn-default col-xs-2">搜索</button>
+            </div>
+          </div>
+        </div>
+        <ul class="fontSize1 list" id="data-container">
+          <li class="paddTop">
+            <a {{#eq resource_type 0}}href="/myresourceDetail/111" {{else}}href="/resourceDetail/111"{{/eq}}>资源名称</a>
+            <span class="textColor1 pull-right paddLeft">2016-03-21</span>
+          </li>
+        </ul>
+        <!-- 分页 -->
+        <div class="text-center" id="page-container">
+        </div>
+        <!-- \.分页 -->
+      </div>
     </div>
+  </div>
 </div>
 {{#extend "scripts"}}
-    <script>
-        $(function () {
+  <script src="js/common.js"></script>
+  <script>
+    $(function () {
+
+      var $pageContainer = $('#page-container');
+      var $dataContainer = $('#data-container');
+
+      search(1);
+
+      function search(pageNo) {
+        $.ajax({
+          url: '/resource',
+          type: 'post',
+          dataType: 'json',
+          data: {pageNo: pageNo},
+          success: function (ret) {
+            if (ret.status == 0) {
+              var html = '';
+              $.each(ret.data.list, function (idx, item) {
+                html += '<li class="paddTop">' +
+                    '<a href="">' + item.name + '</a>' +
+                    '<span class="textColor1 pull-right paddLeft">' + dateFormat(item.createdAt) + '</span>' +
+                    '</li>';
+              });
+              $dataContainer.html(html);
+              pagination($pageContainer, ret.data.pageNo, ret.data.total, function (pageNo) {
+                search(pageNo);
+              });
+            }
+          }
         });
-    </script>
+      }
+
+    });
+  </script>
 {{/extend}}
