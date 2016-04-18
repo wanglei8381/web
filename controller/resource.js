@@ -12,7 +12,7 @@ resource.list = function (req, res, next) {
     var where = {};
     var opt = {};
     var query = {};
-    dbHelper.find('ResourceModel', where, query, opt, function (err, ret) {
+    dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');

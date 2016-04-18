@@ -47,23 +47,23 @@ exports.page = function (tableName, query, keys, opt, callback) {
     pageNo--;
 
     async.parallel({
-            one: function (callback) {
-                var skip = pageNo * pageSize;
-                var limit = pageSize;
+          one: function (callback) {
+              var skip = pageNo * pageSize;
+              var limit = pageSize;
 
-                opt.skip = skip;
-                opt.limit = limit;
-                model[tableName].find(query, keys, opt, callback);
-            },
-            two: function (callback) {
-                model[tableName].count(query, callback);
-            }
-        },
-        function (err, results) {
-            var list = results.one;
-            var count = results.two;//总记录数
-            var total = Math.ceil(count / pageSize);//总页数
-            callback(null, {list: list, count: count, total: total});
+              opt.skip = skip;
+              opt.limit = limit;
+              model[tableName].find(query, keys, opt, callback);
+          },
+          two: function (callback) {
+              model[tableName].count(query, callback);
+          }
+      },
+      function (err, results) {
+          var list = results.one;
+          var count = results.two;//总记录数
+          var total = Math.ceil(count / pageSize);//总页数
+          callback(null, {list: list, pageNo: pageNo + 1, count: count, total: total});
 
-        });
+      });
 };
