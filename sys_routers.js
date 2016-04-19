@@ -125,14 +125,6 @@ router.get('/job', function (req, res) {
     res.out('system/job');
 });
 router.post('/job', job.page);
-//职位添加
-router.get('/job/add', function (req, res) {
-    res.out('system/job_add');
-});
-router.post('/job/add', job.add);
-//职位编辑
-router.get('/job/edit/:id',job.editdetail);
-router.post('/job/edit', job.edit);
 //职位详情
 router.get('/job/detail/:id', job.detail);
 //职位删除
@@ -144,17 +136,11 @@ router.get('/res', function (req, res) {
     res.out('system/res');
 });
 router.post('/res', res.page);
-//资源上传
-router.get('/res/add', function (req, res) {
-    res.out('system/res_add');
-});
-router.post('/res/add', res.add);
-//资源编辑
-router.get('/res/edit/:id',res.editdetail);
-router.post('/res/edit', res.edit);
 //资源详情
 router.get('/res/detail/:id', res.detail);
 //资源删除
 router.post('/res/del/:id', res.delete);
+//资源下载
+router.get('/res/download/:id', res.download);
 
 module.exports = router;

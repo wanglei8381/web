@@ -18,9 +18,9 @@ job.page = function (req, res, next) {
 
     if (req.body.title) {
         //根据公司名称，职位名称或者工作地点查询
-        where = {userId: req.session.sys_user.stid,"$or":[{"jobName" : {'$regex': req.body.title}},{"companyName": {'$regex': req.body.title}},{"workPlace" : {'$regex': req.body.title}}]};
+        where = {collegeId: req.session.sys_user.collegeId,"$or":[{"jobName" : {'$regex': req.body.title}},{"companyName": {'$regex': req.body.title}},{"workPlace" : {'$regex': req.body.title}}]};
     }
-    where.userId =  req.session.sys_user.stid;
+    where.collegeId = req.session.sys_user.collegeId;
     dbHelper.page('JobModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
@@ -28,20 +28,6 @@ job.page = function (req, res, next) {
             return res.fail('查询出错');
         }
         res.ok(ret);
-    });
-};
-
-job.add = function (req, res, next) {
-    console.log(req.body);
-    req.body.collegeId = req.session.sys_user.collegeId;
-    req.body.userId = req.session.sys_user.stid;
-    dbHelper.add('JobModel', req.body, function (err, ret) {
-        console.log('执行的结果------->', ret);
-        if (err){
-            console.log('[contoller][sys][user][add]',err.stack);
-            return res.fail('保存出错');
-        }
-        res.ok();
     });
 };
 
@@ -55,16 +41,6 @@ job.detail = function (req, res, next) {
     });
 };
 
-job.edit = function (req, res, next) {
-    console.log(req.body);
-    dbHelper.edit('JobModel', req.body.id, req.body, function (err, ret) {
-        console.log('执行的结果------->', ret);
-        if (err) {
-            return res.fail('保存出错');
-        }
-        res.ok();
-    });
-};
 
 job.delete = function (req, res, next) {
     console.log(req.body);
@@ -74,15 +50,5 @@ job.delete = function (req, res, next) {
             return res.fail('保存出错');
         }
         res.ok();
-    });
-};
-
-job.editdetail = function (req, res, next) {
-    var id = req.params.id;
-    dbHelper.findOne('JobModel', id, function (err, ret) {
-        if (err) {
-            return res.fail('查询出错');
-        }
-        res.out('system/job_add', ret);
     });
 };

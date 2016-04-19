@@ -54,7 +54,6 @@ resource.download = function (req, res, next) {
         if (err) {
             return res.fail('查询出错');
         }
-
         fs.exists(ret.path, function (exists) {
             if (!exists) {
                 res.fail('资源已经不存在');
@@ -76,7 +75,7 @@ resource.add = function (req, res, next) {
     var str = req.get('content-type') || '';
     var mime = str.split(';')[0];
     if ('multipart/form-data' != mime) return res.fail('表单类型不匹配');
-    var form = new formidable.IncomingForm();
+    var form = new formidable.IncomingForm();//实例化
     form.uploadDir = '/tmp/path';//上传的临时文件
     mkdirsSync(form.uploadDir);
     form.parse(req, function (err, fields, files) {

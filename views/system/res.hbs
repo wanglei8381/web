@@ -5,14 +5,11 @@
                 <h4>资源列表</h4>
             </div>
             <div class="col-xs-4">
-                <input class="form-control" placeholder="标题" type="text" id="title"/>
+                <input class="form-control" placeholder="资源名称/资源" type="text" id="title"/>
             </div>
             <div class="col-xs-2">
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
                 </button>
-            </div>
-            <div class="col-xs-2 pull-left">
-                <a class="btn btn-default purple" href="/sys/res/add"><i class="fa fa-plus"></i> 上传</a>
             </div>
         </div>
     </div>
@@ -50,10 +47,10 @@
                     "data": "description",
                     "title": "资源描述"
                 },{
-                    "data": "url",
+                    "data": "filename",
                     "title": "资源地址"
                 }, {
-                    "data": "createdAt",
+                    "data": "lastModifiedDate",
                     "title": "创建时间"
                 },{
                     "data": null,
@@ -73,17 +70,17 @@
                     }, {
                         targets: 2,
                         render: function (i, j, item) {
-                            return formatStr(item.url);
+                            return item.filename;
                         }
                     }, {
                         targets: 3,
                         render: function (i, j, item) {
-                            return my.toDateString(item.createdAt);
+                            return my.toDateString(item.lastModifiedDate);
                         }
                     }, {
                         targets: 4,
                         render: function (i, j, item) {
-                            var str = '<a href="/sys/res/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/res/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>';
+                            var str = '<a href="/sys/res/detail/' + item._id + '">详情</a>'  + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>';
                             return str;
                         }
                     }

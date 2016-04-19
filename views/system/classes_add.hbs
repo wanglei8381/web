@@ -9,7 +9,7 @@
         <div class="panel-body">
             <form class="form-horizontal">
                 <input type="hidden" name="id" value="{{_id}}"/>
-                <input type="hidden" name="supervisor" value="{{sys_user.stid}}"/>
+                <input type="hidden" name="supervisor" value=""/>
                 <input type="hidden" name="collegeId" value="{{sys_user.collegeId}}"/>
                 <input type="hidden" name="head_teacher" value=""/>
 
@@ -24,6 +24,13 @@
                     <lable class="col-sm-2 control-label">班主任工号<span style="color:red">（*）</span></lable>
                     <div class="col-sm-6">
                         <select class="form-control selectHeader" id="selectHeader">
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <lable class="col-sm-2 control-label">辅导员工号<span style="color:red">（*）</span></lable>
+                    <div class="col-sm-6">
+                        <select class="form-control selectSupervisor" id="selectSupervisor">
                         </select>
                     </div>
                 </div>
@@ -43,9 +50,10 @@
     <script type="text/javascript">
         var url;
         var id = '{{_id}}';
-        //班主任
-        var $selectHeader = $('#selectHeader');
+        var $selectSupervisor = $('#selectSupervisor');//辅导员
+        var $selectHeader = $('#selectHeader');//班主任
         $(function () {
+            $selectSupervisor.select2({placeholder: "请选择班主任"});
             $selectHeader.select2({placeholder: "请选择班主任"});
             if (id) {
                 url = '/sys/classes/edit';
@@ -66,25 +74,39 @@
                 data: data,
                 success: function (data) {
                     $selectHeader.empty();
+                    $selectSupervisor.empty();
                     var headerData = [];
                     if (data.data.length == 0) {
                         $selectHeader.select2({placeholder: "请选择班主任"});
+                        $selectSupervisor.select2({placeholder: "请选择辅导员"});
                     } else {
                         var headNum;
+                        var supersNum;
                         for (var i = 0; i < data.data.length; i++) {
                             var header = {id: data.data[i].stid, text: data.data[i].name};
                             headerData.push(header);
                             if ('{{head_teacher}}' == data.data[i].stid) {
                                 headNum = i;
                             }
+                            if ('{{supervisor}}' == data.data[i].stid) {
+                                supersNum = i;
+                            }
                         }
                         $selectHeader.select2({
+                            data: headerData
+                        });
+                        $selectSupervisor.select2({
                             data: headerData
                         });
                         if ('{{head_teacher}}') {
                             var text = headerData[headNum].text;
                             $('#select2-selectHeader-container').html(text).attr('title', text);
                             $selectHeader[0].options[headNum].selected = true;
+                        }
+                        if ('{{supervisor}}') {
+                            var text = headerData[supersNum].text;
+                            $('#select2-selectSupervisor-container').html(text).attr('title', text);
+                            $selectSupervisor[0].options[supersNum].selected = true;
                         }
                     }
                 }
@@ -94,7 +116,7 @@
         var gradeSubmit = function () {
             var className = $.trim($('input[name=name]').val());
             var head_teacher = $.trim($(".selectHeader").find("option:selected").val());
-            var supervisor = '{{sys_user.stid}}';
+            var supervisor = $.trim($(".selectSupervisor").find("option:selected").val());
             if (!className) {
                 $.warning('请输入班级名称');
                 return;
@@ -103,11 +125,12 @@
                 $.warning('请选择班主任');
                 return;
             }
-            if (supervisor == head_teacher) {
-                $.warning('辅导员，班主任不能为同一个老师');
+            $('input[name=head_teacher]').attr("value", head_teacher);
+            if (!supervisor) {
+                $.warning('请选择辅导员');
                 return;
             }
-            $('input[name=head_teacher]').attr("value", head_teacher);
+            $('input[name=supervisor]').attr("value", supervisor);
             my.ajax({
                 url: url,
                 data: $("form").serialize(),

@@ -11,9 +11,6 @@
                 <button type="button" class="btn btn-default" onclick="search();"><i class="fa fa-search"></i> 查询
                 </button>
             </div>
-            <div class="col-xs-2 pull-left">
-                <a class="btn btn-default purple" href="/sys/job/add"><i class="fa fa-plus"></i> 添加</a>
-            </div>
         </div>
     </div>
     <div class="panel-body">
@@ -83,7 +80,7 @@
                     }, {
                         targets: 4,
                         render: function (i, j, item) {
-                            var str = '<a href="/sys/job/detail/' + item._id + '">详情</a>' + '&nbsp;&nbsp;&nbsp;<a href="/sys/job/edit/' + item._id + '">编辑</a>' + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
+                            var str = '<a href="/sys/job/detail/' + item._id + '">详情</a>'  + '&nbsp;&nbsp;&nbsp;<a href="javascript:del(\'' + item._id + '\');">删除</a>'
                             return str;
                         }
                     }

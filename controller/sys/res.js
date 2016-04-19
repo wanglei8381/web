@@ -1,4 +1,6 @@
 var dbHelper = require('../../proxy/dbHelper');
+var fs = require('fs');
+var path = require('path');
 
 var res = module.exports = function (req, res, next) {
     console.log('----->res');
@@ -17,9 +19,9 @@ res.page = function (req, res, next) {
     };
 
     if (req.body.title) {
-        where ={userId: req.session.sys_user.stid ,"$or":[{"name" : {'$regex': req.body.title}},{"description": {'$regex': req.body.title}}]};
+        where ={collegeId: req.session.sys_user.collegeId ,"$or":[{"filename" : {'$regex': req.body.title}},{"name" : {'$regex': req.body.title}},{"description": {'$regex': req.body.title}}]};
     }
-    where.userId = req.session.sys_user.stid;
+    where.collegeId = req.session.sys_user.collegeId;
 
     dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
@@ -30,19 +32,6 @@ res.page = function (req, res, next) {
     });
 };
 
-res.add = function (req, res, next) {
-    console.log(req.body);
-    req.body.collegeId = req.session.sys_user.collegeId;
-    req.body.userId = req.session.sys_user.stid;
-    dbHelper.add('ResourceModel', req.body, function (err, ret) {
-        console.log('执行的结果------->', ret);
-        if (err) {
-            return res.fail('保存出错');
-        }
-        res.ok();
-    });
-};
-
 res.detail = function (req, res, next) {
     var id = req.params.id;
     dbHelper.findOne('ResourceModel', id, function (err, ret) {
@@ -50,17 +39,6 @@ res.detail = function (req, res, next) {
             return res.fail('查询出错');
         }
         res.out('system/res_detail', ret);
-    });
-};
-
-res.edit = function (req, res, next) {
-    console.log(req.body);
-    dbHelper.edit('ResourceModel', req.body.id, req.body, function (err, ret) {
-        console.log('执行的结果------->', ret);
-        if (err) {
-            return res.fail('保存出错');
-        }
-        res.ok();
     });
 };
 
@@ -75,12 +53,26 @@ res.delete = function (req, res, next) {
     });
 };
 
-res.editdetail = function (req, res, next) {
+res.download = function (req, res, next) {
     var id = req.params.id;
     dbHelper.findOne('ResourceModel', id, function (err, ret) {
+        console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');
         }
-        res.out('system/res_add', ret);
+        fs.exists(ret.path, function (exists) {
+            if (!exists) {
+                res.fail('资源已经不存在');
+            } else {
+                fs.readFile(ret.path, function (err, chunk) {
+                    if(err){
+                        return res.fail('查询出错');
+                    }
+                    //设置请求头以附件的格式
+                    res.setHeader("Content-Disposition", "attachment; filename=" + encodeURIComponent(ret.filename));
+                    res.end(chunk, 'binary');
+                });
+            }
+        });
     });
 };

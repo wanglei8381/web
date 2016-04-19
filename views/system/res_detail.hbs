@@ -15,11 +15,22 @@
                 </div>
             </div>
             <div class="form-group">
+                <lable class="col-sm-2 control-label">资源大小</lable>
+                <div class="col-sm-10 u-word">
+                    {{size}}B
+                </div>
+            </div>
+            <div class="form-group">
+                <lable class="col-sm-2 control-label">资源类型</lable>
+                <div class="col-sm-10 u-word">
+                    {{type}}
+                </div>
+            </div>
+            <div class="form-group">
                 <lable class="col-sm-2 control-label">资源地址</lable>
                 <div class="col-sm-10 u-word">
-                    <span>{{url}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="##" class="btn btn-default">下载</a>
+                    <span>{{filename}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<a href="/sys/res/download/{{_id}}" class="btn btn-default">下载</a>
                 </div>
-
             </div>
             <div class="form-group">
                 <lable class="col-sm-2 control-label">资源描述</lable>
