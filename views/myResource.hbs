@@ -2,25 +2,24 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">企业招聘</div>
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
-                        <li class="active"><a href="/job">企业招聘</a></li>
-                        <li><a href="/myjob">我的职位</a></li>
-                        <li><a href="/job/add">职位发布</a></li>
+                        <li><a href="/resource">所有资源</a></li>
+                        <li class="teaRes active"><a href="/myresource">我的资源</a></li>
+                        <li class="teaRes"><a href="/resourceAdd">资源上传</a></li>
                     </ul>
                 </div>
             </div>
-
             <div class="textColor paddTop col-md-9">
                 <div class="borderStyle row">
                     <div class="col-sm-2 paddTop2 paddBottom2">
-                        <span class="h4 textColor">企业招聘</span>
+                        <span class="h4 textColor">我的资源</span>
                     </div>
                     <div class="col-sm-10">
                         <div class="row">
                             <div class="form-group col-xs-10 col-sm-6">
-                                <input type="text" class="form-control " placeholder="请输入关键字" id="title"/>
+                                <input type="text" class="form-control " placeholder="请输入搜索资源关键字" id="title"/>
                             </div>
                             <button type="col-xs-2 col-sm-2" class="btn  btn-default col-xs-2" onclick="search(1);">搜索</button>
                         </div>
@@ -32,7 +31,6 @@
                 <div class="text-center" id="page-container">
                 </div>
                 <!-- \.分页 -->
-
             </div>
         </div>
     </div>
@@ -40,29 +38,36 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
+            if('{{normal_user.identity}}' == 1){
+                $('.teaRes').addClass('hidden');
+            }else{
+                $('.teaRes').removeClass('hidden');
+            }
             search(1);
         });
+
         var $pageContainer = $('#page-container');
         var $dataContainer = $('#data-container');
 
         function search(pageNo) {
             $.ajax({
-                url: '/job',
+                url: '/myresource',
                 type: 'post',
                 dataType: 'json',
-                data: {pageNo: pageNo, title: $.trim($('#title').val())},
+                data: {pageNo: pageNo,title : $.trim($('#title').val())},
                 success: function (ret) {
                     if (ret.status == 0) {
                         var html = '';
                         if(ret.data.list.length == 0){
                             html += '<li class="paddTop"><span>暂无数据</span></li>';
                             $pageContainer.addClass('hidden');
-                        } else {
+                        } else{
                             $.each(ret.data.list, function (idx, item) {
                                 html += '<li class="paddTop">' +
-                                        '<span>[' + item.jobName + ']</span>&nbsp;' +
-                                        '<a href="/job/detail/' + item._id + '">' + formatStr2(item.companyName) + '</a>' +
+                                        '<a href="/resource/download/'+item._id+'">[' + item.name + ']&nbsp;&nbsp;</a>' +
+                                        '<a href="/resource/download/'+item._id+'">' + formatStr3(item.description) + '</a>' +
                                         '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(item.createdAt) + '</span>' +
+                                        '<span class="pull-right"><a href="javascript:del(\'' + item._id + '\');">删除</a></span>'+
                                         '</li>';
                             });
                         }
@@ -74,5 +79,25 @@
                 }
             });
         }
+
+        function del(id) {
+            bootbox.confirm("您确定要删除吗？", function (result) {
+                if (result) {
+                    my.ajax({
+                        url: '/resource/del/' + id,
+                        data: {id:id},
+                        success: function () {
+                            $.success('操作成功', null, null, function () {
+                                window.location.reload();
+                            });
+                        },
+                        error: function () {
+                            $.danger('网络异常，请联系管理员！');
+                        }
+                    });
+                }
+            });
+        }
+
     </script>
 {{/extend}}

@@ -9,8 +9,12 @@ var resource = module.exports = function (req, res, next) {
 
 resource.list = function (req, res, next) {
     console.log(req.body);
-    var where = {};
-    var opt = {};
+    if(req.body.title){
+        var where = {"collegeId" : req.session.normal_user.collegeId,"$or":[{"description" : {'$regex': req.body.title}},{"name" : {'$regex': req.body.title}}]};
+    }else{
+        var where = {"collegeId" : req.session.normal_user.collegeId};
+    }
+    var opt = {"sort": "-createdAt"};
     var query = {};
     dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
@@ -23,27 +27,19 @@ resource.list = function (req, res, next) {
 
 resource.mylist = function (req, res, next) {
     console.log(req.body);
-    var where = {};
-    where.userId = req.session.normal_user.stid;
-    var opt = {};
+    if(req.body.title){
+        var where = {"userId" : req.session.normal_user.stid,"collegeId" : req.session.normal_user.collegeId,"$or":[{"description" : {'$regex': req.body.title}},{"name" : {'$regex': req.body.title}}]};
+    }else{
+        var where = {"userId" : req.session.normal_user.stid,"collegeId" : req.session.normal_user.collegeId};
+    }
+    var opt = {"sort": "-createdAt"};
     var query = {};
-    dbHelper.find('ResourceModel', where, query, opt, function (err, ret) {
+    dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');
         }
         res.ok(ret);
-    });
-};
-
-resource.detail = function (req, res, next) {
-    var id = req.params.id;
-    dbHelper.findOne('ResourceModel', id, function (err, ret) {
-        console.log('执行的结果------->', ret);
-        if (err) {
-            return res.fail('查询出错');
-        }
-        res.out('job_detail', ret);
     });
 };
 

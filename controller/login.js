@@ -92,3 +92,24 @@ login.repwd = function (req, res, next) {
     res.ok();
   });
 };
+
+
+login.repwd = function (req, res, next) {
+  if (validator.trim(req.body.oldpassword) != req.session.normal_user.password) {
+    return res.fail('旧密码输入错误');
+  }
+  if(req.session.normal_user.stid == 'admin'){
+    res.fail('管理员账户不能修改密码');
+  }else{
+    var id = req.session.normal_user.id;
+    var password = req.body.password;
+    dbHelper.edit('UserModel', id, {password: password}, function (err, ret) {
+      console.log('执行的结果------->', ret);
+      if (err) {
+        return res.fail('保存出错');
+      }
+      req.session.normal_user.password = password;
+      res.ok();
+    });
+  }
+};

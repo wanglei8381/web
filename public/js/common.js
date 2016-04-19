@@ -49,16 +49,3 @@ var pagination = function (container, pageNo, total, callback) {
         callback(parseInt($(this).data('page')));
     });
 };
-
-/**
- * 日期格式化
- * @param date
- */
-var dateFormat = function (date) {
-    var d = new Date(date);
-    var add0 = function (val) {
-        return val >= 10 ? val : '0' + val;
-    };
-
-    return d.getFullYear() + '-' + add0(d.getMonth()) + '-' + add0(d.getDate()) + ' ' + add0(d.getHours()) + ':' + add0(d.getMinutes()) + ':' + add0(d.getSeconds());
-};

@@ -1,0 +1,40 @@
+<div class="marginLR marginBottom">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">企业招聘</div>
+                <div class="textColor borderStyle1">
+                    <ul class="nav nav-stacked">
+                        <li><a href="/job">企业招聘</a></li>
+                        <li><a href="/myjob">我的职位</a></li>
+                        <li><a href="/job/add">职位发布</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="paddTop col-md-9">
+                <div class="borderStyle paddBottom">
+                    <span class="h4 textColor">职位详情</span>
+                </div>
+                <div class="fontSize1 borderStyle2 ">
+                    <h4 class="textColor"><span>{{companyName}}</span>&nbsp;&nbsp;<span class="textColor3">{{jobName}}</span></h4>
+                    <div class="paddTop2 paddBottom1">
+                        工作地点：<span>{{workPlace}}</span>
+                        发布日期：<span class="createdAt"></span>
+                    </div>
+
+                </div>
+                <div class="paddTop fontSize1">
+                   {{{jobDescription}}}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{#extend "scripts"}}
+    <script>
+        $(function () {
+            $('.createdAt').html(my.toDateStr('{{createdAt}}'));
+        });
+    </script>
+{{/extend}}

@@ -1,79 +1,83 @@
 <div class="marginLR marginBottom">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
-        <div class="textColor borderStyle1">
-          <ul class="nav nav-stacked">
-            <li {{#eq resource_type 0}}class="active"{{/eq}}><a href="/myresource">我的资源</a></li>
-            <li><a href="/resourceAdd">资源上传</a></li>
-            <li {{#eq resource_type 1}}class="active"{{/eq}}><a href="/resource">资源共享</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="textColor paddTop col-md-9">
-        <div class="borderStyle row">
-          <div class="col-sm-2 paddTop2 paddBottom2">
-            <span class="h4 textColor">{{#eq resource_type 0}}我的资源{{else}}资源共享{{/eq}}</span>
-          </div>
-          <div class="col-sm-10">
-            <div class="row">
-              <div class="form-group col-xs-10 col-sm-6">
-                <input type="text" class="form-control " placeholder="请输入关键字"/>
-              </div>
-              <button type="submit  col-xs-2 col-sm-2" class="btn  btn-default col-xs-2">搜索</button>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
+                <div class="textColor borderStyle1">
+                    <ul class="nav nav-stacked">
+                        <li class="active"><a href="/resource">所有资源</a></li>
+                        <li class="teaRes"><a href="/myresource">我的资源</a></li>
+                        <li class="teaRes"><a href="/resourceAdd">资源上传</a></li>
+                    </ul>
+                </div>
             </div>
-          </div>
+
+            <div class="textColor paddTop col-md-9">
+                <div class="borderStyle row">
+                    <div class="col-sm-2 paddTop2 paddBottom2">
+                        <span class="h4 textColor">资源共享</span>
+                    </div>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="form-group col-xs-10 col-sm-6">
+                                <input type="text" class="form-control " placeholder="请输入搜索资源关键字" id="title"/>
+                            </div>
+                            <button type="col-xs-2 col-sm-2" class="btn  btn-default col-xs-2" onclick="search(1);">搜索</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="fontSize1 list" id="data-container">
+                </ul>
+                <!-- 分页 -->
+                <div class="text-center" id="page-container">
+                </div>
+                <!-- \.分页 -->
+            </div>
         </div>
-        <ul class="fontSize1 list" id="data-container">
-          <li class="paddTop">
-            <a {{#eq resource_type 0}}href="/myresourceDetail/111" {{else}}href="/resourceDetail/111"{{/eq}}>资源名称</a>
-            <span class="textColor1 pull-right paddLeft">2016-03-21</span>
-          </li>
-        </ul>
-        <!-- 分页 -->
-        <div class="text-center" id="page-container">
-        </div>
-        <!-- \.分页 -->
-      </div>
     </div>
-  </div>
 </div>
 {{#extend "scripts"}}
-  <script src="js/common.js"></script>
-  <script>
-    $(function () {
-
-      var $pageContainer = $('#page-container');
-      var $dataContainer = $('#data-container');
-
-      search(1);
-
-      function search(pageNo) {
-        $.ajax({
-          url: '/resource',
-          type: 'post',
-          dataType: 'json',
-          data: {pageNo: pageNo},
-          success: function (ret) {
-            if (ret.status == 0) {
-              var html = '';
-              $.each(ret.data.list, function (idx, item) {
-                html += '<li class="paddTop">' +
-                    '<a href="">' + item.name + '</a>' +
-                    '<span class="textColor1 pull-right paddLeft">' + dateFormat(item.createdAt) + '</span>' +
-                    '</li>';
-              });
-              $dataContainer.html(html);
-              pagination($pageContainer, ret.data.pageNo, ret.data.total, function (pageNo) {
-                search(pageNo);
-              });
+    <script>
+        $(function () {
+            search(1);
+            if('{{normal_user.identity}}' == 1){
+                $('.teaRes').addClass('hidden');
+            }else{
+                $('.teaRes').removeClass('hidden');
             }
-          }
         });
-      }
 
-    });
-  </script>
+        var $pageContainer = $('#page-container');
+        var $dataContainer = $('#data-container');
+
+        function search(pageNo) {
+            $.ajax({
+                url: '/resource',
+                type: 'post',
+                dataType: 'json',
+                data: {pageNo: pageNo,title : $.trim($('#title').val())},
+                success: function (ret) {
+                    if (ret.status == 0) {
+                        var html = '';
+                        if(ret.data.list.length == 0){
+                            html += '<li class="paddTop"><span>暂无数据</span></li>';
+                            $pageContainer.addClass('hidden');
+                        } else{
+                            $.each(ret.data.list, function (idx, item) {
+                                html += '<li class="paddTop">' +
+                                        '<a href="/resource/download/'+item._id+'">[' + item.name + ']&nbsp;&nbsp;</a>' +
+                                        '<a href="/resource/download/'+item._id+'">' + formatStr3(item.description) + '</a>' +
+                                        '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(item.createdAt) + '</span>' +
+                                        '</li>';
+                            });
+                        }
+                        $dataContainer.html(html);
+                        pagination($pageContainer, ret.data.pageNo, ret.data.total, function (pageNo) {
+                            search(pageNo);
+                        });
+                    }
+                }
+            });
+        }
+    </script>
 {{/extend}}

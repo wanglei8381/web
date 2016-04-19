@@ -33,6 +33,8 @@ router.get('/login', function (req, res) {
 });
 router.post('/login', login.login);
 router.get('/logout', login.logout);
+//修改密码
+router.post('/repwd', login.repwd);
 
 //新闻管理(列表)
 router.get('/news', function (req, res) {
@@ -73,12 +75,6 @@ router.post('/note/appreval/:id', note.appreval);
 //假条删除
 router.post('/note/del/:id', note.delete);
 
-//企业招聘(所以招聘信息)
-router.get('/job', function (req, res) {
-    res.out('job');
-});
-router.post('/job', job.list);
-
 //资源共享(所有资源)
 router.get('/resource', function (req, res) {
     res.out('resource');
@@ -89,30 +85,38 @@ router.get('/resourceAdd', function (req, res) {
     res.out('resourceAdd');
 });
 router.post('/resourceAdd', resource.add);
-
+//我的资源
 router.get('/myresource', function (req, res) {
-    res.out('resource');
+    res.out('myResource');
 });
-
+router.post('/myresource', resource.mylist);
+//资源下载
 router.get('/resource/download/:id', resource.download);
+//资源删除
+router.post('/resource/del/:id', resource.delete);
 
-/*
- //企业招聘(我的职位列表/职位上传/企业招聘列表/我的职位详情/职位详情/职位编辑)
- router.get('/myjob', routeMap.job.myjobList);
- router.get('/jobAdd', routeMap.job.jobAdd);
- router.get('/job', routeMap.job.jobList);
- router.get('/myjobDetail/:id', routeMap.job.myjobDetail);
- router.get('/jobDetail/:id', routeMap.job.jobDetail);
- router.get('/jobEdit/:id', routeMap.job.jobEdit);
- //资源共享(我的资源列表/资源上传/资源共享/我的资源详情/资源详情/资源编辑)
- router.get('/myresource', routeMap.resource.myresourceList);
- router.get('/resourceAdd', routeMap.resource.resourceAdd);
- router.get('/resource', routeMap.resource.resourceList);
- router.get('/myresourceDetail/:id', routeMap.resource.myresourceDetail);
- router.get('/resourceDetail/:id', routeMap.resource.resourceDetail);
- router.get('/resourceEdit/:id', routeMap.resource.resourceEdit);
- //个人中心
- router.get('/personCenter', routeMap.person.personCenter);
- router.get('/changePwd', routeMap.person.changePwd);*/
+//企业招聘(所有招聘)
+router.get('/job', function (req, res) {
+    res.out('job');
+});
+router.post('/job', job.list);
+//企业招聘(我的招聘)
+router.get('/myjob', function (req, res) {
+    res.out('myjob');
+});
+router.post('/myjob', job.mylist);
+//职位添加
+router.get('/job/add', function (req, res) {
+    res.out('job_add');
+});
+router.post('/job/add', job.add);
+//职位详情
+router.get('/job/detail/:id', job.detail);
+//职位编辑
+router.get('/job/edit/:id',job.editdetail);
+router.post('/job/edit', job.edit);
+//职位删除
+router.post('/job/del/:id', job.delete);
+
 
 module.exports = router;

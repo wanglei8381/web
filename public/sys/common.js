@@ -50,9 +50,13 @@ var my = {
         };
         return d.getFullYear() + '-' + add0((d.getMonth() + 1)) + '-' + add0(d.getDate());
     },
-    repwd: function () {
+    repwd: function (type) {
         var self = this;
-        var html = '<div class="panel-body"><form class="form-horizontal" id="repwdForm"><div class="form-group"><label class="col-sm-3 control-label">旧密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="旧密码" type="text" name="oldpassword"/></div></div><div class="form-group"><label class="col-sm-3 control-label">新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="新密码" type="text" name="password"/></div></div><div class="form-group"><label class="col-sm-3 control-label">确认新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="确认新密码" type="text" name="repassword"/></div></div></form></div>';
+        var html = '<div class="panel-body"><form class="form-horizontal" id="repwdForm"><div class="form-group"><label class="col-sm-3 control-label">旧密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="旧密码" type="password" name="oldpassword"/></div></div><div class="form-group"><label class="col-sm-3 control-label">新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="新密码" type="password" name="password"/></div></div><div class="form-group"><label class="col-sm-3 control-label">确认新密码 :</label><div class="col-sm-7 u-word"><input class="form-control" placeholder="确认新密码" type="password" name="repassword"/></div></div></form></div>';
+        var url = '/sys/user/repwd';
+        if(type){
+            url = '/repwd';
+        }
         bootbox.dialog({
             message: html,
             title: '添加',
@@ -63,7 +67,7 @@ var my = {
                     className: "btn-success",
                     callback: function () {
                         self.ajax({
-                            url: '/sys/user/repwd',
+                            url: url,
                             data: $('#repwdForm').serialize(),
                             success: function (data) {
                                 $.success('更新成功');

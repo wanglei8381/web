@@ -11,32 +11,16 @@
                             <div class="form-group col-xs-10 col-sm-6">
                                 <input type="text" class="form-control " placeholder="请输入关键字" id="title"/>
                             </div>
-                            <button type="submit  col-xs-2 col-sm-2" onclick="search();" class="btn  btn-default col-xs-2">搜索</button>
+                            <button type="submit  col-xs-2 col-sm-2" onclick="search(1);" class="btn  btn-default col-xs-2">搜索</button>
                         </div>
                     </div>
                 </div>
-                <ul class="fontSize1 list" id="notifyList">
+                <ul class="fontSize1 list" id="data-container">
                 </ul>
-                <div class="text-center" id="changePage">
-                    <div class="hidden-xs">
-                        <ul class="paginationM">
-                            <li><a href="#">&laquo;第一页</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li class="disabled"><a href="#">最后一页&raquo;</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="visible-xs">
-                        <ul class="pagerM">
-                            <li class="previous"><a href="#">&laquo;上一页</a></li>
-                            <li class="next"><a href="#">下一页&raquo;</a></li>
-                        </ul>
-                    </div>
+                <!-- 分页 -->
+                <div class="text-center" id="page-container">
                 </div>
+                <!-- \.分页 -->
             </div>
         </div>
     </div>
@@ -45,40 +29,39 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
-            search();//获取当前登录学生导员ID
+            search(1);
         });
-
-        function search() {
-            var data = {
-                title : $.trim($('#title').val())
-            }
-            my.ajax({
+        var $pageContainer = $('#page-container');
+        var $dataContainer = $('#data-container');
+        function search(pageNo) {
+            $.ajax({
                 url: '/notify',
-                data : data,
-                success: function (data) {
-                    var data = data.data;
-                    if(data.length == 0){
-                        var str = '<li class="paddTop"><span>暂无数据</span></li>';
-                        $('#notifyList').prepend(str);
-                        $('#changePage').addClass('hidden');
-                    }else {
-                        $('#notifyList').empty();
-                        for (var i = 0; i < data.length; i++) {
-                            var type = notifyType[data[i].type];
-                            var str = '<li class="paddTop">' +
-                                    '<span>[' + type + ']</span>&nbsp;' +
-                                    '<a href="/notify/detail/' + data[i]._id + '">' + formatStr2(data[i].title) + '</a>' +
-                                    '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(data[i].createdAt) + '</span>' +
-                                    '</li>'
-                            $('#notifyList').prepend(str);
+                type: 'post',
+                dataType: 'json',
+                data: {pageNo: pageNo, title: $.trim($('#title').val())},
+                success: function (ret) {
+                    if (ret.status == 0) {
+                        var html = '';
+                        if(ret.data.list.length == 0){
+                            html += '<li class="paddTop"><span>暂无数据</span></li>';
+                            $pageContainer.addClass('hidden');
+                        } else {
+                            $.each(ret.data.list, function (idx, item) {
+                                var type = notifyType[item.type];
+                                html += '<li class="paddTop">' +
+                                        '<span>[' + type + ']</span>&nbsp;' +
+                                        '<a href="/notify/detail/' + item._id + '">' + formatStr2(item.title) + '</a>' +
+                                        '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(item.createdAt) + '</span>' +
+                                        '</li>';
+                            });
                         }
+                        $dataContainer.html(html);
+                        pagination($pageContainer, ret.data.pageNo, ret.data.total, function (pageNo) {
+                            search(pageNo);
+                        });
                     }
-                },
-                error: function () {
-                    $.danger('网络异常，请联系管理员！');
                 }
-           });
+            });
         }
-
     </script>
 {{/extend}}

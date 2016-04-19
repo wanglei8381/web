@@ -4,11 +4,11 @@
       <div class="col-md-3">
         <div class="bgColor textColor2 marginTop fontSize2 paddAll1">资源共享</div>
         <div class="textColor borderStyle1">
-          <ul class="nav nav-stacked">
-            <li><a href="/myresource">我的资源</a></li>
-            <li class="active"><a href="/resourceAdd">资源上传</a></li>
-            <li><a href="/resource">资源共享</a></li>
-          </ul>
+            <ul class="nav nav-stacked">
+                <li><a href="/resource">所有资源</a></li>
+                <li class="teaRes"><a href="/myresource">我的资源</a></li>
+                <li class="teaRes active"><a href="/resourceAdd">资源上传</a></li>
+            </ul>
         </div>
       </div>
 
@@ -21,7 +21,7 @@
             <div class="form-group row">
               <label class="col-md-2 control-label">资源名称</label>
 
-              <div class="col-md-2">
+              <div class="col-md-7">
                 <input type="text" class="form-control" name="name" placeholder="资源名称">
               </div>
             </div>
@@ -34,7 +34,7 @@
             </div>
             <div class="form-group row">
               <label class="col-md-2 control-label">资源上传</label>
-              <div class="col-md-10">
+              <div class="col-md-7">
                 <input type="file" class="form-control" name="file" placeholder="资源文件">
               </div>
             </div>
@@ -46,7 +46,6 @@
   </div>
 </div>
 {{#extend "scripts"}}
-  <script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.min.js"></script>
   <script>
     $('#submit').click(function () {
       $("form").ajaxSubmit({

@@ -16,7 +16,8 @@
             <a href="http://www.cwu.edu.cn/" class="hidden-xs">中华女子学院</a>
             <a href="http://jw.cwu.edu.cn/" class="paddLeft">中华女子学院教务处</a>
                 <span class="pull-right">
-                    <a href="/personCenter">【{{normal_user.name}}】</a>
+                    <a>【{{normal_user.name}}】</a>
+                    <a href="javascript:my.repwd(1);">【修改密码】</a>
                     <a href="/logout" class="paddLeft">退出</a>
                 </span>
         </div>
@@ -38,7 +39,7 @@
                     <li id="notify_id"><a href="/notify">通知</a></li>
                     <li id="note_id"></li>
                     <li id=job_id""><a href="/job">企业招聘</a></li>
-                    <li id="res_id"><a href="/resource">资源共享</a></li>
+                    <li id="resource_id"><a href="/resource">资源共享</a></li>
                 </ul>
             </div>
         </div>
@@ -61,6 +62,11 @@
     <script src="/sys/bootbox.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.min.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript" src="/umeditor/umeditor.config.js"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="/umeditor/umeditor.min.js"></script>
     <script>
         $(function () {
             var path_module = location.pathname.substr(1);
