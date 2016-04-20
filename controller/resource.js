@@ -94,9 +94,7 @@ resource.add = function (req, res, next) {
             }
             res.ok();
         });
-
     });
-
 };
 
 resource.delete = function (req, res, next) {
