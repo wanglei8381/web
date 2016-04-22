@@ -16,24 +16,12 @@
                         <span class="h4 textColor">我的假条</span>
                     </div>
                 </div>
-                <ul class="fontSize1 list" id="noteList">
+                <ul class="fontSize1 list" id="data-container">
                 </ul>
-                <div class="text-center" id="changePage">
-                    <div class="hidden-xs">
-                        <ul class="paginationM">
-                            <li><a href="#">&laquo;第一页</a></li>
-                            <li class="active"><a href="#">1</a></li>
-                            <li class="disabled"><a href="#">最后一页&raquo;</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="visible-xs">
-                        <ul class="pagerM">
-                            <li class="previous"><a href="#">&laquo;上一页</a></li>
-                            <li class="next"><a href="#">下一页&raquo;</a></li>
-                        </ul>
-                    </div>
+                <!-- 分页 -->
+                <div class="text-center" id="page-container">
                 </div>
+                <!-- \.分页 -->
             </div>
         </div>
     </div>
@@ -41,34 +29,41 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
-            search()
+            search(1)
         });
-        function search() {
-            my.ajax({
+        var $pageContainer = $('#page-container');
+        var $dataContainer = $('#data-container');
+
+        function search(pageNo) {
+            $.ajax({
                 url: '/note',
-                success: function (data) {
-                    var data = data.data;
-                    if(data.length == 0){
-                        var str = '<li class="paddTop"><span>暂无数据</span></li>';
-                        $('#noteList').prepend(str);
-                        $('#changePage').addClass('hidden');
-                    }else{
-                        $('#noteList').empty();
-                        for(var i = 0; i < data.length; i++){
-                            var str = '<li class="paddTop">'+
-                                    '<a href="/note/detail/' + data[i]._id + '"><span>{{normal_user.name}}</span> 的请假单</a>'+
-                                    '<span class="textColor1 pull-right paddLeft">'+my.toDateStr(data[i].createdAt)+'</span>'+
-                                    '<span class="pull-right">'+noteStatus[data[i].status]+'</span>'
-                            if(data[i].status == 0 || data[i].status == 2){
-                                str = str + '<span class="pull-right"><a href="javascript:del(\'' + data[i]._id + '\');">删除&nbsp;</a></span>'
-                            }
-                            str = str + '</li>';
-                            $('#noteList').prepend(str);
+                type: 'post',
+                dataType: 'json',
+                data: {pageNo: pageNo},
+                success: function (ret) {
+                    if (ret.status == 0) {
+                        var html = '';
+                        if(ret.data.list.length == 0){
+                            html += '<li class="paddTop"><span>暂无数据</span></li>';
+                            $pageContainer.addClass('hidden');
+                        } else {
+                            $.each(ret.data.list, function (idx, item) {
+                                html += '<li class="paddTop">' +
+                                        '<a href="/note/detail/' + item._id + '"><span>{{normal_user.name}}</span> 的请假单</a>'+
+                                        '<span class="textColor1 pull-right paddLeft">' + my.toDateStr(item.createdAt) + '</span>' +
+                                        '<span class="pull-right">'+noteStatus[item.status]+'</span>'
+
+                                if(item.status == 0 || item.status == 2){
+                                    html = html + '<span class="pull-right"><a href="javascript:del(\'' + item._id + '\');">删除&nbsp;</a></span>'
+                                }
+                                html += '</li>';
+                            });
                         }
+                        $dataContainer.html(html);
+                        pagination($pageContainer, ret.data.pageNo, ret.data.total, function (pageNo) {
+                            search(pageNo);
+                        });
                     }
-                },
-                error: function () {
-                    $.danger('网络异常，请联系管理员！');
                 }
             });
         }

@@ -13,7 +13,7 @@ classes.page = function (req, res, next) {
     var opt = {
         pageNo: req.body.pageNo,
         pageSize: req.body.pageSize,
-        sort: {"stid":1}
+        sort: {"name":1}
     };
 
     if (req.body.title) {

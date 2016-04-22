@@ -9,6 +9,7 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/common.css" rel="stylesheet">
     <link href="/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
 </head>
 <body>
     <header class="navbar-fixed-top">
@@ -37,8 +38,8 @@
                 <ul class="nav navbar-nav h4">
                     <li id="news_id" ><a href="/news">新闻</a></li>
                     <li id="notify_id"><a href="/notify">通知</a></li>
-                    <li id="note_id"></li>
-                    <li id=job_id""><a href="/job">企业招聘</a></li>
+                    <li id="note_id" class="note"></li>
+                    <li id="job_id"><a href="/job">企业招聘</a></li>
                     <li id="resource_id"><a href="/resource">资源共享</a></li>
                 </ul>
             </div>
@@ -80,13 +81,15 @@
         });
 
         if('{{normal_user.identity}}' == 4){
-            $('#note_id').addClass('hidden');
+            $('.note').addClass('hidden');
         }else if('{{normal_user.identity}}' == 1){
             var str = '<a href="/note">假条审批</a>';
-            $('#note_id').append(str);
+            $('.note').append(str);
         }else{
+            $('.note').attr('id','allNote_id');
             var str = '<a href="/allNote">假条审批</a>';
-            $('#note_id').append(str);
+            $('.note').append(str);
+
         }
     </script>
     {{{block "scripts"}}}

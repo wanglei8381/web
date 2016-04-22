@@ -10,7 +10,7 @@ job.list = function (req, res, next) {
     if(req.body.title){
         where = {"$or":[{"jobName" : {'$regex': req.body.title}},{"companyName" : {'$regex': req.body.title}}]};
     }
-    var opt = {"sort": "-createdAt"};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
     dbHelper.page('JobModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
@@ -28,7 +28,7 @@ job.mylist = function (req, res, next) {
     }else{
         var where = {"userId" : req.session.normal_user.stid};
     }
-    var opt = {"sort": "-createdAt"};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
     dbHelper.page('JobModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

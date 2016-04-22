@@ -11,7 +11,7 @@ notify.list = function (req, res, next) {
     }else{
         var where = {status: 1, "collegeId" : req.session.normal_user.collegeId};
     }
-    var opt = {"sort": "-createdAt"};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
     dbHelper.page('NotificationModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

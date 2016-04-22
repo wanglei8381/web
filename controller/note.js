@@ -9,9 +9,9 @@ note.list = function (req, res, next) {
     var where = {
         "userId": req.session.normal_user.stid
     };
-    var opt = {};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
-    dbHelper.find('NoteModel', where, query, opt, function (err, ret) {
+    dbHelper.page('NoteModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');
@@ -48,9 +48,9 @@ note.listAll = function (req, res, next) {
             };
         }
     }
-    var opt = {};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
-    dbHelper.find('NoteModel', where, query, opt, function (err, ret) {
+    dbHelper.page('NoteModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {
             return res.fail('查询出错');

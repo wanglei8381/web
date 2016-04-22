@@ -1,7 +1,4 @@
 var dbHelper = require('../../proxy/dbHelper');
-var formidable = require('formidable');
-var fs = require('fs');
-var path = require('path');
 
 var news = module.exports = function (req, res, next) {
     console.log('----->news');
@@ -22,7 +19,7 @@ news.page = function (req, res, next) {
     if (req.body.title) {
         where ={userId: req.session.sys_user.stid, title: {'$regex': req.body.title}};
     }
-    //where.userId = req.session.sys_user.stid;
+    where.userId = req.session.sys_user.stid;
 
     dbHelper.page('NewsModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

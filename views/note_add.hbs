@@ -69,6 +69,9 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
+            var date =Date.now();
+            alert(my.toDateStr(date))
+
             if('{{normal_user.identity}}' == 1){
                 $('#noteApproval').addClass('hidden');
             }else if('{{normal_user.identity}}' == 2 || '{{normal_user.identity}}' == 3){
@@ -93,15 +96,26 @@
 
         function noteSubmit(){
             var beginDate = $.trim($('input[name=beginDate]').val());
+            var endDate = $.trim($('input[name=endDate]').val());
+            var days = $.trim($('input[name=days]').val());
             var noteReason = $.trim($('textarea[name=reason]').val());
             if(!beginDate){
                 $.warning('请选择请假日期');
+                return;
+            }
+            if(!endDate){
+                $.warning('请选择请假日期');
+                return;
+            }
+            if(!days){
+                $.warning('请输入请假天数');
                 return;
             }
             if(!noteReason){
                 $.warning('请输入请假理由');
                 return;
             }
+
             my.ajax({
                 url: '/note/add',
                 data: $("form").serialize(),

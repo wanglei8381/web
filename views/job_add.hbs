@@ -6,8 +6,8 @@
                 <div class="textColor borderStyle1">
                     <ul class="nav nav-stacked">
                         <li><a href="/job">企业招聘</a></li>
-                        <li><a href="/myjob">我的职位</a></li>
-                        <li class="active"><a href="/job/add">职位发布</a></li>
+                        <li class="myjob"><a href="/myjob">我的职位</a></li>
+                        <li class="active addjob"><a href="/job/add">职位发布</a></li>
                     </ul>
                 </div>
             </div>
@@ -17,28 +17,30 @@
                 </div>
                 <div class="paddAll4 borderStyle1 bgColor2">
                     <form role="form form-horizontal">
+                        <input type="hidden" name="id" value="{{_id}}"/>
+                        <input type="hidden" name="collegeId" value="{{collegeId}}"/>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">公司名称</label>
+                            <label class="col-md-2 control-label">公司名称<span style="color:red">（*）</span></label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="companyName" placeholder="" value="{{companyName}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">工作地点</label>
+                            <label class="col-md-2 control-label">工作地点<span style="color:red">（*）</span></label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="workPlace" placeholder="" value="{{workPlace}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">职位名称</label>
+                            <label class="col-md-2 control-label">职位名称<span style="color:red">（*）</span></label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="jobName" placeholder="" value="{{workPlace}}">
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label class="col-md-2 control-label">职位介绍</label>
+                            <label class="col-md-2 control-label">职位介绍<span style="color:red">（*）</span></label>
                             <div class="col-md-10">
-                                <script type="text/plain" name="content" id="editor" style="width:100%;height:360px;"></script>
+                                <script type="text/plain" name="jobDescription" id="editor" style="width:100%;height:360px;"></script>
                             </div>
                         </div>
                     </form>
@@ -68,16 +70,39 @@
             um.setContent(content);
         })
 
+        var url = '/job/add';
+        if (id) {
+            $('.myjob').addClass('active');
+            $('.addjob').removeClass('active');
+            url = '/job/edit';
+        }
+
         var jobSubmit = function(){
-            var url = '/job/add';
-            if (id) {
-                url = '/job/edit';
+            var companyName = $.trim($('input[name=companyName]').val());
+            var workPlace = $.trim($('input[name=workPlace]').val());
+            var jobName = $.trim($('input[name=jobName]').val());
+            var jobContent = $.trim($('#editor').html());
+            if(!companyName){
+                $.warning('请输入公司名称');
+                return;
+            }
+            if(!workPlace){
+                $.warning('请输入工作地点');
+                return;
+            }
+            if(!jobName){
+                $.warning('请选择职位名称');
+                return;
+            }
+            if(jobContent == '<p><br></p>'){
+                $.warning('请输入职位介绍');
+                return;
             }
             my.ajax({
                 url: url,
                 data: $("form").serialize(),
                 success: function () {
-                    window.location = '/job';
+                    window.location = '/myjob';
                 }
             });
         };

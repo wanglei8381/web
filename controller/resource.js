@@ -14,7 +14,7 @@ resource.list = function (req, res, next) {
     }else{
         var where = {"collegeId" : req.session.normal_user.collegeId};
     }
-    var opt = {"sort": "-createdAt"};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
     dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
@@ -32,7 +32,7 @@ resource.mylist = function (req, res, next) {
     }else{
         var where = {"userId" : req.session.normal_user.stid,"collegeId" : req.session.normal_user.collegeId};
     }
-    var opt = {"sort": "-createdAt"};
+    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
     var query = {};
     dbHelper.page('ResourceModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="panel-body">
-        <form class="form form-horizontal" action="/sys/news/add" method="post" enctype="multipart/form-data">
+        <form class="form-horizontal">
             <input type="hidden" name="id" value="{{_id}}"/>
             <input type="hidden" name="collegeId" value="{{collegeId}}"/>
             <div class="form-group">
@@ -38,14 +38,6 @@
                 </div>
             </div>
             <div class="form-group">
-                <lable class="col-sm-2 control-label">新闻图片<span >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></lable>
-                <div class="col-sm-6 row">
-                    <div class="col-sm-9">
-                        <input type="file" class="form-control" name="file" placeholder="请选择新闻图片">
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
                 <lable class="col-sm-2 control-label">新闻内容<span style="color:red">（*）</span></lable>
                 <div class="col-sm-8">
                     <script type="text/plain" name="content" id="editor" style="width:100%;height:360px;"></script>
@@ -67,7 +59,6 @@
     <script type="text/javascript" src="/umeditor/umeditor.config.js"></script>
     <!-- 编辑器源码文件 -->
     <script type="text/javascript" src="/umeditor/umeditor.min.js"></script>
-    <script src="//cdn.bootcss.com/jquery.form/3.51/jquery.form.min.js"></script>
 
     <!-- 实例化编辑器 -->
     <script type="text/javascript">
@@ -88,8 +79,7 @@
             um.setContent(content);
         })
 
-
-        $('#submit').click(function () {
+        var newsSubmit = function(){
             var newsTitle = $.trim($('input[name=title]').val());
             var newsDescription = $.trim($('textarea[name=description]').val());
             var newsScope = $.trim($('input[name=scope]:checked').attr("value"));
@@ -114,18 +104,21 @@
             if (id) {
                 $('form').attr("action","/sys/news/edit")
             }
-
-            $("form").ajaxSubmit({
-                dataType: 'json',
+            var url = '/sys/news/add';
+            if (id) {
+                url = '/sys/news/edit';
+            }
+            my.ajax({
+                url: url,
+                data: $("form").serialize(),
                 success: function () {
                     window.location = '/sys/news';
-                },
-                error: function (err) {
-                    alert(JSON.stringify(err))
-                },
-                complete: function () {
                 }
             });
+        };
+
+        $('#submit').click(function(){
+           newsSubmit();
         });
     </script>
 

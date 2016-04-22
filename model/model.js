@@ -52,7 +52,6 @@ mongoose.model('Class', ClassSchema);
 var NewsSchema = new Schema({
     userId: {type: String},
     title: {type: String},
-    imgUrl: {type: String},
     description: {type: String},
     content: {type: String},
     scope: {type: Number, default: 0},//0公开1自己学院
