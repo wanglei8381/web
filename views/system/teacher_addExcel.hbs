@@ -1,0 +1,83 @@
+<link href="/umeditor/themes/default/css/umeditor.min.css" type="text/css" rel="stylesheet">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-md-7">
+                <h4>教师导入</h4>
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <form role="form form-horizontal" action="/sys/teacher/addExcel" method="post" enctype="multipart/form-data">
+            <div class="form-group row">
+                <label class="col-md-2 control-label">表格导入<span style="color:red">（*）</span></label>
+                <div class="col-md-7">
+                    <input type="file" class="form-control" name="file" placeholder="资源文件">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 control-label">所属院系<span style="color:red">（*）</span></label>
+                <div class="col-sm-10 collage">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-md-2 control-label">导入说明</label>
+                <div class="col-md-7">
+                    <p>表格仅包含(教师工号，教师姓名，教师级别[班主任2辅导员3普通老师4])信息</p>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <button class="btn btn-default col-sm-4" type="button" id="submit">保存</button>
+                    <a href="/sys/student" class="btn btn-default col-sm-4 col-sm-offset-2">取消</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+{{#extend "scripts"}}
+
+    <script>
+        $(function () {
+            //初始化数据
+            getCollage();
+        });
+
+        $('#submit').click(function () {
+            var file = $.trim($('input[name=file]').val());
+            if(!file){
+                $.warning('请上传资源文件');
+                return;
+            }
+            var fileStr = file.split('.');
+            if(fileStr[1] != 'xlsx'){
+                $.warning('请上传后缀为“xlsx”的excel表格文件');
+                return;
+            }
+            $("form").ajaxSubmit({
+                dataType: 'json',
+                success: function (data) {
+                    window.location = '/sys/teacher';
+                },
+                error: function (err) {
+                },
+                complete: function () {
+                }
+            });
+        });
+
+        function getCollage(){
+            for(var i=0; i<collage.length; i++){
+                var str = '<lable class="radio-inline">'+
+                        '<input type="radio" value="'+i+'" name="collegeId"/>'+ collage[i] +
+                        '</lable>';
+                $('.collage').append(str);
+                if('{{collegeId}}' == i){
+                    $('input[name=collegeId]').attr('checked','checked');
+                }
+            }
+        }
+    </script>
+
+{{/extend}}

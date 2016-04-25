@@ -44,6 +44,7 @@
         var $dataContainer = $('#data-container');
 
         function search(pageNo,type) {
+            var type = type;
             if(type ==0){
                 $('.wait').addClass('active');
                 $('.already').removeClass('active');
@@ -82,7 +83,7 @@
                         }
                         $dataContainer.html(html);
                         pagination($pageContainer, ret.data.pageNo, ret.data.total, function (pageNo) {
-                            search(pageNo);
+                            search(pageNo,type);
                         });
                     }
                 }

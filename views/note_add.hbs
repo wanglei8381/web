@@ -29,14 +29,14 @@
                             <label class="col-md-2 control-label">请假日期<span style="color:red">（*）</span></label>
                             <div class="col-md-10 row">
                                 <div class="col-md-4">
-                                    <div class="input-group date noteDate " data-date="" data-date-format="yyyy-mm-dd  hh:00" data-link-field="dtp_input1">
+                                    <div class="input-group date noteDate " data-date="" data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="dtp_input1">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                         <input class="form-control" size="16" type="text" value="{{beginDate}}" name="beginDate" readonly placeholder="开始日期">
                                     </div>
                                     <input type="hidden" id="dtp_input1" value="" /><br/>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="input-group date noteDate " data-date="" data-date-format="yyyy-mm-dd  hh:00" data-link-field="dtp_input1">
+                                    <div class="input-group date noteDate " data-date="" data-date-format="yyyy-mm-dd hh:mm:ss" data-link-field="dtp_input1">
                                         <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
                                         <input class="form-control" size="16" type="text" value="{{endDate}}" name="endDate" readonly placeholder="结束日期">
                                     </div>
@@ -69,9 +69,6 @@
 {{#extend "scripts"}}
     <script>
         $(function () {
-            var date =Date.now();
-            alert(my.toDateStr(date))
-
             if('{{normal_user.identity}}' == 1){
                 $('#noteApproval').addClass('hidden');
             }else if('{{normal_user.identity}}' == 2 || '{{normal_user.identity}}' == 3){
@@ -86,7 +83,8 @@
                 startView: 2,
                 minView:1,
                 forceParse: 0,
-                showMeridian: 1
+                showMeridian: 1,
+                daysOfWeekDisabled: [0,6]
             });
         });
 
@@ -95,16 +93,25 @@
         });
 
         function noteSubmit(){
+            var nowDate = my.toDateString(Date.now());
             var beginDate = $.trim($('input[name=beginDate]').val());
             var endDate = $.trim($('input[name=endDate]').val());
             var days = $.trim($('input[name=days]').val());
             var noteReason = $.trim($('textarea[name=reason]').val());
             if(!beginDate){
-                $.warning('请选择请假日期');
+                $.warning('请选择请假开始日期');
+                return;
+            }
+            if(compareDate(nowDate,beginDate) < 0){
+                $.warning('开始日期必须大于当前日期');
                 return;
             }
             if(!endDate){
-                $.warning('请选择请假日期');
+                $.warning('请选择请假结束日期');
+                return;
+            }
+            if(compareDate(beginDate,endDate) < 0){
+                $.warning('结束日期必须大于开始日期');
                 return;
             }
             if(!days){
@@ -115,7 +122,6 @@
                 $.warning('请输入请假理由');
                 return;
             }
-
             my.ajax({
                 url: '/note/add',
                 data: $("form").serialize(),

@@ -85,6 +85,7 @@ note.add = function (req, res, next) {
     console.log(req.body);
     req.body.userId = req.session.normal_user.stid;
     req.body.userName = req.session.normal_user.name;
+    req.body.classId = req.session.normal_user.classId;
     dbHelper.add('NoteModel', req.body, function (err, ret) {
         console.log('执行的结果------->', ret);
         if (err) {

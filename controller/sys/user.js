@@ -1,4 +1,8 @@
 var dbHelper = require('../../proxy/dbHelper');
+var formidable = require('formidable');
+var fs = require('fs');
+var path = require('path');
+var xlsx = require('node-xlsx');
 
 var user = module.exports = function (req, res, next) {
     console.log('----->user');
@@ -75,6 +79,51 @@ user.add = function (req, res, next) {
     });
 };
 
+user.addExcel = function (req, res, next) {
+    var str = req.get('content-type') || '';
+    var mime = str.split(';')[0];
+    if ('multipart/form-data' != mime) return res.fail('表单类型不匹配');
+    var form = new formidable.IncomingForm();//实例化
+    form.uploadDir = '/tmp/path';//上传的临时文件
+    mkdirsSync(form.uploadDir);
+    form.parse(req, function (err, fields, files) {
+        if (err) return res.fail('服务器出错');
+        var file = files[Object.keys(files)[0]];
+        req.body = fields;
+        if (req.body.identity) {
+            req.body.collegeId = req.session.sys_user.collegeId;
+        }
+        fs.exists(file.path, function (exists) {
+            if (!exists) {
+                res.fail('资源已经不存在');
+            } else {
+                fs.readFile(file.path, function (err, chunk) {
+                    if(err){
+                        return res.fail('查询出错');
+                    }
+                    var obj = xlsx.parse(file.path);
+                    var userData = obj[0].data;
+                    for(var i=0; i<userData.length; i++){
+                        if (!req.body.identity) {
+                            req.body.identity = userData[i][2];
+                        }
+                        req.body.stid = userData[i][0];
+                        req.body.name = userData[i][1];
+                        dbHelper.add('UserModel', req.body, function (err, ret) {
+                            console.log('执行的结果------->', ret);
+                            if (err) {
+                                console.log('[contoller][sys][user][add]',err.stack);
+                                return res.fail('保存出错');
+                            }
+                        });
+                    }
+                });
+            }
+        });
+    });
+    res.ok();
+};
+
 user.detail = function (req, res, next) {
     var id = req.params.id;
     dbHelper.find('UserModel', id, function (err, ret) {
@@ -126,3 +175,23 @@ user.editSdetail = function (req, res, next) {
         res.out('system/student_add', ret);
     });
 };
+
+//创建多层文件夹 同步
+function mkdirsSync(dirpath, mode) {
+    if (!fs.existsSync(dirpath)) {
+        var pathtmp = '/';
+        dirpath.split('/').forEach(function (dirname) {
+            if (pathtmp) {
+                pathtmp = path.join(pathtmp, dirname);
+            } else {
+                pathtmp = dirname;
+            }
+            if (!fs.existsSync(pathtmp)) {
+                if (!fs.mkdirSync(pathtmp, mode)) {
+                    return false;
+                }
+            }
+        });
+    }
+    return true;
+}

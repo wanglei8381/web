@@ -40,6 +40,11 @@ router.get('/teacher/add', function (req, res) {
     res.out('system/teacher_add');
 });
 router.post('/teacher/add', user.add);
+//学生添加excel导入
+router.get('/teacher/addExcel', function (req, res) {
+    res.out('system/teacher_addExcel');
+});
+router.post('/teacher/addExcel', user.addExcel);
 //教师编辑
 router.get('/teacher/edit/:id',user.editTdetail);
 router.post('/teacher/edit', user.edit);
@@ -74,6 +79,13 @@ router.get('/student/add', function (req, res) {
     res.out('system/student_add');
 });
 router.post('/student/add', user.add);
+
+//学生添加excel导入
+router.get('/student/addExcel', function (req, res) {
+    res.out('system/student_addExcel');
+});
+router.post('/student/addExcel', user.addExcel);
+
 //学生编辑
 router.get('/student/edit/:id',user.editSdetail);
 router.post('/student/edit', user.edit);

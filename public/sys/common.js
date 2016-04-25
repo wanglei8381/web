@@ -113,6 +113,15 @@ function formatStr3(str){
     return str;
 }
 
+function compareDate(a,b){
+    var dateStrA = a.replace(/-/g,"\/");
+    var dateStrB = b.replace(/-/g,"\/");
+    var dateA = new Date(dateStrA).getTime();
+    var dateB = new Date(dateStrB).getTime();
+    var num = dateB-dateA;
+    return num;
+}
+
 jQuery.extend({
     intiAlert: function (cnt, dom, cls, time, callback) {
         time = time || 3000;
