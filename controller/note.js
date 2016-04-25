@@ -9,7 +9,7 @@ note.list = function (req, res, next) {
     var where = {
         "userId": req.session.normal_user.stid
     };
-    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
+    var opt = {"sort": "-createdAt", "pageNo": req.body.pageNo};
     var query = {};
     dbHelper.page('NoteModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
@@ -22,33 +22,26 @@ note.list = function (req, res, next) {
 
 note.listAll = function (req, res, next) {
     console.log(req.body);
-    var where = {"userName": {'$regex': req.body.title}}
-    if(req.session.normal_user.identity == 3){//辅导员
-        if(req.body.status){
-            where = {
-                "days" : {$gt : 3},
-                "status" : 2
-            };
-        }else{
-            where = {
-                "days" : {$gt : 3},
-                $or:[{"status" : 0 , "status" : 1}]
-            };
+    console.log('classId------->', req.session.normal_user.classId);
+    var where = {"classId": {"$in": req.session.normal_user.classId}}
+    if (req.body.title.trim()) {
+        where.userName = {'$regex': req.body.title.trim()};
+    }
+    if (req.session.normal_user.identity == 3) {//辅导员
+        where.days = {$gt: 3};
+        where.status = {"$in": [0, 1]};
+        if (req.body.status) {
+            where.status = 2;
         }
-    }else if(req.session.normal_user.identity == 2){//班主任
-        if(req.body.status){
-            where = {
-                "days" : {$lt : 3},
-                "status" : 2
-            };
-        }else{
-            where = {
-                "days" : {$lt : 3},
-                 $or:[{"status" : 0 , "status" : 1}]
-            };
+    } else if (req.session.normal_user.identity == 2) {//班主任
+        where.days = {$lte: 3};
+        where.status = {"$in": [0, 1]};
+        if (req.body.status) {
+            where.status = 2;
         }
     }
-    var opt = {"sort": "-createdAt","pageNo" : req.body.pageNo};
+
+    var opt = {"sort": "-createdAt", "pageNo": req.body.pageNo};
     var query = {};
     dbHelper.page('NoteModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);

@@ -71,7 +71,31 @@ login.login = function (req, res) {
             };
             console.log('登陆者信息：', user);
             req.session.normal_user = user;
-            res.ok(ret);
+
+            //学生
+            if (user.identity === 1 || user.identity === 4) {
+                res.ok();
+            } else {
+                var param = {};
+                //班主任2 辅导员3
+                if (user.identity === 2) {
+                    param.head_teacher = stid;
+                } else {
+                    param.supervisor = stid;
+                }
+                dbHelper.find('ClassModel', param, {}, {}, function (err, ret) {
+                    if (err) {
+                        console.log('查询教师所在班级出错', err.stack);
+                    } else {
+                        user.classId = ret.map(function (item) {
+                            return item._id;
+                        });
+                    }
+                    console.log('教师所在的班级有：', user.classId);
+                    return res.ok();
+                });
+            }
+
         }
     });
 };
