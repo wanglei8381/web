@@ -18,6 +18,7 @@
     "qiniu": "^6.1.8",
     "validator": "^4.2.1",
     "formidable": "1.0.17",
-    "async": "*"
+    "async": "*",
+    "node-xlsx":"0.6.0"
   }
 }
