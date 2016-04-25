@@ -145,9 +145,8 @@
         ,toolbar:[
             'undo redo | bold italic underline strikethrough | removeformat |',
             'insertorderedlist insertunorderedlist | selectall cleardoc paragraph | fontfamily fontsize' ,
-            '| justifyleft justifycenter justifyright justifyjustify |',
-            'link unlink |  image ',
-            '| horizontal  preview fullscreen'
+            '| justifyleft justifycenter justifyright',
+            '| horizontal  preview'
         ]
 
         //语言配置项,默认是zh-cn。有需要的话也可以使用如下这样的方式来自动多语言切换，当然，前提条件是lang文件夹下存在对应的语言文件：

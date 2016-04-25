@@ -30,7 +30,7 @@ news.page = function (req, res, next) {
     });
 };
 
-/*news.add = function (req, res, next) {
+news.add = function (req, res, next) {
     console.log(req.body);
     req.body.collegeId = req.session.sys_user.collegeId;
     req.body.userId = req.session.sys_user.stid;
@@ -41,34 +41,6 @@ news.page = function (req, res, next) {
         }
         res.ok();
     });
-};*/
-
-news.add = function (req, res, next) {
-    var str = req.get('content-type') || '';
-    var mime = str.split(';')[0];
-    if ('multipart/form-data' != mime) return res.fail('表单类型不匹配');
-    var form = new formidable.IncomingForm();//实例化
-    form.uploadDir = '/tmp/path';//上传的临时文件
-    mkdirsSync(form.uploadDir);
-    form.parse(req, function (err, fields, files) {
-        if (err) return res.fail('服务器出错');
-        var file = files[Object.keys(files)[0]];
-        req.body = fields;
-        req.body.collegeId = req.session.sys_user.collegeId;
-        req.body.userId = req.session.sys_user.stid;
-        req.body.imgUrl = file.name;
-        console.log(req.body);
-        dbHelper.add('NewsModel', req.body, function (err, ret) {
-            console.log('执行的结果------->', ret);
-            if (err) {
-                console.log('[contoller][sys][user][add]', err.stack);
-                return res.fail('保存出错');
-            }
-            res.ok();
-        });
-
-    });
-
 };
 
 news.edit = function (req, res, next) {

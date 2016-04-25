@@ -32,10 +32,8 @@ user.page = function (req, res, next) {
             where = {"identity": {"$in":[2, 3,4]},"$or":[{"name" : {'$regex': req.body.title}},{"stid" : {'$regex': req.body.title}}]};
         }
     }
-
     dbHelper.page('UserModel', where, query, opt, function (err, ret) {
         console.log('执行的结果------->', ret);
-        console.log('------',req.session)
         if (err) {
             return res.fail('查询出错');
         }
