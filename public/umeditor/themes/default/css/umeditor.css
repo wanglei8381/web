@@ -1,3 +1,6 @@
+img {
+    max-width: 100%; /*图片自适应宽度*/
+}
 .edui-container{
     position: relative;
     border: 1px solid #d4d4d4;

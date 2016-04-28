@@ -37,7 +37,25 @@ user.page = function (req, res, next) {
         if (err) {
             return res.fail('查询出错');
         }
-        res.ok(ret);
+        var retNew = {};
+        var retList = [];
+        for(var i=0; i<ret.list.length; i++){
+            var retDate = {};
+            retDate.identity = ret.list[i].identity;
+            retDate.name = ret.list[i].name;
+            retDate.stid = ret.list[i].stid;
+            retDate.collegeId = ret.list[i].collegeId;
+            retDate.classId = ret.list[i].classId;
+            retDate.className = ret.list[i].className;
+            retDate._id = ret.list[i]._id;
+            retList.push(retDate);
+        }
+        retNew.list = retList;
+        retNew.pageNo = ret.pageNo;
+        retNew.count = ret.count;
+        retNew.total = ret.total;
+        console.log('执行的结果------->', retNew);
+        res.ok(retNew);
     });
 };
 

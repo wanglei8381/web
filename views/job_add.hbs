@@ -56,8 +56,8 @@
         var URL = '/ueditor/';
         var serverPath = '/server/umeditor/';
         var um = UM.getEditor('editor', {
-            imageUrl: 'http://7xobdo.com1.z0.glb.clouddn.com',
-            imagePath: serverPath,
+            /*imageUrl: 'http://7xobdo.com1.z0.glb.clouddn.com',
+            imagePath: serverPath,*/
             lang: /^zh/.test(navigator.language || navigator.browserLanguage || navigator.userLanguage) ? 'zh-cn' : 'en',
             langPath: UMEDITOR_CONFIG.UMEDITOR_HOME_URL + "lang/",
             focus: true
@@ -82,6 +82,7 @@
             var workPlace = $.trim($('input[name=workPlace]').val());
             var jobName = $.trim($('input[name=jobName]').val());
             var jobContent = $.trim($('#editor').html());
+            alert(jobContent)
             if(!companyName){
                 $.warning('请输入公司名称');
                 return;

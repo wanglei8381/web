@@ -22,7 +22,7 @@ note.list = function (req, res, next) {
 
 note.listAll = function (req, res, next) {
     console.log(req.body);
-    console.log('classId------->', req.session.normal_user.classId);
+    console.log('title------->', req.body.title);
     var where = {"classId": {"$in": req.session.normal_user.classId}}
     if (req.body.title.trim()) {
         where.userName = {'$regex': req.body.title.trim()};
