@@ -70,7 +70,7 @@ resource.download = function (req, res, next) {
 resource.add = function (req, res, next) {
     var str = req.get('content-type') || '';
     var mime = str.split(';')[0];
-    if ('multipart/form-data' != mime) return res.fail('表单类型不匹配');
+    if ('multipart/form-data' != mime) return res.fail('表单类型不匹配');//设置表单的MIME编码
     var form = new formidable.IncomingForm();//实例化
     form.uploadDir = '/tmp/path';//上传的临时文件
     mkdirsSync(form.uploadDir);
