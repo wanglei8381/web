@@ -10,6 +10,12 @@
     <div class="panel-body">
         <form role="form form-horizontal" action="/sys/teacher/addExcel" method="post" enctype="multipart/form-data">
             <div class="form-group row">
+                <label class="col-md-2 control-label">模板下载</label>
+                <div class="col-md-7">
+                    <a href="/sys/usermodel/download/teacher">teacher.xlsx</a>
+                </div>
+            </div>
+            <div class="form-group row">
                 <label class="col-md-2 control-label">表格导入<span style="color:red">（*）</span></label>
                 <div class="col-md-7">
                     <input type="file" class="form-control" name="file" placeholder="资源文件">
@@ -44,6 +50,18 @@
             getCollage();
         });
 
+        function getCollage(){
+            for(var i=0; i<collage.length; i++){
+                var str = '<lable class="radio-inline">'+
+                        '<input type="radio" value="'+i+'" name="collegeId"/>'+ collage[i] +
+                        '</lable>';
+                $('.collage').append(str);
+                if('{{collegeId}}' == i){
+                    $('input[name=collegeId]').attr('checked','checked');
+                }
+            }
+        }
+
         $('#submit').click(function () {
             var file = $.trim($('input[name=file]').val());
             if(!file){
@@ -66,18 +84,6 @@
                 }
             });
         });
-
-        function getCollage(){
-            for(var i=0; i<collage.length; i++){
-                var str = '<lable class="radio-inline">'+
-                        '<input type="radio" value="'+i+'" name="collegeId"/>'+ collage[i] +
-                        '</lable>';
-                $('.collage').append(str);
-                if('{{collegeId}}' == i){
-                    $('input[name=collegeId]').attr('checked','checked');
-                }
-            }
-        }
     </script>
 
 {{/extend}}

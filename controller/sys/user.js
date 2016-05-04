@@ -15,8 +15,6 @@ user.page = function (req, res, next) {
     var query = {};
     //分页排序
     var opt = {
-        pageNo: req.body.pageNo,
-        pageSize: req.body.pageSize,
         sort: {"stid":1}
     };
     if (req.body.identity) {
@@ -37,25 +35,7 @@ user.page = function (req, res, next) {
         if (err) {
             return res.fail('查询出错');
         }
-        var retNew = {};
-        var retList = [];
-        for(var i=0; i<ret.list.length; i++){
-            var retDate = {};
-            retDate.identity = ret.list[i].identity;
-            retDate.name = ret.list[i].name;
-            retDate.stid = ret.list[i].stid;
-            retDate.collegeId = ret.list[i].collegeId;
-            retDate.classId = ret.list[i].classId;
-            retDate.className = ret.list[i].className;
-            retDate._id = ret.list[i]._id;
-            retList.push(retDate);
-        }
-        retNew.list = retList;
-        retNew.pageNo = ret.pageNo;
-        retNew.count = ret.count;
-        retNew.total = ret.total;
-        console.log('执行的结果------->', retNew);
-        res.ok(retNew);
+        res.ok(ret);
     });
 };
 
@@ -81,8 +61,8 @@ user.check = function(req,res,next){
 }
 
 user.add = function (req, res, next) {
-    console.log(req.body);
-    if (req.body.identity) {
+    console.log('执行的结果BODY------->',req.body);
+    if (req.body.identity == '1') {
         req.body.collegeId = req.session.sys_user.collegeId;
     }
     dbHelper.add('UserModel', req.body, function (err, ret) {
@@ -106,7 +86,7 @@ user.addExcel = function (req, res, next) {
         if (err) return res.fail('服务器出错');
         var file = files[Object.keys(files)[0]];
         req.body = fields;
-        if (req.body.identity) {
+        if (req.body.identity == '1') {
             req.body.collegeId = req.session.sys_user.collegeId;
         }
         fs.exists(file.path, function (exists) {
@@ -119,7 +99,7 @@ user.addExcel = function (req, res, next) {
                     }
                     var obj = xlsx.parse(file.path);
                     var userData = obj[0].data;
-                    for(var i=0; i<userData.length; i++){
+                    for(var i=1; i<userData.length; i++){
                         if (!req.body.identity) {
                             req.body.identity = userData[i][2];
                         }
@@ -138,6 +118,23 @@ user.addExcel = function (req, res, next) {
         });
     });
     res.ok();
+};
+
+user.download = function (req, res, next) {
+    var id = req.params.id + '.xlsx';
+    console.log(id);
+    var path = '\\tmp\\path\\' + id;
+    fs.exists(path, function (exists) {
+        fs.readFile(path, function (err, chunk) {
+            if(err){
+                return res.fail('查询出错');
+            }
+            //设置请求头以附件的格式
+            res.setHeader("Content-Disposition", "attachment; filename=" + encodeURIComponent(id));
+            res.end(chunk, 'binary');
+        });
+
+    });
 };
 
 user.detail = function (req, res, next) {

@@ -13,13 +13,21 @@
 </head>
 <body>
     <header class="navbar-fixed-top">
-        <div class="bgColor headTitle paddALL">
-            <a href="http://www.cwu.edu.cn/" class="hidden-xs">中华女子学院</a>
-                <span class="pull-right">
-                    <a>【{{normal_user.name}}】</a>
-                    <a href="javascript:my.repwd(1);">【修改密码】</a>
-                    <a href="/logout" class="paddLeft">退出</a>
-                </span>
+        <div class="paddALL textColor2 bgColor" id="show" >您有<span id="noteNum"></span>条待审批假条</div>
+        <div class="bgColor headTitle paddALL hidden-xs">
+            <a href="http://www.cwu.edu.cn/">中华女子学院</a>
+            <span class="pull-right">
+                <a>【{{normal_user.name}}】</a>
+                <a href="javascript:my.repwd(1);">【修改密码】</a>
+                <a href="/logout" class="paddLeft">退出</a>
+            </span>
+        </div>
+        <div class="bgColor headTitle paddAll7 visible-xs">
+            <span class="pull-right">
+                <a>【{{normal_user.name}}】</a>
+                <a href="javascript:my.repwd(1);">【修改密码】</a>
+                <a href="/logout" class="paddLeft">退出</a>
+            </span>
         </div>
 
         <div class="navbar navbarM paddAll2" role="navigation">
@@ -77,6 +85,27 @@
                 }
                 $('#' + path_module + '_id').addClass('active');
             }
+            if(path_module == ''){
+                if('{{normal_user.identity}}' == 4){
+                    $('#show').addClass('hidden');
+                }else if('{{normal_user.identity}}' == 1){
+                    $('#show').addClass('hidden');
+                }else{
+                    $('#show').animate({
+                        top: 0
+                    }, 1000,function(){
+                        $('#show').animate({
+                            top: 0
+                        }, 500,function(){
+                            var n1 = setTimeout(function() {
+                                $('#show').addClass('hidden');
+                            }, 2000);
+                        });
+                    })
+
+                }
+            }
+            getNote();
         });
 
         if('{{normal_user.identity}}' == 4){
@@ -88,7 +117,29 @@
             $('.note').attr('id','allNote_id');
             var str = '<a href="/allNote">假条审批</a>';
             $('.note').append(str);
+        }
 
+        function getNote() {
+            var data = {
+                title : $.trim($('#title').val()),
+                status : 2,
+                pageNo: 1
+            }
+            $.ajax({
+                url: '/allNote',
+                type: 'post',
+                dataType: 'json',
+                data: data,
+                success: function (ret) {
+                    if (ret.status == 0) {
+                        if(ret.data.list.length == 0){
+                            $('#show').css({'display':'none'})
+                        } else {
+                            $('#noteNum').html(ret.data.count);
+                        }
+                    }
+                }
+            });
         }
     </script>
     {{{block "scripts"}}}

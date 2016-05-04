@@ -31,18 +31,29 @@
             <div class="form-group">
                 <lable class="col-sm-2 control-label">教师<span style="color:red">（*）</span></lable>
                 <div class="col-sm-6">
+                {{#if identity}}
                     <lable class="radio-inline">
-                        <input type="radio" value="4" {{#eq identity 4}}checked{{/eq}} name="identity"/>
+                        <input type="radio" value="4"{{#eq identity 4}}checked{{/eq}} name="identity"/>
                         普通教师
                     </lable>
                     <lable class="radio-inline">
-                        <input type="radio" value="2" {{#eq identity 2}}checked{{/eq}} name="identity"/>
+                        <input type="radio" value="2"{{#eq identity 2}}checked{{/eq}} name="identity"/>
                         班主任
                     </lable>
                     <lable class="radio-inline">
                         <input type="radio" value="3" {{#eq identity 3}}checked{{/eq}} name="identity"/>
                         辅导员
                     </lable>
+                {{else}}
+                        <lable class="radio-inline">
+                            <input type="radio" value="4" checked name="identity"/>
+                            普通教师
+                        </lable>
+                        <lable class="radio-inline">
+                            <input type="radio" value="3" name="identity"/>
+                            辅导员
+                        </lable>
+                {{/if}}
                 </div>
             </div>
             <div class="form-group">

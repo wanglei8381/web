@@ -29,6 +29,9 @@ router.get('/logout', main.logout);
 //修改密码
 router.post('/user/repwd', main.repwd);
 
+
+//模板下载
+router.get('/usermodel/download/:id', user.download);
 //教师管理
 router.get('/teacher', function (req, res) {
     res.out('system/teacher');

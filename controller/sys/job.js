@@ -5,14 +5,9 @@ var job = module.exports = function (req, res, next) {
 };
 
 job.page = function (req, res, next) {
-    //查询条件
     var where = {};
-    //查询的字段
     var query = {};
-    //分页排序
     var opt = {
-        pageNo: req.body.pageNo,
-        pageSize: req.body.pageSize,
         sort: '-createdAt'
     };
 

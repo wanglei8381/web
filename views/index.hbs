@@ -55,7 +55,14 @@
             });
             //加载新闻
             getNews();
-            //加载招聘
+            //加载假条
+            if('{{normal_user.identity}}' == 1){
+
+            }else if('{{normal_user.identity}}' == 4){
+
+            }else{
+                getNote();
+            }
         })
 
         function getNews() {
@@ -81,6 +88,8 @@
                 }
             });
         }
+
+
 
     </script>
 {{/extend}}

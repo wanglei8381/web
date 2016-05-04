@@ -11,8 +11,6 @@ classes.page = function (req, res, next) {
     var query = {};
     //分页排序
     var opt = {
-        pageNo: req.body.pageNo,
-        pageSize: req.body.pageSize,
         sort: {"name":1}
     };
 
