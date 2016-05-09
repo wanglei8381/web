@@ -13,7 +13,8 @@ res.page = function (req, res, next) {
     var query = {};
     //分页排序
     var opt = {
-        sort: '-createdAt'
+        sort: '-createdAt',
+        pageNo: req.body.pageNo
     };
 
     if (req.body.title) {

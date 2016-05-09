@@ -5,13 +5,15 @@ var news = module.exports = function (req, res, next) {
 };
 
 news.page = function (req, res, next) {
+    console.log(req.body);
     //查询条件
     var where = {};
     //查询的字段
     var query = {};
     //分页排序
     var opt = {
-        sort: '-createdAt'
+        sort: '-createdAt',
+        pageNo: req.body.pageNo
     };
 
     if (req.body.title) {

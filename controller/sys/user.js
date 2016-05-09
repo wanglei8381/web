@@ -15,7 +15,8 @@ user.page = function (req, res, next) {
     var query = {};
     //分页排序
     var opt = {
-        sort: {"stid":1}
+        sort: {"stid":1},
+        pageNo: req.body.pageNo
     };
     if (req.body.identity) {
         where = {"identity" : 1, "collegeId" : req.session.sys_user.collegeId};

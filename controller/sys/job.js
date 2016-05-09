@@ -8,7 +8,8 @@ job.page = function (req, res, next) {
     var where = {};
     var query = {};
     var opt = {
-        sort: '-createdAt'
+        sort: '-createdAt',
+        pageNo: req.body.pageNo
     };
 
     if (req.body.title) {
